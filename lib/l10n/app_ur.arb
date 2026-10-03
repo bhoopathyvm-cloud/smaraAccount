@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "ان کھاتوں کا صرف ایک مالک ہے۔ کسی اور منسلک آلہ کو بھی مالک بنانے پر غور کریں۔",
   "settingsLinkedDevicesSyncNow": "ابھی سنک کریں",
   "settingsLinkedDevicesSyncNowBusy": "ہم آہنگ ہو رہا ہے…",
-  "translateCategoryWithAi": "AI سے ترجمہ کریں"
+  "translateCategoryWithAi": "AI سے ترجمہ کریں",
+  "settingsLinkedDevicesCodesDontMatch": "مماثل نہیں",
+  "settingsLinkedDevicesConnectByAddress": "پتہ سے منسلک ہوں",
+  "settingsLinkedDevicesConnectByAddressBody": "جب دریافت منسلک آلہ نہ ڈھونڈ سکے تو اس کا LAN پتہ اور پورٹ درج کریں۔",
+  "settingsLinkedDevicesConnectByAddressTitle": "پتہ سے منسلک ہوں",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "اس کی بجائے کوڈ درج کریں",
+  "settingsLinkedDevicesEnterCodeSubmit": "آلہ تلاش کریں",
+  "settingsLinkedDevicesEnterCodeTitle": "جوائن کوڈ درج کریں",
+  "settingsLinkedDevicesJoinCodeExpired": "یہ کوڈ ختم ہو گیا — نیا مانگیں",
+  "settingsLinkedDevicesJoinCodeLabel": "جوائن کوڈ",
+  "settingsLinkedDevicesJoinCodeNotFound": "اس Wi-Fi پر اس کوڈ والا کوئی آلہ نہیں",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} باقی",
+  "settingsLinkedDevicesJoinCodeTryAgain": "دوبارہ کوشش کریں",
+  "settingsLinkedDevicesJoinCodeUsed": "یہ کوڈ پہلے استعمال ہو چکا ہے۔ نیا مانگیں۔",
+  "settingsLinkedDevicesJoinCheckCode": "چیک کوڈ — تصدیق کریں کہ دوسرے آلے پر مماثل ہے",
+  "settingsLinkedDevicesScanQr": "جوائن QR اسکین کریں",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "چیک کوڈ کی تصدیق کریں",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "کیا یہ کوڈ دوسرے آلے والے سے مماثل ہے؟",
+  "settingsLinkedDevicesCodesMatch": "کوڈ مماثل ہیں",
+  "settingsLinkedDevicesJoinExpired": "یہ جوائن QR ختم ہو گیا۔ نیا کوڈ مانگیں۔",
+  "settingsLinkedDevicesJoinReused": "یہ جوائن QR پہلے استعمال ہو چکا ہے۔ نیا کوڈ مانگیں۔",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "ہوسٹ",
+  "settingsLinkedDevicesPort": "پورٹ",
+  "settingsLinkedDevicesPeer": "آلہ",
+  "settingsLinkedDevicesSaveAddress": "پتہ محفوظ کریں",
+  "claimsPersonalLimitsTitle": "دعوے کی حدیں",
+  "claimsPersonalLimitsTitleFor": "{name} کی دعوے کی حدیں",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "{limit} کی حد سے اوپر",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "کوئی ذاتی حد مقرر نہیں۔",
+  "claimsClearPersonalLimit": "حد صاف کریں"
 }

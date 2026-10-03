@@ -102,6 +102,16 @@ class ClaimPersonService {
     );
   }
 
+  /// Best-effort company currency from an existing account group.
+  Future<String> resolveCompanyCurrency({String fallback = 'EUR'}) async {
+    final groups = await _db.select(_db.accountGroups).get();
+    for (final g in groups) {
+      final c = g.currency;
+      if (c != null && c.isNotEmpty) return c;
+    }
+    return fallback;
+  }
+
   /// Completes Add a person: creates owed-to account when Claimant is in
   /// the role set, then links the device.
   Future<LinkedDevice> acceptAddPerson({
@@ -111,7 +121,7 @@ class ClaimPersonService {
     required String joinerDisplayName,
     required List<int> joinerSigningPublicKey,
     required String joinerDeviceCertFingerprint,
-    required String currency,
+    String? currency,
     String? joinerIdentityId,
     String? peerHint,
   }) async {
@@ -123,7 +133,7 @@ class ClaimPersonService {
     if (roles.contains(LinkedDeviceRole.claimant)) {
       final account = await ensureOwedToAccount(
         displayName: personName,
-        currency: currency,
+        currency: currency ?? await resolveCompanyCurrency(),
       );
       owedToId = account.id;
     }

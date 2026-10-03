@@ -16,6 +16,10 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+	<!-- Linked devices / join-by-code: outbound TLS to peers (and Bonjour
+	     browse callbacks) when sandbox is later aligned with Release. -->
+	<key>com.apple.security.network.client</key>
+	<true/>
 	<!-- Required by file_picker (ofx-transaction-import): its macOS plugin
 	     checks for this entitlement key before opening NSOpenPanel even
 	     though App Sandbox is off above - without it, pickFiles() returns

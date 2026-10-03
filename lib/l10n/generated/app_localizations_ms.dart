@@ -1025,6 +1025,92 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Sedang mengejar…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Kod semak — sahkan ia sepadan pada peranti lain';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Imbas QR sertai';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => 'Sahkan kod semak';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Adakah kod ini sepadan dengan pada peranti lain?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Kod sepadan';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Tidak sepadan';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'QR sertai ini telah tamat tempoh. Minta kod baharu.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'QR sertai ini sudah digunakan. Minta kod baharu.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Kod sertai';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds lagi';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Masukkan kod sebaliknya';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Masukkan kod sertai';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Cari peranti';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Kod ini telah tamat tempoh — minta yang baharu';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Kod ini sudah digunakan. Minta yang baharu.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Tiada peranti dengan kod ini pada Wi-Fi ini';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Cuba lagi';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Sambung melalui alamat';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Sambung melalui alamat';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Apabila penemuan tidak menemui peranti dipautkan, masukkan alamat LAN dan port.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Hos';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Port';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Peranti';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Simpan alamat';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Peranti ditambah: $name';
   }
@@ -2199,6 +2285,48 @@ class AppLocalizationsMs extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Petunjuk: paling banyak $amount setiap $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Had tuntutan';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Had tuntutan untuk $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Melebihi had $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Tiada had peribadi ditetapkan.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Kosongkan had';
 
   @override
   String get claimsNoClaimsYet => 'Belum ada tuntutan.';

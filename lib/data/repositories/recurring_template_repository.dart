@@ -5,6 +5,7 @@ import '../../domain/models/recurring_template.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
 import 'ledger_repository.dart';
+import 'metadata_outbox.dart';
 
 /// Recurring templates and one-tap recording of a due template. Split
 /// out of `LedgerRepository` (architecture-deepening design.md D1).
@@ -13,11 +14,17 @@ class RecurringTemplateRepository {
   RecurringTemplateRepository({
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
   }) : _db = database,
-       _ledgerRepository = ledgerRepository;
+       _ledgerRepository = ledgerRepository,
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   Stream<List<RecurringTemplate>> watchRecurringTemplates() {
     final query = _db.select(_db.recurringTemplates)
@@ -72,20 +79,31 @@ class RecurringTemplateRepository {
       amountMinor: amountMinor,
       dayOfMonth: dayOfMonth,
     );
-    final row = await _db
-        .into(_db.recurringTemplates)
-        .insertReturning(
-          RecurringTemplatesCompanion.insert(
-            name: name,
-            direction: direction,
-            financialAccountId: financialAccountId,
-            categoryId: categoryId,
-            amountMinor: amountMinor,
-            dayOfMonth: dayOfMonth,
-            createdAt: DateTime.now(),
-          ),
-        );
-    return _toDomainRecurringTemplate(row);
+    return _db.transaction(() async {
+      final row = await _db
+          .into(_db.recurringTemplates)
+          .insertReturning(
+            RecurringTemplatesCompanion.insert(
+              name: name,
+              direction: direction,
+              financialAccountId: financialAccountId,
+              categoryId: categoryId,
+              amountMinor: amountMinor,
+              dayOfMonth: dayOfMonth,
+              createdAt: DateTime.now(),
+            ),
+          );
+      await _emitTemplateFields(
+        id: row.id,
+        name: name,
+        direction: direction,
+        financialAccountId: financialAccountId,
+        categoryId: categoryId,
+        amountMinor: amountMinor,
+        dayOfMonth: dayOfMonth,
+      );
+      return _toDomainRecurringTemplate(row);
+    });
   }
 
   Future<void> updateRecurringTemplate({
@@ -101,24 +119,38 @@ class RecurringTemplateRepository {
       amountMinor: amountMinor,
       dayOfMonth: dayOfMonth,
     );
-    await (_db.update(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(id))).write(
-      RecurringTemplatesCompanion(
-        name: Value(name),
-        direction: Value(direction),
-        financialAccountId: Value(financialAccountId),
-        categoryId: Value(categoryId),
-        amountMinor: Value(amountMinor),
-        dayOfMonth: Value(dayOfMonth),
-      ),
-    );
+    await _db.transaction(() async {
+      await (_db.update(
+        _db.recurringTemplates,
+      )..where((t) => t.id.equals(id))).write(
+        RecurringTemplatesCompanion(
+          name: Value(name),
+          direction: Value(direction),
+          financialAccountId: Value(financialAccountId),
+          categoryId: Value(categoryId),
+          amountMinor: Value(amountMinor),
+          dayOfMonth: Value(dayOfMonth),
+        ),
+      );
+      await _emitTemplateFields(
+        id: id,
+        name: name,
+        direction: direction,
+        financialAccountId: financialAccountId,
+        categoryId: categoryId,
+        amountMinor: amountMinor,
+        dayOfMonth: dayOfMonth,
+      );
+    });
   }
 
   Future<void> deleteRecurringTemplate(String id) async {
-    await (_db.delete(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(id))).go();
+    await _db.transaction(() async {
+      await (_db.delete(
+        _db.recurringTemplates,
+      )..where((t) => t.id.equals(id))).go();
+      await _emit(entityId: id, field: 'deleted', value: true);
+    });
   }
 
   /// Posts [templateId]'s due transaction via [recordTransaction] - the
@@ -170,6 +202,46 @@ class RecurringTemplateRepository {
         'must be between 1 and 31',
       );
     }
+  }
+
+  Future<void> _emitTemplateFields({
+    required String id,
+    required String name,
+    required TransactionDirection direction,
+    required String financialAccountId,
+    required String categoryId,
+    required int amountMinor,
+    required int dayOfMonth,
+  }) async {
+    await _emit(entityId: id, field: 'name', value: name);
+    await _emit(entityId: id, field: 'direction', value: direction.name);
+    await _emit(
+      entityId: id,
+      field: 'financialAccountId',
+      value: financialAccountId,
+    );
+    await _emit(entityId: id, field: 'categoryId', value: categoryId);
+    await _emit(entityId: id, field: 'amountMinor', value: amountMinor);
+    await _emit(entityId: id, field: 'dayOfMonth', value: dayOfMonth);
+  }
+
+  Future<void> _emit({
+    required String entityId,
+    required String field,
+    required Object? value,
+  }) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: 'recurring_template',
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
+    );
   }
 
   RecurringTemplate _toDomainRecurringTemplate(RecurringTemplateRow row) {

@@ -1025,6 +1025,95 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Se actualizează…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Cod de verificare — confirmați că se potrivește pe celălalt dispozitiv';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Scanați QR-ul de asociere';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Confirmați codul de verificare';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Acest cod se potrivește cu cel de pe celălalt dispozitiv?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Codurile se potrivesc';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Nu se potrivesc';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Acest QR de asociere a expirat. Cereți un cod nou.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Acest QR de asociere a fost deja folosit. Cereți un cod nou.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Cod de asociere';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds rămase';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'Introduceți codul în schimb';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle =>
+      'Introduceți codul de asociere';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Găsiți dispozitivul';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Acest cod a expirat — cereți unul nou';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Acest cod a fost deja folosit. Cereți unul nou.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Niciun dispozitiv cu acest cod pe acest Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Încercați din nou';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Conectare după adresă';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Conectare după adresă';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Când descoperirea nu găsește un dispozitiv asociat, introduceți adresa LAN și portul.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Gazdă';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Port';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Dispozitiv';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Salvați adresa';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'A fost adăugat un dispozitiv: $name';
   }
@@ -2211,6 +2300,48 @@ class AppLocalizationsRo extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Sugestie: cel mult $amount pe $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Limite de decontare';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Limite de decontare pentru $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Peste limita de $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Nicio limită personală setată.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Ștergeți limita';
 
   @override
   String get claimsNoClaimsYet => 'Nu există încă deconturi.';

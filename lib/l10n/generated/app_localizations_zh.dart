@@ -996,6 +996,84 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => '正在追赶…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode => '核对码 — 请确认另一台设备上显示相同';
+
+  @override
+  String get settingsLinkedDevicesScanQr => '扫描加入二维码';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => '确认核对码';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody => '此代码是否与另一台设备上的一致？';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => '代码匹配';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => '不匹配';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired => '此加入二维码已过期。请索取新代码。';
+
+  @override
+  String get settingsLinkedDevicesJoinReused => '此加入二维码已使用过。请索取新代码。';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => '加入码';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '剩余 $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => '改为输入代码';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => '输入加入码';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => '查找设备';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired => '此代码已过期 — 请索取新代码';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed => '此代码已使用过。请索取新代码。';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound => '此 Wi-Fi 上没有使用此代码的设备';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => '重试';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => '通过地址连接';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => '通过地址连接';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      '当发现功能找不到已关联设备时，请输入其局域网地址和端口。';
+
+  @override
+  String get settingsLinkedDevicesHost => '主机';
+
+  @override
+  String get settingsLinkedDevicesPort => '端口';
+
+  @override
+  String get settingsLinkedDevicesPeer => '设备';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => '保存地址';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return '已添加设备：$name';
   }
@@ -2083,6 +2161,48 @@ class AppLocalizationsZh extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return '提示：每 $unit 最多 $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => '报销限额';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name 的报销限额';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '超过 $limit 限额';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => '未设置个人限额。';
+
+  @override
+  String get claimsClearPersonalLimit => '清除限额';
 
   @override
   String get claimsNoClaimsYet => '暂无报销。';

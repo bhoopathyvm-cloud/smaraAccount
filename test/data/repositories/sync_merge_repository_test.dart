@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
@@ -14,6 +12,7 @@ import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/sync_merge_repository.dart';
 import 'package:smara_accounting/domain/crypto/entry_canonical_hash.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
+import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/domain/models/membership_notice.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/peer_sync/sync_payloads.dart';
@@ -387,5 +386,60 @@ void main() {
       merge.appliedBooksSettings.containsKey('preferredLocaleTag'),
       isFalse,
     );
+  });
+
+  test('refuses entries signed by removed device after removal time', () async {
+    final accountId = await financialId();
+    final categoryId = await expenseId();
+    final peer = await addPeer();
+
+    await db
+        .into(db.linkedDevices)
+        .insert(
+          LinkedDevicesCompanion.insert(
+            deviceId: 'peer-device',
+            displayName: 'Peer',
+            signingIdentityId: peer.identityId,
+            deviceCertFingerprint: 'fp-peer',
+            role: LinkedDeviceRole.member,
+            removedAt: Value(DateTime.utc(2026, 4, 1)),
+          ),
+        );
+
+    final before = await buildPeerEntry(
+      peerKeys: peer.keys,
+      peerIdentityId: peer.identityId,
+      previousHash: Uint8List.fromList(genesisPreviousEntryHash),
+      sequence: 0,
+      financialAccountId: accountId,
+      categoryId: categoryId,
+      amountMinor: 100,
+      recordedAt: DateTime.utc(2026, 3, 15),
+    );
+    final after = await buildPeerEntry(
+      peerKeys: peer.keys,
+      peerIdentityId: peer.identityId,
+      previousHash: Uint8List.fromList(before.entryHash),
+      sequence: 1,
+      financialAccountId: accountId,
+      categoryId: categoryId,
+      amountMinor: 200,
+      recordedAt: DateTime.utc(2026, 5, 1),
+    );
+
+    final ok = await merge.mergeEntryBatch(
+      EntryBatch(entries: [before]),
+      fromDeviceId: 'peer-device',
+      fromDeviceDisplayName: 'Peer',
+    );
+    expect(ok.insertedCount, 1);
+
+    final refused = await merge.mergeEntryBatch(
+      EntryBatch(entries: [after]),
+      fromDeviceId: 'peer-device',
+      fromDeviceDisplayName: 'Peer',
+    );
+    expect(refused.insertedCount, 0);
+    expect(refused.rejectedCount, 1);
   });
 }

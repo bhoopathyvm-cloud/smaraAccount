@@ -19,6 +19,19 @@ class ExchangeRateService {
 
   static const _timeout = Duration(seconds: 5);
 
+  /// Compiled into company-sync acceptance runs only
+  /// (`--dart-define=COMPANY_SYNC_TEST=true`). Release / normal builds keep
+  /// this false so production never uses fixed scenario rates (task 7.4).
+  static const companySyncTest = bool.fromEnvironment('COMPANY_SYNC_TEST');
+
+  /// Scenario rates for Acme Travel Co (GBP→EUR 1.17, JPY→EUR 0.0062).
+  static const Map<String, double> companySyncFixedRates = {
+    'GBP>EUR': 1.17,
+    'EUR>GBP': 1 / 1.17,
+    'JPY>EUR': 0.0062,
+    'EUR>JPY': 1 / 0.0062,
+  };
+
   /// Units of [to] currency equal to one unit of [from] currency
   /// (destination-per-source, matching the convention `TransferView` uses
   /// for the implied rate), or `null` on any failure.
@@ -27,6 +40,11 @@ class ExchangeRateService {
     required String to,
     required ExchangeRateProvider provider,
   }) async {
+    if (companySyncTest) {
+      final key = '${from.toUpperCase()}>${to.toUpperCase()}';
+      if (from.toUpperCase() == to.toUpperCase()) return 1.0;
+      return companySyncFixedRates[key];
+    }
     try {
       final uri = switch (provider) {
         ExchangeRateProvider.frankfurter => Uri.https(

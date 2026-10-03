@@ -41,6 +41,7 @@ class MembershipRepository {
   final DateTime Function() _clock;
   final Uuid _uuid;
   final Duration _soleOwnerClaimDelay;
+  final JoinNonceRegistry _joinNonces = JoinNonceRegistry();
 
   /// Lists all membership rows (including removed/erased).
   Future<List<LinkedDevice>> listDevices() async {
@@ -451,6 +452,9 @@ class MembershipRepository {
         personRoles ??
         (isPersonJoin ? {LinkedDeviceRole.claimant} : {roleOffer});
     final primary = MembershipRoleGates.primaryRole(roles);
+    final joinNonce = _uuid.v4();
+    final now = _clock().toUtc();
+    final checkCode = await JoinQrPayload.deriveCheckCode(joinNonce);
     return JoinQrPayload(
       booksSetId: booksSetId,
       hostDeviceId: hostDeviceId,
@@ -460,7 +464,9 @@ class MembershipRepository {
       deviceCertDer: cert.derBytes,
       deviceCertFingerprint: cert.fingerprint,
       roleOffer: isPersonJoin ? primary : roleOffer,
-      joinNonce: _uuid.v4(),
+      joinNonce: joinNonce,
+      expiresAt: now.add(JoinQrPayload.joinQrTtl),
+      checkCode: checkCode,
       personRoles: roles,
       personDisplayName: personDisplayName,
       isPersonJoin: isPersonJoin,
@@ -489,11 +495,31 @@ class MembershipRepository {
         debugMessage: 'Join requires the same Wi-Fi (local network).',
       );
     }
+    final now = _clock().toUtc();
+    if (payload.isExpiredAt(now)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR has expired. Ask for a new code.',
+      );
+    }
+    if (_joinNonces.hasBeenUsed(payload.joinNonce)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR was already used. Ask for a new code.',
+      );
+    }
+    final expectedCode = await JoinQrPayload.deriveCheckCode(payload.joinNonce);
+    if (payload.checkCode != expectedCode) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Join check code does not match.',
+      );
+    }
     final peerIdentity = await _identity.addLinkedPeerIdentity(
       publicKey: joinerSigningPublicKey,
       identityId: joinerIdentityId,
     );
-    return addDevice(
+    final device = await addDevice(
       actorDeviceId: actorDeviceId,
       deviceId: joinerDeviceId,
       displayName: joinerDisplayName,
@@ -505,6 +531,32 @@ class MembershipRepository {
           : {payload.roleOffer},
       personDisplayName: payload.personDisplayName,
       owedToAccountId: owedToAccountId,
+    );
+    _joinNonces.markUsed(payload.joinNonce);
+    return device;
+  }
+
+  /// Joiner-side step after scanning a host QR: validates expiry/check code
+  /// and stores the host Signing Identity under the host's id (task 12.3).
+  /// Does not mark the nonce used — only [acceptJoinFromQr] on the host does.
+  Future<void> prepareJoinerFromScannedQr(JoinQrPayload payload) async {
+    final now = _clock().toUtc();
+    if (payload.isExpiredAt(now)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR has expired. Ask for a new code.',
+      );
+    }
+    final expectedCode = await JoinQrPayload.deriveCheckCode(payload.joinNonce);
+    if (payload.checkCode != expectedCode) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Join check code does not match.',
+      );
+    }
+    await _identity.addLinkedPeerIdentity(
+      publicKey: payload.signingPublicKey,
+      identityId: payload.hostIdentityId,
     );
   }
 

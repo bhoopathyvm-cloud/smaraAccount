@@ -494,6 +494,10 @@ Future<void> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
   required String categoryName,
+
+  /// ISO currency for onboarding. Defaults to USD so acceptance locale
+  /// runs stay amount-stable; company-sync passes `EUR`.
+  String currencyCode = 'USD',
   bool skipFirstWeekSetup = true,
   Future<void> Function(String screen)? onScreen,
   bool doubleTapCurrencyContinue = false,
@@ -578,7 +582,7 @@ Future<void> completeOnboardingWithGuidedEntry(
       of: find.byType(CurrencySelectionView),
       matching: find.byType(TextField),
     ),
-    'USD',
+    currencyCode,
     () {
       final field =
           find
@@ -590,7 +594,7 @@ Future<void> completeOnboardingWithGuidedEntry(
                   .single
                   .widget
               as TextField;
-      return field.controller?.text == 'USD';
+      return field.controller?.text == currencyCode;
     },
   );
 

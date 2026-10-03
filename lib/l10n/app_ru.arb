@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "У этих книг только один Владелец. Рассмотрите возможность сделать Владельцем и другое связанное устройство.",
   "settingsLinkedDevicesSyncNow": "Синхронизировать сейчас",
   "settingsLinkedDevicesSyncNowBusy": "Синхронизация…",
-  "translateCategoryWithAi": "Перевести с помощью AI"
+  "translateCategoryWithAi": "Перевести с помощью AI",
+  "settingsLinkedDevicesCodesDontMatch": "Не совпадают",
+  "settingsLinkedDevicesConnectByAddress": "Подключиться по адресу",
+  "settingsLinkedDevicesConnectByAddressBody": "Если обнаружение не находит связанное устройство, введите его LAN-адрес и порт.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Подключиться по адресу",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Ввести код вместо этого",
+  "settingsLinkedDevicesEnterCodeSubmit": "Найти устройство",
+  "settingsLinkedDevicesEnterCodeTitle": "Ввести код присоединения",
+  "settingsLinkedDevicesJoinCodeExpired": "Срок этого кода истёк — запросите новый",
+  "settingsLinkedDevicesJoinCodeLabel": "Код присоединения",
+  "settingsLinkedDevicesJoinCodeNotFound": "Нет устройства с этим кодом в этой сети Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "Осталось {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Повторить",
+  "settingsLinkedDevicesJoinCodeUsed": "Этот код уже использован. Запросите новый.",
+  "settingsLinkedDevicesJoinCheckCode": "Проверочный код — подтвердите, что он совпадает на другом устройстве",
+  "settingsLinkedDevicesScanQr": "Сканировать QR присоединения",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Подтвердить проверочный код",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Совпадает ли этот код с кодом на другом устройстве?",
+  "settingsLinkedDevicesCodesMatch": "Коды совпадают",
+  "settingsLinkedDevicesJoinExpired": "Срок этого QR присоединения истёк. Запросите новый код.",
+  "settingsLinkedDevicesJoinReused": "Этот QR присоединения уже использован. Запросите новый код.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Хост",
+  "settingsLinkedDevicesPort": "Порт",
+  "settingsLinkedDevicesPeer": "Устройство",
+  "settingsLinkedDevicesSaveAddress": "Сохранить адрес",
+  "claimsPersonalLimitsTitle": "Лимиты заявок",
+  "claimsPersonalLimitsTitleFor": "Лимиты заявок для {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "Выше лимита {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Личные лимиты не заданы.",
+  "claimsClearPersonalLimit": "Очистить лимит"
 }

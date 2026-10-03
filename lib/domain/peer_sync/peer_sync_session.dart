@@ -1,3 +1,4 @@
+import '../linked_devices/device_certificate_store.dart';
 import '../linked_devices/local_network_reachability.dart';
 import 'sync_payloads.dart';
 import 'sync_transport.dart';
@@ -53,17 +54,20 @@ class PeerSyncSession {
     required LocalNetworkReachability reachability,
     required SyncPeerIdentity localIdentity,
     required Set<String> pinnedFingerprints,
+    List<DeviceCertificate> pinnedCertificates = const [],
   }) : _transport = transport,
        _ledger = ledger,
        _reachability = reachability,
        _localIdentity = localIdentity,
-       _pinnedFingerprints = pinnedFingerprints;
+       _pinnedFingerprints = pinnedFingerprints,
+       _pinnedCertificates = pinnedCertificates;
 
   final SyncTransport _transport;
   final SyncLedgerView _ledger;
   final LocalNetworkReachability _reachability;
   final SyncPeerIdentity _localIdentity;
   final Set<String> _pinnedFingerprints;
+  final List<DeviceCertificate> _pinnedCertificates;
 
   /// Runs Sync now against [remote]. Refuses when peers are not on the local
   /// network.
@@ -82,6 +86,7 @@ class PeerSyncSession {
       local: _localIdentity,
       remote: remote,
       pinnedFingerprints: _pinnedFingerprints,
+      pinnedCertificates: _pinnedCertificates,
     );
 
     try {
@@ -94,10 +99,15 @@ class PeerSyncSession {
   /// Serves inbound sync sessions while the app is open.
   Future<void> startListening({
     required void Function(SyncSessionResult result)? onCompleted,
+    int? bindPort,
+    void Function(int port)? onBound,
   }) {
     return _transport.listen(
       local: _localIdentity,
       pinnedFingerprints: _pinnedFingerprints,
+      pinnedCertificates: _pinnedCertificates,
+      bindPort: bindPort,
+      onBound: onBound,
       onSession: (connection) async {
         try {
           final result = await _exchange(connection);

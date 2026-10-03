@@ -1,0 +1,543 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+
+import '../models/join_qr_payload.dart';
+import '../peer_sync/sync_payloads.dart';
+import 'device_certificate_store.dart';
+import 'join_code.dart';
+import 'join_code_crypto.dart';
+import 'join_code_lookup.dart';
+import 'join_offer_discovery.dart';
+
+/// Length-prefixed JSON frames for join-by-code over unpinned TLS (task 4.4).
+class _JoinFrame {
+  static Future<void> send(
+    SecureSocket socket,
+    Map<String, Object?> map,
+  ) async {
+    final encoded = jsonEncode(map);
+    if (syncPayloadContainsPrivateKeyMaterial(encoded)) {
+      throw const FormatException(
+        'Join frame must not include private key material.',
+      );
+    }
+    final body = utf8.encode(encoded);
+    final header = ByteData(4)..setUint32(0, body.length, Endian.big);
+    socket.add(header.buffer.asUint8List());
+    socket.add(body);
+    await socket.flush();
+  }
+
+  static Future<Map<String, dynamic>> receive(
+    StreamIterator<List<int>> chunks,
+    BytesBuilder buffer,
+  ) async {
+    while (true) {
+      final bytes = buffer.toBytes();
+      if (bytes.length >= 4) {
+        final length = ByteData.sublistView(
+          Uint8List.fromList(bytes),
+        ).getUint32(0, Endian.big);
+        if (bytes.length >= 4 + length) {
+          final payload = utf8.decode(bytes.sublist(4, 4 + length));
+          final remaining = bytes.sublist(4 + length);
+          buffer.clear();
+          if (remaining.isNotEmpty) buffer.add(remaining);
+          if (syncPayloadContainsPrivateKeyMaterial(payload)) {
+            throw const FormatException(
+              'Join frame must not include private key material.',
+            );
+          }
+          final decoded = jsonDecode(payload);
+          if (decoded is! Map) {
+            throw const FormatException('Join frame must be a JSON object.');
+          }
+          return Map<String, dynamic>.from(decoded);
+        }
+      }
+      if (!await chunks.moveNext()) {
+        throw StateError('Join connection closed.');
+      }
+      buffer.add(chunks.current);
+    }
+  }
+}
+
+SecurityContext _joinServerContext(DeviceCertificate cert) {
+  final pem = cert.certificatePem;
+  final key = cert.privateKeyPem;
+  if (pem == null || key == null) {
+    throw StateError(
+      'Join-by-code TLS requires local certificatePem and privateKeyPem.',
+    );
+  }
+  final context = SecurityContext(withTrustedRoots: false);
+  context.useCertificateChainBytes(utf8.encode(pem));
+  context.usePrivateKeyBytes(utf8.encode(key));
+  return context;
+}
+
+List<int> _randomNonce([Random? random]) {
+  final rng = random ?? Random.secure();
+  return List<int>.generate(16, (_) => rng.nextInt(256));
+}
+
+/// Host-side outcome after both devices confirm the join-code check code.
+class JoinCodeHostAccepted {
+  const JoinCodeHostAccepted({
+    required this.payload,
+    required this.joinerDeviceId,
+    required this.joinerDisplayName,
+    required this.joinerSigningPublicKey,
+    required this.joinerDeviceCertFingerprint,
+    this.joinerIdentityId,
+  });
+
+  final JoinQrPayload payload;
+  final String joinerDeviceId;
+  final String joinerDisplayName;
+  final List<int> joinerSigningPublicKey;
+  final String joinerDeviceCertFingerprint;
+  final String? joinerIdentityId;
+}
+
+/// Host side: advertise offer + accept unpinned TLS join sessions.
+class JoinCodeHost {
+  JoinCodeHost({
+    required this.localCertificate,
+    required this.discovery,
+    required this.registry,
+    InternetAddress? bindAddress,
+    this.confirmCheckCode,
+    this.onJoinAccepted,
+  }) : bindAddress = bindAddress ?? InternetAddress.anyIPv4;
+
+  final DeviceCertificate localCertificate;
+  final JoinOfferDiscovery discovery;
+  final JoinCodeRegistry registry;
+  final InternetAddress bindAddress;
+
+  /// When set, host UI must confirm [checkCode] before the payload is sent.
+  /// Null auto-confirms (harness / unit tests).
+  final Future<bool> Function(String checkCode)? confirmCheckCode;
+
+  /// Called after both sides confirm, before the payload frame is sent, so
+  /// the host can [MembershipRepository.acceptJoinFromQr].
+  final Future<void> Function(JoinCodeHostAccepted accepted)? onJoinAccepted;
+
+  JoinQrPayload? _payload;
+  List<int>? _inviterPublicKey;
+  SecureServerSocket? _server;
+  StreamSubscription<SecureSocket>? _acceptSub;
+  int? _port;
+
+  int? get port => _port;
+
+  /// Starts listening and advertising [code]'s offer id. [payload] is sent
+  /// only after both sides confirm matching check codes.
+  Future<void> start({
+    required JoinCode code,
+    required JoinQrPayload payload,
+    required List<int> inviterPublicKey,
+  }) async {
+    await stop();
+    _payload = payload;
+    _inviterPublicKey = inviterPublicKey;
+    final context = _joinServerContext(localCertificate);
+    _server = await SecureServerSocket.bind(
+      bindAddress,
+      0,
+      context,
+      // Join-only: trust is the typed code + check-code confirm, not pins.
+      requestClientCertificate: false,
+      requireClientCertificate: false,
+    );
+    _port = _server!.port;
+    await discovery.startAdvertising(
+      JoinOfferAdvertisement(offerId: code.offerId, port: _port!),
+    );
+    // Bonjour / port scanners can open TCP without completing TLS. Those
+    // HandshakeExceptions must not escape into the Flutter test zone or the
+    // inviting app (and company-sync Owner) dies mid-join.
+    _acceptSub = _server!.listen(
+      (socket) {
+        unawaited(_handleClient(socket));
+      },
+      onError: (Object error, StackTrace stack) {
+        if (error is HandshakeException || error is TlsException) {
+          return;
+        }
+        // ignore: avoid_print — join host has no logger seam
+        print('JoinCodeHost accept error: $error');
+      },
+      cancelOnError: false,
+    );
+  }
+
+  Future<void> stop() async {
+    await _acceptSub?.cancel();
+    _acceptSub = null;
+    await _server?.close();
+    _server = null;
+    _port = null;
+    await discovery.stopAdvertising();
+  }
+
+  Future<void> _handleClient(SecureSocket socket) async {
+    final buffer = BytesBuilder(copy: false);
+    final chunks = StreamIterator(socket);
+    try {
+      final hello = await _JoinFrame.receive(chunks, buffer);
+      if (hello['type'] != 'hello') {
+        await socket.close();
+        return;
+      }
+      final joinerNonce = base64Decode(hello['joinerNonce'] as String);
+      final joinerPublicKey = base64Decode(hello['joinerPublicKey'] as String);
+      final joinerDeviceId = hello['joinerDeviceId'] as String? ?? '';
+      final joinerDisplayName =
+          hello['joinerDisplayName'] as String? ?? 'Joining device';
+      final joinerCertFingerprint =
+          hello['joinerCertFingerprint'] as String? ?? '';
+      final joinerIdentityId = hello['joinerIdentityId'] as String?;
+      final inviterNonce = _randomNonce();
+      final inviterPublicKey = _inviterPublicKey!;
+      await _JoinFrame.send(socket, {
+        'type': 'challenge',
+        'inviterNonce': base64Encode(inviterNonce),
+        'inviterPublicKey': base64Encode(inviterPublicKey),
+      });
+
+      final proofMsg = await _JoinFrame.receive(chunks, buffer);
+      if (proofMsg['type'] != 'proof') {
+        await socket.close();
+        return;
+      }
+      final typedCode = proofMsg['code'] as String? ?? '';
+      final proof = base64Decode(proofMsg['proof'] as String);
+      final active = registry.active;
+      if (active == null) {
+        await _JoinFrame.send(socket, {
+          'type': 'error',
+          'error': JoinCodeValidation.mismatch.name,
+        });
+        await socket.close();
+        return;
+      }
+      final validation = active.validateTyped(typedCode);
+      if (validation != JoinCodeValidation.ok) {
+        if (validation == JoinCodeValidation.mismatch) {
+          final rotated = active.recordWrongAttempt();
+          if (rotated) registry.issue();
+        }
+        await _JoinFrame.send(socket, {
+          'type': 'error',
+          'error': validation.name,
+        });
+        await socket.close();
+        return;
+      }
+      final expected = JoinCodeCrypto.codeProof(
+        code: active.raw,
+        inviterNonce: inviterNonce,
+        joinerNonce: joinerNonce,
+      );
+      if (!_bytesEqual(proof, expected)) {
+        final rotated = active.recordWrongAttempt();
+        if (rotated) registry.issue();
+        await _JoinFrame.send(socket, {
+          'type': 'error',
+          'error': JoinCodeValidation.mismatch.name,
+        });
+        await socket.close();
+        return;
+      }
+
+      final check = JoinCodeCrypto.checkCode(
+        code: active.raw,
+        inviterPublicKey: inviterPublicKey,
+        joinerPublicKey: joinerPublicKey,
+        inviterNonce: inviterNonce,
+        joinerNonce: joinerNonce,
+      );
+      await _JoinFrame.send(socket, {'type': 'check', 'checkCode': check});
+
+      final hostOk = confirmCheckCode == null
+          ? true
+          : await confirmCheckCode!(check);
+      if (!hostOk) {
+        active.markUsed();
+        try {
+          await _JoinFrame.send(socket, {'type': 'confirm', 'matched': false});
+        } catch (_) {}
+        await socket.close();
+        return;
+      }
+
+      final confirm = await _JoinFrame.receive(chunks, buffer);
+      if (confirm['type'] != 'confirm' || confirm['matched'] != true) {
+        active.markUsed();
+        await socket.close();
+        return;
+      }
+
+      active.markUsed();
+      final payload = _payload;
+      if (payload == null) {
+        await socket.close();
+        return;
+      }
+      if (joinerDeviceId.isNotEmpty &&
+          joinerCertFingerprint.isNotEmpty &&
+          onJoinAccepted != null) {
+        await onJoinAccepted!(
+          JoinCodeHostAccepted(
+            payload: payload,
+            joinerDeviceId: joinerDeviceId,
+            joinerDisplayName: joinerDisplayName,
+            joinerSigningPublicKey: joinerPublicKey,
+            joinerDeviceCertFingerprint: joinerCertFingerprint,
+            joinerIdentityId: joinerIdentityId,
+          ),
+        );
+      }
+      final encoded = payload.encode();
+      if (syncPayloadContainsPrivateKeyMaterial(encoded) ||
+          JoinQrPayload.containsPrivateKeyMaterial(encoded)) {
+        throw StateError('Join payload must not include private keys.');
+      }
+      await _JoinFrame.send(socket, {
+        'type': 'payload',
+        'payload': jsonDecode(encoded),
+      });
+      await socket.close();
+    } catch (_) {
+      try {
+        await socket.close();
+      } catch (_) {}
+    } finally {
+      await chunks.cancel();
+    }
+  }
+
+  static bool _bytesEqual(List<int> a, List<int> b) {
+    if (a.length != b.length) return false;
+    var diff = 0;
+    for (var i = 0; i < a.length; i++) {
+      diff |= a[i] ^ b[i];
+    }
+    return diff == 0;
+  }
+}
+
+/// Joiner-side LAN lookup: browse offers, prove the code, return check code
+/// and a completer that fetches the same [JoinQrPayload] the QR path uses.
+class SecureJoinCodeLookup implements JoinCodeLookup {
+  SecureJoinCodeLookup({
+    required this.discovery,
+    required this.localCertificate,
+    required this.joinerPublicKey,
+    required this.joinerDeviceId,
+    required this.joinerDisplayName,
+    required this.joinerCertFingerprint,
+    this.joinerIdentityId,
+    this.browseTimeout = const Duration(seconds: 3),
+    this.bindAddress,
+  });
+
+  /// Last per-offer errors from the most recent [lookup] (company-sync debug).
+  static String lastOfferErrors = '';
+
+  final JoinOfferDiscovery discovery;
+  final DeviceCertificate localCertificate;
+  final List<int> joinerPublicKey;
+  final String joinerDeviceId;
+  final String joinerDisplayName;
+  final String joinerCertFingerprint;
+  final String? joinerIdentityId;
+  final Duration browseTimeout;
+  final InternetAddress? bindAddress;
+
+  @override
+  Future<JoinCodeLookupResult> lookup(String typedCode) async {
+    final normalized = JoinCode.normalize(typedCode);
+    if (!JoinCode.isWellFormed(normalized)) {
+      return const JoinCodeLookupResult.failure(JoinCodeLookupError.malformed);
+    }
+
+    // Try each offer as it arrives. Waiting a fixed browseTimeout before any
+    // attempt broke company-sync on IntegrationTestWidgetsFlutterBinding:
+    // Stream.fromIterable events were easy to miss with listen+delay+cancel,
+    // and the joiner always burned the full timeout even for a fixed offer.
+    Object? lastError;
+    final errors = <String>[];
+    var sawOffer = false;
+    try {
+      await for (final offer in discovery.browse().timeout(
+        browseTimeout,
+        onTimeout: (EventSink<DiscoveredJoinOffer> sink) => sink.close(),
+      )) {
+        sawOffer = true;
+        try {
+          lastOfferErrors = '';
+          return await _tryOffer(offer, typedCode, normalized);
+        } catch (e) {
+          lastError = e;
+          errors.add('${offer.host}:${offer.port}=$e');
+        }
+      }
+    } on TimeoutException {
+      // No offers within [browseTimeout].
+    }
+    lastOfferErrors = errors.isEmpty
+        ? (sawOffer ? 'all_offers_failed' : 'no_offers')
+        : errors.join(' | ');
+    // ignore: avoid_print — company-sync / simulator diagnosis
+    print('SecureJoinCodeLookup failed: $lastOfferErrors');
+    if (lastError is _JoinLookupException) {
+      return JoinCodeLookupResult.failure(lastError.error);
+    }
+    return const JoinCodeLookupResult.failure(JoinCodeLookupError.notFound);
+  }
+
+  Future<JoinCodeLookupResult> _tryOffer(
+    DiscoveredJoinOffer offer,
+    String typedCode,
+    String normalized,
+  ) async {
+    // Use the platform default SecurityContext for the joiner. An empty
+    // custom context broke TLS from the iOS Simulator to the macOS host
+    // (handshake never completed); onBadCertificate still accepts the
+    // host's self-signed device certificate.
+    final socket = await SecureSocket.connect(
+      offer.host,
+      offer.port,
+      onBadCertificate: (_) => true,
+      timeout: const Duration(seconds: 5),
+    );
+    final buffer = BytesBuilder(copy: false);
+    final chunks = StreamIterator(socket);
+    Future<Map<String, dynamic>> receiveFrame() =>
+        _JoinFrame.receive(chunks, buffer).timeout(
+          const Duration(seconds: 8),
+          onTimeout: () => throw TimeoutException(
+            'join frame timeout from ${offer.host}:${offer.port}',
+          ),
+        );
+    try {
+      final joinerNonce = _randomNonce();
+      await _JoinFrame.send(socket, {
+        'type': 'hello',
+        'joinerNonce': base64Encode(joinerNonce),
+        'joinerPublicKey': base64Encode(joinerPublicKey),
+        'joinerDeviceId': joinerDeviceId,
+        'joinerDisplayName': joinerDisplayName,
+        'joinerCertFingerprint': joinerCertFingerprint,
+        if (joinerIdentityId != null) 'joinerIdentityId': joinerIdentityId,
+      });
+      final challenge = await receiveFrame();
+      if (challenge['type'] == 'error') {
+        throw _JoinLookupException(_mapError(challenge['error'] as String?));
+      }
+      if (challenge['type'] != 'challenge') {
+        throw const _JoinLookupException(JoinCodeLookupError.notFound);
+      }
+      final inviterNonce = base64Decode(challenge['inviterNonce'] as String);
+      final inviterPublicKey = base64Decode(
+        challenge['inviterPublicKey'] as String,
+      );
+      final proof = JoinCodeCrypto.codeProof(
+        code: normalized,
+        inviterNonce: inviterNonce,
+        joinerNonce: joinerNonce,
+      );
+      await _JoinFrame.send(socket, {
+        'type': 'proof',
+        'code': normalized,
+        'proof': base64Encode(proof),
+      });
+      final checkMsg = await receiveFrame();
+      if (checkMsg['type'] == 'error') {
+        throw _JoinLookupException(_mapError(checkMsg['error'] as String?));
+      }
+      if (checkMsg['type'] != 'check') {
+        throw const _JoinLookupException(JoinCodeLookupError.notFound);
+      }
+      final checkCode = checkMsg['checkCode'] as String;
+      final expected = JoinCodeCrypto.checkCode(
+        code: normalized,
+        inviterPublicKey: inviterPublicKey,
+        joinerPublicKey: joinerPublicKey,
+        inviterNonce: inviterNonce,
+        joinerNonce: joinerNonce,
+      );
+      if (checkCode != expected) {
+        await socket.close();
+        throw const _JoinLookupException(JoinCodeLookupError.notFound);
+      }
+
+      return JoinCodeLookupResult.success(
+        JoinCodeLookupSuccess(
+          checkCode: checkCode,
+          offer: offer,
+          normalizedCode: normalized,
+          completeJoin: () async {
+            await _JoinFrame.send(socket, {'type': 'confirm', 'matched': true});
+            final payloadMsg = await _JoinFrame.receive(chunks, buffer);
+            if (payloadMsg['type'] == 'confirm' &&
+                payloadMsg['matched'] == false) {
+              throw StateError('Host rejected check code.');
+            }
+            if (payloadMsg['type'] != 'payload') {
+              throw StateError('Expected join payload.');
+            }
+            final raw = jsonEncode(payloadMsg['payload']);
+            if (syncPayloadContainsPrivateKeyMaterial(raw) ||
+                JoinQrPayload.containsPrivateKeyMaterial(raw)) {
+              throw StateError('Join payload contained private key material.');
+            }
+            final payload = JoinQrPayload.decode(raw);
+            await socket.close();
+            await chunks.cancel();
+            return payload;
+          },
+          cancelJoin: () async {
+            try {
+              await _JoinFrame.send(socket, {
+                'type': 'confirm',
+                'matched': false,
+              });
+            } catch (_) {}
+            try {
+              await socket.close();
+            } catch (_) {}
+            await chunks.cancel();
+          },
+        ),
+      );
+    } catch (e) {
+      try {
+        await socket.close();
+      } catch (_) {}
+      await chunks.cancel();
+      rethrow;
+    }
+  }
+
+  JoinCodeLookupError _mapError(String? name) {
+    return switch (name) {
+      'expired' => JoinCodeLookupError.expired,
+      'alreadyUsed' => JoinCodeLookupError.alreadyUsed,
+      'mismatch' || 'malformed' => JoinCodeLookupError.notFound,
+      _ => JoinCodeLookupError.notFound,
+    };
+  }
+}
+
+class _JoinLookupException implements Exception {
+  const _JoinLookupException(this.error);
+  final JoinCodeLookupError error;
+}

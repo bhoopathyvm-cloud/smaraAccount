@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "കണക്കുകൾ-ന് ഒരു ഉടമ മാത്രമേയുള്ളൂ. മറ്റൊരു ലിങ്ക് ചെയ്‌ത ഉപകരണത്തെ ഉടമയാക്കുന്നത് പരിഗണിക്കുക.",
   "settingsLinkedDevicesSyncNow": "ഇപ്പോൾ സമന്വയിപ്പിക്കുക",
   "settingsLinkedDevicesSyncNowBusy": "സമന്വയിപ്പിക്കുന്നു…",
-  "translateCategoryWithAi": "AI ഉപയോഗിച്ച് വിവർത്തനം ചെയ്യുക"
+  "translateCategoryWithAi": "AI ഉപയോഗിച്ച് വിവർത്തനം ചെയ്യുക",
+  "settingsLinkedDevicesCodesDontMatch": "പൊരുത്തപ്പെടുന്നില്ല",
+  "settingsLinkedDevicesConnectByAddress": "വിലാസം വഴി ബന്ധിപ്പിക്കുക",
+  "settingsLinkedDevicesConnectByAddressBody": "കണ്ടെത്തൽ ലിങ്ക് ചെയ്ത ഉപകരണം കണ്ടെത്താത്തപ്പോൾ, അതിന്റെ LAN വിലാസവും പോർട്ടും നൽകുക.",
+  "settingsLinkedDevicesConnectByAddressTitle": "വിലാസം വഴി ബന്ധിപ്പിക്കുക",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "പകരം കോഡ് നൽകുക",
+  "settingsLinkedDevicesEnterCodeSubmit": "ഉപകരണം കണ്ടെത്തുക",
+  "settingsLinkedDevicesEnterCodeTitle": "ചേരൽ കോഡ് നൽകുക",
+  "settingsLinkedDevicesJoinCodeExpired": "ഈ കോഡ് കാലഹരണപ്പെട്ടു — പുതിയത് ചോദിക്കുക",
+  "settingsLinkedDevicesJoinCodeLabel": "ചേരൽ കോഡ്",
+  "settingsLinkedDevicesJoinCodeNotFound": "ഈ Wi-Fi-യിൽ ഈ കോഡുള്ള ഉപകരണമില്ല",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} ബാക്കി",
+  "settingsLinkedDevicesJoinCodeTryAgain": "വീണ്ടും ശ്രമിക്കുക",
+  "settingsLinkedDevicesJoinCodeUsed": "ഈ കോഡ് ഇതിനകം ഉപയോഗിച്ചു. പുതിയത് ചോദിക്കുക.",
+  "settingsLinkedDevicesJoinCheckCode": "പരിശോധന കോഡ് — മറ്റേ ഉപകരണത്തിൽ പൊരുത്തപ്പെടുന്നുണ്ടെന്ന് ഉറപ്പാക്കുക",
+  "settingsLinkedDevicesScanQr": "ചേരൽ QR സ്കാൻ ചെയ്യുക",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "പരിശോധന കോഡ് സ്ഥിരീകരിക്കുക",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "ഈ കോഡ് മറ്റേ ഉപകരണത്തിലേതുമായി പൊരുത്തപ്പെടുന്നുണ്ടോ?",
+  "settingsLinkedDevicesCodesMatch": "കോഡുകൾ പൊരുത്തപ്പെടുന്നു",
+  "settingsLinkedDevicesJoinExpired": "ഈ ചേരൽ QR കാലഹരണപ്പെട്ടു. പുതിയ കോഡ് ചോദിക്കുക.",
+  "settingsLinkedDevicesJoinReused": "ഈ ചേരൽ QR ഇതിനകം ഉപയോഗിച്ചു. പുതിയ കോഡ് ചോദിക്കുക.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "ഹോസ്റ്റ്",
+  "settingsLinkedDevicesPort": "പോർട്ട്",
+  "settingsLinkedDevicesPeer": "ഉപകരണം",
+  "settingsLinkedDevicesSaveAddress": "വിലാസം സംരക്ഷിക്കുക",
+  "claimsPersonalLimitsTitle": "ക്ലെയിം പരിധികൾ",
+  "claimsPersonalLimitsTitleFor": "{name}-ന്റെ ക്ലെയിം പരിധികൾ",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "{limit} പരിധിക്ക് മുകളിൽ",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "വ്യക്തിഗത പരിധികൾ സജ്ജീകരിച്ചിട്ടില്ല.",
+  "claimsClearPersonalLimit": "പരിധി മായ്ക്കുക"
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,24 +11,40 @@ import 'data/repositories/account_repository.dart';
 import 'data/repositories/books_copy_repository.dart';
 import 'data/repositories/books_set_repository.dart';
 import 'data/repositories/category_repository.dart';
+import 'data/repositories/identity_id_source.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/membership_repository.dart';
+import 'data/repositories/metadata_outbox.dart';
+import 'data/repositories/personal_claim_limit_repository.dart';
 import 'data/repositories/claim_person_service.dart';
 import 'data/repositories/claim_receipt_store.dart';
 import 'data/repositories/claim_repository.dart';
+import 'data/claims/company_sync_claim_receipt_picker.dart';
 import 'data/claims/platform_claim_receipt_picker.dart';
 import 'domain/claims/claim_receipt_picker.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
+import 'data/repositories/sync_merge_repository.dart';
 import 'data/books_set/books_set_paths.dart';
+import 'domain/crypto/secure_key_storage.dart';
 import 'domain/crypto/signing_key_service.dart';
+import 'domain/linked_devices/device_certificate_store.dart';
+import 'domain/linked_devices/join_offer_discovery.dart';
 import 'domain/linked_devices/local_network_permission.dart';
+import 'domain/linked_devices/local_network_reachability.dart';
+import 'domain/linked_devices/persisting_device_certificate_store.dart';
+import 'domain/peer_sync/bonsoir_peer_discovery.dart';
+import 'domain/peer_sync/direct_address_peer_discovery.dart';
+import 'domain/peer_sync/peer_discovery.dart';
+import 'domain/peer_sync/peer_sync_service.dart';
+import 'domain/peer_sync/sync_transport.dart';
+import 'domain/peer_sync/tls_sync_transport.dart';
 import 'l10n/l10n.dart';
 import 'domain/lock/app_lock_service.dart';
 import 'domain/lock/biometric_authenticator.dart';
@@ -76,6 +94,10 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, LedgerChainStore>(
           update: (_, db, _) => LedgerChainStore(db),
         ),
+        Provider<IdentityIdSource>(create: (_) => IdentityIdSource()),
+        ProxyProvider<AppDatabase, MetadataOutbox>(
+          update: (_, db, _) => MetadataOutbox(database: db),
+        ),
         ProxyProvider4<
           AppDatabase,
           AccountChartReader,
@@ -90,24 +112,34 @@ class SmaraAccountingApp extends StatelessWidget {
             signingKeyService: keys,
           ),
         ),
-        ProxyProvider3<
+        ProxyProvider5<
           AppDatabase,
           LedgerRepository,
           AccountChartReader,
+          MetadataOutbox,
+          IdentityIdSource,
           AccountRepository
         >(
-          update: (_, db, ledgerRepository, chart, _) => AccountRepository(
+          update: (_, db, ledgerRepository, chart, outbox, identitySource, _) =>
+              AccountRepository(
+                database: db,
+                ledgerRepository: ledgerRepository,
+                chart: chart,
+                metadataOutbox: outbox,
+                currentIdentityId: identitySource.current,
+              ),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          MetadataOutbox,
+          IdentityIdSource,
+          PayeeRepository
+        >(
+          update: (_, db, outbox, identitySource, _) => PayeeRepository(
             database: db,
-            ledgerRepository: ledgerRepository,
-            chart: chart,
+            metadataOutbox: outbox,
+            currentIdentityId: identitySource.current,
           ),
-        ),
-        ProxyProvider2<AppDatabase, AccountChartReader, CategoryRepository>(
-          update: (_, db, chart, _) =>
-              CategoryRepository(database: db, chart: chart),
-        ),
-        ProxyProvider<AppDatabase, PayeeRepository>(
-          update: (_, db, _) => PayeeRepository(database: db),
         ),
         ProxyProvider4<
           AppDatabase,
@@ -116,13 +148,43 @@ class SmaraAccountingApp extends StatelessWidget {
           SigningKeyService,
           IdentityRepository
         >(
-          update: (_, db, accountRepository, chain, keys, _) =>
-              IdentityRepository(
+          update: (context, db, accountRepository, chain, keys, _) {
+            final identity = IdentityRepository(
+              database: db,
+              accountRepository: accountRepository,
+              chain: chain,
+              signingKeyService: keys,
+            );
+            context.read<IdentityIdSource>().bind(
+              () async => (await identity.currentIdentity())?.identityId,
+            );
+            return identity;
+          },
+        ),
+        ProxyProvider4<
+          AppDatabase,
+          AccountChartReader,
+          MetadataOutbox,
+          IdentityIdSource,
+          CategoryRepository
+        >(
+          update: (_, db, chart, outbox, identitySource, _) =>
+              CategoryRepository(
                 database: db,
-                accountRepository: accountRepository,
-                chain: chain,
-                signingKeyService: keys,
+                chart: chart,
+                metadataOutbox: outbox,
+                currentIdentityId: identitySource.current,
               ),
+        ),
+        ProxyProvider2<
+          AppDatabase,
+          MetadataOutbox,
+          PersonalClaimLimitRepository
+        >(
+          update: (_, db, outbox, _) => PersonalClaimLimitRepository(
+            database: db,
+            metadataOutbox: outbox,
+          ),
         ),
         ProxyProvider3<
           AppDatabase,
@@ -136,9 +198,52 @@ class SmaraAccountingApp extends StatelessWidget {
             signingKeyService: keys,
           ),
         ),
-        ProxyProvider2<AppDatabase, IdentityRepository, MembershipRepository>(
-          update: (_, db, identity, _) =>
-              MembershipRepository(database: db, identityRepository: identity),
+        Provider<LocalNetworkReachability>(
+          create: (_) => FakeLocalNetworkReachability(onLocalNetwork: true),
+        ),
+        Provider<DeviceCertificateStore>(
+          create: (_) => PersistingDeviceCertificateStore(
+            secureStorage: FlutterSecureKeyStorage(),
+          ),
+        ),
+        Provider<LocalNetworkPermission>(
+          create: (_) => FakeLocalNetworkPermission(granted: true),
+        ),
+        Provider<JoinOfferDiscovery>(
+          create: (_) => BonsoirJoinOfferDiscovery(),
+        ),
+        Provider<SyncTransport>(
+          create: (_) => TlsSyncTransport(),
+          dispose: (_, transport) => transport.stopListening(),
+        ),
+        ProxyProvider<LocalNetworkPermission, PeerDiscovery>(
+          update: (_, permission, previous) {
+            if (previous != null) return previous;
+            return PermissionGatedPeerDiscovery(
+              inner: CompositePeerDiscovery(
+                primary: BonsoirPeerDiscovery(),
+                direct: DirectAddressPeerDiscovery(),
+              ),
+              permission: permission,
+            );
+          },
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          IdentityRepository,
+          DeviceCertificateStore,
+          MembershipRepository
+        >(
+          update: (context, db, identity, certs, _) => MembershipRepository(
+            database: db,
+            identityRepository: identity,
+            certificateStore: certs,
+            reachability: context.read<LocalNetworkReachability>(),
+          ),
+        ),
+        ProxyProvider2<AppDatabase, SigningKeyService, SyncMergeRepository>(
+          update: (_, db, keys, _) =>
+              SyncMergeRepository(database: db, signingKeyService: keys),
         ),
         ProxyProvider2<AppDatabase, ActiveBooksSession, ClaimReceiptStore>(
           update: (_, db, session, _) {
@@ -170,7 +275,13 @@ class SmaraAccountingApp extends StatelessWidget {
           ),
         ),
         Provider<ClaimReceiptPicker>(
-          create: (_) => PlatformClaimReceiptPicker(),
+          create: (_) {
+            const companySyncTest = bool.fromEnvironment('COMPANY_SYNC_TEST');
+            if (companySyncTest) {
+              return CompanySyncClaimReceiptPicker();
+            }
+            return PlatformClaimReceiptPicker();
+          },
         ),
         ProxyProvider3<
           MembershipRepository,
@@ -184,15 +295,55 @@ class SmaraAccountingApp extends StatelessWidget {
             database: db,
           ),
         ),
-        Provider<LocalNetworkPermission>(
-          create: (_) => FakeLocalNetworkPermission(granted: true),
-        ),
         ProxyProvider<ActiveBooksSession, BooksSetStore>(
           update: (_, session, _) => session.store,
         ),
-        ProxyProvider<ActiveBooksSession, SettingsRepository>(
-          update: (_, session, _) =>
-              SettingsRepository(booksSetStore: session.store),
+        ProxyProvider3<
+          BooksSetStore,
+          MetadataOutbox,
+          IdentityIdSource,
+          SettingsRepository
+        >(
+          update: (_, store, outbox, identitySource, _) => SettingsRepository(
+            booksSetStore: store,
+            metadataOutbox: outbox,
+            currentIdentityId: identitySource.current,
+          ),
+        ),
+        ProxyProvider6<
+          SyncTransport,
+          PeerDiscovery,
+          MembershipRepository,
+          SyncMergeRepository,
+          DeviceCertificateStore,
+          SettingsRepository,
+          PeerSyncService
+        >(
+          update:
+              (
+                context,
+                transport,
+                discovery,
+                membership,
+                merge,
+                certs,
+                settings,
+                previous,
+              ) {
+                unawaited(previous?.stop());
+                return PeerSyncService(
+                  transport: transport,
+                  discovery: discovery,
+                  membership: membership,
+                  merge: merge,
+                  certificates: certs,
+                  settings: settings,
+                  reachability: context.read<LocalNetworkReachability>(),
+                  activeBooksSetId: () =>
+                      context.read<ActiveBooksSession>().activeBooksSetId(),
+                );
+              },
+          dispose: (_, service) => service.stop(),
         ),
         ProxyProvider4<
           AppDatabase,
@@ -221,15 +372,20 @@ class SmaraAccountingApp extends StatelessWidget {
             chart: chart,
           ),
         ),
-        ProxyProvider2<
+        ProxyProvider4<
           AppDatabase,
           LedgerRepository,
+          MetadataOutbox,
+          IdentityIdSource,
           RecurringTemplateRepository
         >(
-          update: (_, db, ledgerRepository, _) => RecurringTemplateRepository(
-            database: db,
-            ledgerRepository: ledgerRepository,
-          ),
+          update: (_, db, ledgerRepository, outbox, identitySource, _) =>
+              RecurringTemplateRepository(
+                database: db,
+                ledgerRepository: ledgerRepository,
+                metadataOutbox: outbox,
+                currentIdentityId: identitySource.current,
+              ),
         ),
         Provider<AppLockService>(create: (_) => AppLockService()),
         Provider<BiometricAuthenticator>(
@@ -249,11 +405,13 @@ class SmaraAccountingApp extends StatelessWidget {
             settingsRepository: context.read<SettingsRepository>(),
           ),
         ),
-        ProxyProvider4<
+        ProxyProvider6<
           AppDatabase,
           LedgerRepository,
           AccountRepository,
           CategoryRepository,
+          MetadataOutbox,
+          IdentityIdSource,
           StatementImportRepository
         >(
           update:
@@ -263,12 +421,16 @@ class SmaraAccountingApp extends StatelessWidget {
                 ledgerRepository,
                 accountRepository,
                 categoryRepository,
+                outbox,
+                identitySource,
                 _,
               ) => StatementImportRepository(
                 database: db,
                 ledgerRepository: ledgerRepository,
                 accountRepository: accountRepository,
                 categoryRepository: categoryRepository,
+                metadataOutbox: outbox,
+                currentIdentityId: identitySource.current,
               ),
         ),
         ChangeNotifierProxyProvider4<
@@ -534,7 +696,8 @@ class _AppRouterHost extends StatefulWidget {
   State<_AppRouterHost> createState() => _AppRouterHostState();
 }
 
-class _AppRouterHostState extends State<_AppRouterHost> {
+class _AppRouterHostState extends State<_AppRouterHost>
+    with WidgetsBindingObserver {
   late final AppLockController _appLockController = context
       .read<AppLockController>();
   GoRouter? _router;
@@ -554,15 +717,28 @@ class _AppRouterHostState extends State<_AppRouterHost> {
       context.read<SettingsRepository>(),
       _appLockController,
       membershipRepository: context.read<MembershipRepository>(),
+      peerSyncService: context.read<PeerSyncService>(),
     );
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _booksGeneration = context.read<ActiveBooksSession>().generation;
     _router = _buildRouter();
     _migrateKeyAccessibilityIfNeeded();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(context.read<PeerSyncService>().startForeground());
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(context.read<PeerSyncService>().onAppResumed());
+    }
   }
 
   Future<void> _migrateKeyAccessibilityIfNeeded() async {
@@ -576,6 +752,7 @@ class _AppRouterHostState extends State<_AppRouterHost> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _router?.dispose();
     super.dispose();
   }

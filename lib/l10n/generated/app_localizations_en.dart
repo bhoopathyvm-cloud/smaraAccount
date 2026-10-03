@@ -1017,6 +1017,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Check code — confirm it matches on the other device';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Scan join QR';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => 'Confirm check code';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Does this code match the one on the other device?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Codes match';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'They don\'t match';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'This join QR has expired. Ask for a new code.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'This join QR was already used. Ask for a new code.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Join code';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds left';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Enter code instead';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Enter join code';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Find device';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'This code has expired — ask for a new one';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'This code was already used. Ask for a new one.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'No device with this code on this Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Try again';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Connect by address';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'Connect by address';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'When discovery cannot find a linked device, enter its LAN address and port.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Host';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Port';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Device';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Save address';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'A device was added: $name';
   }
@@ -2191,6 +2276,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Hint: at most $amount per $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Claim limits';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Claim limits for $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Above the $limit limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'No personal limits set.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Clear limit';
 
   @override
   String get claimsNoClaimsYet => 'No claims yet.';

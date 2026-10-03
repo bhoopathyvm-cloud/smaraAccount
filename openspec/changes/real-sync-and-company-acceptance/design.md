@@ -98,4 +98,8 @@ See proposal.md, "Why". What exists today:
 
 ## Open Questions
 
-- **Discovery plugin:** `bonsoir` vs `nsd`. Pick the one that passes the macOS ↔ iOS simulator ↔ vmnet Android spike in task 2.1. This doesn't change the specs or tasks.
+- **Discovery plugin:** Chose `bonsoir` (v7 sealed discovery events). Advertise
+  and browse of `_smara._tcp` work in unit tests via `BonsoirPeerDiscovery`;
+  Android emulator / simulator Wi-Fi verification is covered by the company
+  acceptance run (task 7.x / 8.x) and linked-devices 11.3. `nsd` was not
+  needed once Bonsoir 7's API was adapted.

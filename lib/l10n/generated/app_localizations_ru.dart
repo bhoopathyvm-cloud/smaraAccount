@@ -1022,6 +1022,93 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Синхронизация…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Проверочный код — подтвердите, что он совпадает на другом устройстве';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Сканировать QR присоединения';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Подтвердить проверочный код';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Совпадает ли этот код с кодом на другом устройстве?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Коды совпадают';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Не совпадают';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Срок этого QR присоединения истёк. Запросите новый код.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Этот QR присоединения уже использован. Запросите новый код.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Код присоединения';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return 'Осталось $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Ввести код вместо этого';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Ввести код присоединения';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Найти устройство';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Срок этого кода истёк — запросите новый';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Этот код уже использован. Запросите новый.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Нет устройства с этим кодом в этой сети Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Повторить';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Подключиться по адресу';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Подключиться по адресу';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Если обнаружение не находит связанное устройство, введите его LAN-адрес и порт.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Хост';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Порт';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Устройство';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Сохранить адрес';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Добавлено устройство: $name';
   }
@@ -2201,6 +2288,48 @@ class AppLocalizationsRu extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Подсказка: не больше $amount за $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Лимиты заявок';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Лимиты заявок для $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Выше лимита $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Личные лимиты не заданы.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Очистить лимит';
 
   @override
   String get claimsNoClaimsYet => 'Заявок пока нет.';

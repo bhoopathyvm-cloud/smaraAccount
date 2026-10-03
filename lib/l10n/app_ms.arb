@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Buku ini hanya mempunyai satu Pemilik. Pertimbangkan menjadikan peranti dipaut lain sebagai Pemilik juga.",
   "settingsLinkedDevicesSyncNow": "Segerakkan sekarang",
   "settingsLinkedDevicesSyncNowBusy": "Sedang mengejar…",
-  "translateCategoryWithAi": "Terjemah dengan AI"
+  "translateCategoryWithAi": "Terjemah dengan AI",
+  "settingsLinkedDevicesCodesDontMatch": "Tidak sepadan",
+  "settingsLinkedDevicesConnectByAddress": "Sambung melalui alamat",
+  "settingsLinkedDevicesConnectByAddressBody": "Apabila penemuan tidak menemui peranti dipautkan, masukkan alamat LAN dan port.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Sambung melalui alamat",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Masukkan kod sebaliknya",
+  "settingsLinkedDevicesEnterCodeSubmit": "Cari peranti",
+  "settingsLinkedDevicesEnterCodeTitle": "Masukkan kod sertai",
+  "settingsLinkedDevicesJoinCodeExpired": "Kod ini telah tamat tempoh — minta yang baharu",
+  "settingsLinkedDevicesJoinCodeLabel": "Kod sertai",
+  "settingsLinkedDevicesJoinCodeNotFound": "Tiada peranti dengan kod ini pada Wi-Fi ini",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} lagi",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Cuba lagi",
+  "settingsLinkedDevicesJoinCodeUsed": "Kod ini sudah digunakan. Minta yang baharu.",
+  "settingsLinkedDevicesJoinCheckCode": "Kod semak — sahkan ia sepadan pada peranti lain",
+  "settingsLinkedDevicesScanQr": "Imbas QR sertai",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Sahkan kod semak",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Adakah kod ini sepadan dengan pada peranti lain?",
+  "settingsLinkedDevicesCodesMatch": "Kod sepadan",
+  "settingsLinkedDevicesJoinExpired": "QR sertai ini telah tamat tempoh. Minta kod baharu.",
+  "settingsLinkedDevicesJoinReused": "QR sertai ini sudah digunakan. Minta kod baharu.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Hos",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Peranti",
+  "settingsLinkedDevicesSaveAddress": "Simpan alamat",
+  "claimsPersonalLimitsTitle": "Had tuntutan",
+  "claimsPersonalLimitsTitleFor": "Had tuntutan untuk {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "Melebihi had {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Tiada had peribadi ditetapkan.",
+  "claimsClearPersonalLimit": "Kosongkan had"
 }

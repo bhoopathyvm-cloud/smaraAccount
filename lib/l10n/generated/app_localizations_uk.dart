@@ -1025,6 +1025,94 @@ class AppLocalizationsUk extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Наздоганяємо…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Код перевірки — підтвердіть, що він збігається на іншому пристрої';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Сканувати QR приєднання';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Підтвердити код перевірки';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Чи збігається цей код з кодом на іншому пристрої?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Коди збігаються';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Не збігаються';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Термін цього QR приєднання минув. Попросіть новий код.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Цей QR приєднання вже використано. Попросіть новий код.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Код приєднання';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return 'Залишилось $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'Ввести код замість цього';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Ввести код приєднання';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Знайти пристрій';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Термін цього коду минув — попросіть новий';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Цей код уже використано. Попросіть новий.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Немає пристрою з цим кодом у цій мережі Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Спробувати знову';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Підключитися за адресою';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Підключитися за адресою';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Якщо виявлення не знаходить повязаний пристрій, введіть його LAN-адресу та порт.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Хост';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Порт';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Пристрій';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Зберегти адресу';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Додано пристрій: $name';
   }
@@ -2204,6 +2292,48 @@ class AppLocalizationsUk extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Підказка: щонайбільше $amount за $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Ліміти заявок';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Ліміти заявок для $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Вище ліміту $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Особисті ліміти не задано.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Очистити ліміт';
 
   @override
   String get claimsNoClaimsYet => 'Заявок ще немає.';

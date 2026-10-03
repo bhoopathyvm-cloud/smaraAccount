@@ -1,12 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../data/books_set/books_set_paths.dart';
 import '../../../../data/repositories/claim_person_service.dart';
 import '../../../../data/repositories/claim_repository.dart';
+import '../../../../data/repositories/identity_repository.dart';
 import '../../../../data/repositories/membership_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/app_error.dart';
+import '../../../../domain/linked_devices/device_certificate_store.dart';
+import '../../../../domain/linked_devices/join_code.dart';
+import '../../../../domain/linked_devices/join_code_lookup.dart';
+import '../../../../domain/linked_devices/join_code_session.dart';
+import '../../../../domain/linked_devices/join_offer_discovery.dart';
 import '../../../../domain/linked_devices/local_network_permission.dart';
 import '../../../../domain/models/join_qr_payload.dart';
 import '../../../../domain/models/join_request.dart';
@@ -24,15 +34,24 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     ClaimPersonService? claimPersonService,
     ClaimRepository? claimRepository,
     LocalNetworkPermission? localNetworkPermission,
+    JoinCodeLookup? joinCodeLookup,
+    DeviceCertificateStore? deviceCertificateStore,
+    IdentityRepository? identityRepository,
+    JoinOfferDiscovery? joinOfferDiscovery,
     Uuid? uuid,
     this.booksGeneration = 0,
     this.syncNowAction,
+    this.connectByAddressAction,
   }) : _membership = membershipRepository,
        _settings = settingsRepository,
        _booksSetStore = booksSetStore,
        _people = claimPersonService,
        _claims = claimRepository,
        _permission = localNetworkPermission ?? FakeLocalNetworkPermission(),
+       _joinCodeLookup = joinCodeLookup ?? FakeJoinCodeLookup(),
+       _certs = deviceCertificateStore,
+       _identity = identityRepository,
+       _joinDiscovery = joinOfferDiscovery,
        _uuid = uuid ?? const Uuid() {
     _load();
   }
@@ -43,12 +62,27 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final ClaimPersonService? _people;
   final ClaimRepository? _claims;
   final LocalNetworkPermission _permission;
+  final JoinCodeLookup _joinCodeLookup;
+  final DeviceCertificateStore? _certs;
+  final IdentityRepository? _identity;
+  final JoinOfferDiscovery? _joinDiscovery;
+  final JoinCodeRegistry _joinCodes = JoinCodeRegistry();
   final Uuid _uuid;
   final int booksGeneration;
 
   /// Optional Sync now hook (PeerSyncSession). Null means the button is a
   /// no-op success until the session is wired in DI.
   final Future<void> Function()? syncNowAction;
+
+  /// Optional Connect-by-address hook when mDNS is blocked (real-sync 2.3).
+  final Future<void> Function({
+    required String peerDeviceId,
+    required String host,
+    required int port,
+  })?
+  connectByAddressAction;
+
+  JoinCodeHost? _joinHost;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -86,6 +120,23 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   JoinQrPayload? _activeJoinQr;
   JoinQrPayload? get activeJoinQr => _activeJoinQr;
 
+  JoinCode? get activeJoinCode => _joinCodes.active;
+
+  /// Check code awaiting confirm after a successful join-code lookup.
+  JoinCodeLookupSuccess? _pendingJoinCodeSuccess;
+  JoinCodeLookupSuccess? get pendingJoinCodeSuccess => _pendingJoinCodeSuccess;
+
+  /// Host-side join-by-code check code awaiting "Codes match".
+  String? _pendingHostCheckCode;
+  String? get pendingHostCheckCode => _pendingHostCheckCode;
+  Completer<bool>? _hostCheckCompleter;
+
+  /// Listening port of the active join-by-code host, when advertising.
+  int? get activeJoinOfferPort => _joinHost?.port;
+
+  /// Offer id of the active join code (for company-sync direct connect).
+  String? get activeJoinOfferId => _joinCodes.active?.offerId;
+
   bool _disposed = false;
 
   Future<void> _load() async {
@@ -117,6 +168,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
           local != null && await _membership.canAddDevices(_localDeviceId!);
       _canManageMembership =
           local != null && MembershipRoleGates.canManageMembership(local.roles);
+      _canApproveClaims =
+          local != null && MembershipRoleGates.canApproveClaims(local.roles);
       _suggestSecondOwner = await _membership.shouldSuggestSecondOwner();
       clearFailure();
     } catch (e) {
@@ -173,6 +226,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
         hostDisplayName: displayName,
         booksSetId: booksSetId,
       );
+      final code = _joinCodes.issue();
+      await _startJoinHost(code: code, payload: _activeJoinQr!);
       clearFailure();
       return _activeJoinQr;
     } catch (e) {
@@ -184,10 +239,14 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  bool _canApproveClaims = false;
+  bool get canApproveClaims => _canApproveClaims;
+
   /// Builds an "Add a person" QR (default Claimant). Requires
   /// [ClaimPersonService].
   Future<JoinQrPayload?> startAddPerson({
     required String personDisplayName,
+    Set<LinkedDeviceRole> roles = const {LinkedDeviceRole.claimant},
   }) async {
     if (_isBusy || _localDeviceId == null || _people == null) return null;
     final name = personDisplayName.trim();
@@ -212,7 +271,10 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
         hostDisplayName: displayName,
         booksSetId: booksSetId,
         personDisplayName: name,
+        roles: roles,
       );
+      final code = _joinCodes.issue();
+      await _startJoinHost(code: code, payload: _activeJoinQr!);
       clearFailure();
       return _activeJoinQr;
     } catch (e) {
@@ -224,9 +286,281 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  Future<void> _startJoinHost({
+    required JoinCode code,
+    required JoinQrPayload payload,
+  }) async {
+    final certs = _certs;
+    final identityRepo = _identity;
+    final discovery = _joinDiscovery;
+    if (certs == null || identityRepo == null || discovery == null) {
+      // Widget tests / fakes: join code is shown but LAN host is skipped.
+      return;
+    }
+    final identity = await identityRepo.currentIdentity();
+    if (identity == null) return;
+    final localCert = await certs.localCertificate(deviceId: _localDeviceId!);
+    await _joinHost?.stop();
+    _joinHost = JoinCodeHost(
+      localCertificate: localCert,
+      discovery: discovery,
+      registry: _joinCodes,
+      confirmCheckCode: (check) async {
+        if (_disposed) return false;
+        _pendingHostCheckCode = check;
+        _hostCheckCompleter = Completer<bool>();
+        notifyListeners();
+        return _hostCheckCompleter!.future;
+      },
+      onJoinAccepted: (accepted) async {
+        if (_localDeviceId == null) return;
+        final people = _people;
+        if (people != null && accepted.payload.isPersonJoin) {
+          // Add-a-person must create the Claimant's Owed-to account.
+          await people.acceptAddPerson(
+            actorDeviceId: _localDeviceId!,
+            payload: accepted.payload,
+            joinerDeviceId: accepted.joinerDeviceId,
+            joinerDisplayName: accepted.joinerDisplayName,
+            joinerSigningPublicKey: accepted.joinerSigningPublicKey,
+            joinerDeviceCertFingerprint: accepted.joinerDeviceCertFingerprint,
+            joinerIdentityId: accepted.joinerIdentityId,
+          );
+        } else {
+          await _membership.acceptJoinFromQr(
+            actorDeviceId: _localDeviceId!,
+            payload: accepted.payload,
+            joinerDeviceId: accepted.joinerDeviceId,
+            joinerDisplayName: accepted.joinerDisplayName,
+            joinerSigningPublicKey: accepted.joinerSigningPublicKey,
+            joinerDeviceCertFingerprint: accepted.joinerDeviceCertFingerprint,
+            joinerIdentityId: accepted.joinerIdentityId,
+          );
+        }
+        await _load();
+      },
+    );
+    await _joinHost!.start(
+      code: code,
+      payload: payload,
+      inviterPublicKey: identity.publicKey,
+    );
+    await _writeCompanySyncJoinOffer(code);
+  }
+
+  Future<void> _writeCompanySyncJoinOffer(JoinCode code) async {
+    const companySyncTest = bool.fromEnvironment('COMPANY_SYNC_TEST');
+    const artifactsRoot = String.fromEnvironment('COMPANY_SYNC_ARTIFACTS');
+    const conductorUrl = String.fromEnvironment('COMPANY_SYNC_CONDUCTOR');
+    if (!companySyncTest) return;
+    final port = _joinHost?.port;
+    if (port == null) return;
+    try {
+      // Prefer loopback first (iOS Simulator → macOS); then LAN IPv4 for
+      // Android emulators / physical devices on the same Wi-Fi.
+      final hosts = <String>['127.0.0.1'];
+      for (final iface in await NetworkInterface.list(
+        type: InternetAddressType.IPv4,
+        includeLinkLocal: false,
+      )) {
+        for (final addr in iface.addresses) {
+          if (!addr.isLoopback && !hosts.contains(addr.address)) {
+            hosts.add(addr.address);
+          }
+        }
+      }
+      final payload = jsonEncode({
+        'hosts': hosts,
+        'host': '127.0.0.1',
+        'port': port,
+        'offerId': code.offerId,
+      });
+      if (artifactsRoot.isNotEmpty) {
+        final dir = Directory('$artifactsRoot/conductor');
+        if (!dir.existsSync()) dir.createSync(recursive: true);
+        await File('${dir.path}/join_offer.json').writeAsString(payload);
+      }
+      // Conductor HTTP is reachable from the iOS Simulator via 127.0.0.1 even
+      // when the sim cannot read the Mac artifacts directory.
+      if (conductorUrl.isNotEmpty) {
+        final client = HttpClient();
+        try {
+          final req = await client.postUrl(Uri.parse('$conductorUrl/value'));
+          req.headers.contentType = ContentType.json;
+          req.write(jsonEncode({'key': 'join_offer', 'value': payload}));
+          await (await req.close()).drain<void>();
+        } finally {
+          client.close(force: true);
+        }
+      }
+    } catch (_) {}
+  }
+
   void clearActiveJoinQr() {
+    unawaited(_joinHost?.stop());
+    _joinHost = null;
+    _pendingHostCheckCode = null;
+    if (_hostCheckCompleter != null && !_hostCheckCompleter!.isCompleted) {
+      _hostCheckCompleter!.complete(false);
+    }
+    _hostCheckCompleter = null;
     _activeJoinQr = null;
+    _joinCodes.clear();
+    _pendingJoinCodeSuccess = null;
     notifyListeners();
+  }
+
+  /// Host/joiner cancelled because check codes did not match.
+  void cancelJoinBecauseCodesDontMatch() {
+    final pending = _pendingJoinCodeSuccess;
+    final cancel = pending?.cancelJoin;
+    if (cancel != null) {
+      cancel();
+    }
+    if (_hostCheckCompleter != null && !_hostCheckCompleter!.isCompleted) {
+      _hostCheckCompleter!.complete(false);
+    }
+    _hostCheckCompleter = null;
+    _pendingHostCheckCode = null;
+    final active = _joinCodes.active;
+    active?.markUsed();
+    unawaited(_joinHost?.stop());
+    _joinHost = null;
+    _activeJoinQr = null;
+    _pendingJoinCodeSuccess = null;
+    notifyListeners();
+  }
+
+  /// Host confirms the join-by-code check code matches the peer.
+  void confirmHostCheckCodeMatch() {
+    if (_hostCheckCompleter != null && !_hostCheckCompleter!.isCompleted) {
+      _hostCheckCompleter!.complete(true);
+    }
+    _pendingHostCheckCode = null;
+    notifyListeners();
+  }
+
+  /// Looks up a typed join code on the LAN (task 4.3). On success stores
+  /// [pendingJoinCodeSuccess] for the check-code confirm step.
+  Future<JoinCodeLookupResult>? _inFlightJoinLookup;
+
+  Future<JoinCodeLookupResult> lookupJoinCode(String typed) async {
+    final inFlight = _inFlightJoinLookup;
+    if (inFlight != null) {
+      // Coalesce re-entrant submits (tap retries) onto the same lookup so a
+      // busy collision cannot surface a false "not found".
+      return inFlight;
+    }
+    if (_isBusy) {
+      return const JoinCodeLookupResult.failure(JoinCodeLookupError.notFound);
+    }
+    _isBusy = true;
+    notifyListeners();
+    final future = () async {
+      try {
+        final normalized = JoinCode.normalize(typed);
+        if (!JoinCode.isWellFormed(normalized)) {
+          return const JoinCodeLookupResult.failure(
+            JoinCodeLookupError.malformed,
+          );
+        }
+        final result = await _joinCodeLookup.lookup(typed);
+        if (result.isSuccess) {
+          _pendingJoinCodeSuccess = result.success;
+          clearFailure();
+        } else {
+          _pendingJoinCodeSuccess = null;
+        }
+        return result;
+      } catch (e) {
+        setFailure(e);
+        return const JoinCodeLookupResult.failure(JoinCodeLookupError.notFound);
+      } finally {
+        _isBusy = false;
+        _inFlightJoinLookup = null;
+        if (!_disposed) notifyListeners();
+      }
+    }();
+    _inFlightJoinLookup = future;
+    return future;
+  }
+
+  /// After check-code confirm on the join-by-code path, completes the payload
+  /// exchange (task 4.4) and prepares the joiner like a scanned QR.
+  Future<bool> confirmJoinCodeMatch() async {
+    final pending = _pendingJoinCodeSuccess;
+    if (pending == null || _isBusy) return false;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      final complete = pending.completeJoin;
+      if (complete != null) {
+        final payload = await complete();
+        await _membership.prepareJoinerFromScannedQr(payload);
+      }
+      _pendingJoinCodeSuccess = null;
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      _isBusy = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
+  /// Maps a lookup error to the localized user-facing sentence.
+  String joinCodeErrorMessage(
+    AppLocalizations l10n,
+    JoinCodeLookupError error,
+  ) {
+    return switch (error) {
+      JoinCodeLookupError.expired => l10n.settingsLinkedDevicesJoinCodeExpired,
+      JoinCodeLookupError.alreadyUsed => l10n.settingsLinkedDevicesJoinCodeUsed,
+      JoinCodeLookupError.notFound =>
+        l10n.settingsLinkedDevicesJoinCodeNotFound,
+      JoinCodeLookupError.malformed =>
+        l10n.settingsLinkedDevicesJoinCodeNotFound,
+    };
+  }
+
+  /// Validates a scanned join QR (expiry + check code). Returns the payload
+  /// when valid, otherwise null and sets [errorMessage].
+  JoinQrPayload? validateScannedJoin(JoinQrPayload payload) {
+    final now = DateTime.now().toUtc();
+    if (payload.isExpiredAt(now)) {
+      setFailure(
+        const AppFailure(
+          AppErrorCode.generic,
+          debugMessage: 'This join QR has expired. Ask for a new code.',
+        ),
+      );
+      notifyListeners();
+      return null;
+    }
+    clearFailure();
+    return payload;
+  }
+
+  /// After the user confirms the check code, remember the host identity from
+  /// the scanned QR (joiner side). Host still completes [acceptJoinFromQr]
+  /// once the joiner's certificate is exchanged over the LAN.
+  Future<bool> registerHostFromScannedJoin(JoinQrPayload payload) async {
+    if (_isBusy) return false;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      await _membership.prepareJoinerFromScannedQr(payload);
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      _isBusy = false;
+      if (!_disposed) notifyListeners();
+    }
   }
 
   /// Open-claims / owed-balance warning before remove (task 2.4).
@@ -336,6 +670,30 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  /// Registers [host]:[port] for a linked peer when discovery is blocked.
+  Future<bool> connectByAddress({
+    required String peerDeviceId,
+    required String host,
+    required int port,
+  }) async {
+    if (_isBusy) return false;
+    final action = connectByAddressAction;
+    if (action == null) return false;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      await action(peerDeviceId: peerDeviceId, host: host, port: port);
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      _isBusy = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
   Future<String> _ensureLocalDeviceId() async {
     final existing = await _settings.localDeviceId();
     if (existing != null && existing.isNotEmpty) return existing;
@@ -347,6 +705,11 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   @override
   void dispose() {
     _disposed = true;
+    if (_hostCheckCompleter != null && !_hostCheckCompleter!.isCompleted) {
+      _hostCheckCompleter!.complete(false);
+    }
+    unawaited(_joinHost?.stop());
+    _joinHost = null;
     super.dispose();
   }
 }

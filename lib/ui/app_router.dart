@@ -13,6 +13,7 @@ import '../data/repositories/category_repository.dart';
 import '../data/repositories/claim_person_service.dart';
 import '../data/repositories/claim_receipt_store.dart';
 import '../data/repositories/claim_repository.dart';
+import '../data/repositories/personal_claim_limit_repository.dart';
 import '../domain/claims/claim_receipt_picker.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
@@ -22,8 +23,12 @@ import '../data/repositories/membership_repository.dart';
 import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
+import '../domain/linked_devices/app_join_code_lookup.dart';
+import '../domain/linked_devices/device_certificate_store.dart';
+import '../domain/linked_devices/join_offer_discovery.dart';
 import '../domain/linked_devices/local_network_permission.dart';
 import '../domain/models/account_type.dart';
+import '../domain/peer_sync/peer_sync_service.dart';
 import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
@@ -41,6 +46,7 @@ import 'features/claims/view_models/claims_list_view_model.dart';
 import 'features/claims/views/approver_queue_view.dart';
 import 'features/claims/views/claim_editor_view.dart';
 import 'features/claims/views/claims_list_view.dart';
+import 'features/claims/views/personal_claim_limits_page.dart';
 import 'features/continuation/view_models/continuation_view_model.dart';
 import 'features/continuation/views/continuation_view.dart';
 import 'features/correction_wizard/view_models/correction_view_model.dart';
@@ -104,8 +110,10 @@ GoRouter buildAppRouter(
   SettingsRepository settingsRepository,
   AppLockController appLockController, {
   MembershipRepository? membershipRepository,
+  PeerSyncService? peerSyncService,
 }) {
   final membership = membershipRepository;
+  final peerSync = peerSyncService;
   final navigationPolicy = AppNavigationPolicy(
     currentIdentity: identityRepository.currentIdentity,
     hasAnyJournalEntries: ledgerRepository.hasAnyJournalEntries,
@@ -323,7 +331,32 @@ GoRouter buildAppRouter(
             claimPersonService: context.read<ClaimPersonService>(),
             claimRepository: context.read<ClaimRepository>(),
             localNetworkPermission: context.read<LocalNetworkPermission>(),
+            deviceCertificateStore: context.read<DeviceCertificateStore>(),
+            identityRepository: identityRepository,
+            joinOfferDiscovery: context.read<JoinOfferDiscovery>(),
+            joinCodeLookup: AppJoinCodeLookup(
+              discovery: context.read<JoinOfferDiscovery>(),
+              certificates: context.read<DeviceCertificateStore>(),
+              settings: settingsRepository,
+              identity: identityRepository,
+            ),
             booksGeneration: context.read<ActiveBooksSession>().generation,
+            syncNowAction: peerSync == null
+                ? null
+                : () async {
+                    await peerSync.syncNow();
+                  },
+            connectByAddressAction: peerSync == null
+                ? null
+                : ({
+                    required String peerDeviceId,
+                    required String host,
+                    required int port,
+                  }) => peerSync.connectByAddress(
+                    peerDeviceId: peerDeviceId,
+                    host: host,
+                    port: port,
+                  ),
           );
           return SettingsView(
             viewModel: viewModel,
@@ -474,12 +507,91 @@ GoRouter buildAppRouter(
         },
       ),
       GoRoute(
+        path: AppNavPaths.myClaimLimits,
+        builder: (context, state) {
+          final membership = context.read<MembershipRepository>();
+          final claims = context.read<ClaimRepository>();
+          final limits = context.read<PersonalClaimLimitRepository>();
+          final categories = context.read<CategoryRepository>();
+          return FutureBuilder(
+            future: () async {
+              final identity = await identityRepository.currentIdentity();
+              final devices = await membership.listActiveDevices();
+              final mine = devices.where(
+                (d) =>
+                    identity != null &&
+                    d.signingIdentityId == identity.identityId,
+              );
+              final device = mine.isNotEmpty ? mine.first : null;
+              final deviceId = device?.deviceId ?? 'local';
+              final name =
+                  device?.personDisplayName ?? device?.displayName ?? 'Me';
+              final personal = await limits.listForPerson(deviceId);
+              final cats = await categories.watchCategories().first;
+              final catName = {for (final c in cats) c.id: c.name};
+              String lineFor({
+                required String categoryId,
+                required int? amountMinor,
+                required String? unit,
+              }) {
+                final cat = catName[categoryId] ?? categoryId;
+                final amount = ((amountMinor ?? 0) / 100).toStringAsFixed(0);
+                final unitLabel = (unit == null || unit.isEmpty)
+                    ? ''
+                    : ' per $unit';
+                return '$cat $amount$unitLabel';
+              }
+
+              final personalLines = [
+                for (final row in personal)
+                  if (row.amountMinor != null)
+                    lineFor(
+                      categoryId: row.categoryId,
+                      amountMinor: row.amountMinor,
+                      unit: row.unitLabel,
+                    ),
+              ];
+              final hints = await claims.spendingHints();
+              final companyLines = [
+                for (final h in hints)
+                  lineFor(
+                    categoryId: h.categoryId,
+                    amountMinor: h.maxAmountMinor,
+                    unit: h.unitLabel,
+                  ),
+              ];
+              return (
+                name: name,
+                personal: personalLines,
+                company: companyLines,
+              );
+            }(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              final data = snapshot.data!;
+              return PersonalClaimLimitsPage(
+                personName: data.name,
+                lines: data.personal,
+                companyLines: data.company,
+                viewerIsOwner: false,
+                allowClaimantSelf: true,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
         path: AppNavPaths.approverQueue,
         builder: (context, state) {
           final membership = context.read<MembershipRepository>();
           final claims = context.read<ClaimRepository>();
           final categories = context.read<CategoryRepository>();
           final receipts = context.read<ClaimReceiptStore>();
+          final accounts = context.read<AccountRepository>();
           final database = context.read<AppDatabase>();
           return FutureBuilder(
             future: () async {
@@ -505,6 +617,8 @@ GoRouter buildAppRouter(
               final vm = ApproverQueueViewModel(
                 claims: claims,
                 actorDeviceId: deviceId,
+                membership: membership,
+                accounts: accounts,
               );
               await vm.load();
               final thumbs = <String, Uint8List>{};

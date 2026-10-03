@@ -9,6 +9,7 @@ import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
 import 'account_chart_reader.dart';
 import 'ledger_repository.dart';
+import 'metadata_outbox.dart';
 import 'repository_date_utils.dart';
 
 /// Financial accounts and account groups - creation, renaming,
@@ -29,13 +30,19 @@ class AccountRepository {
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
     AccountChartReader? chart,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
   }) : _db = database,
        _ledgerRepository = ledgerRepository,
-       _chart = chart ?? AccountChartReader(database);
+       _chart = chart ?? AccountChartReader(database),
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
   final AccountChartReader _chart;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   /// Whether any `account_groups` row still has no currency - the signal
   /// for a database migrated from schemaVersion 3 that needs the one-time
@@ -292,9 +299,17 @@ class AccountRepository {
         code: AppErrorCode.accountNotFinancial,
       );
     }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(name: Value(newName)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(name: Value(newName)),
+      );
+      await _emit(
+        entityType: 'account',
+        entityId: id,
+        field: 'name',
+        value: newName,
+      );
+    });
   }
 
   Future<void> reassignFinancialAccountGroup({
@@ -346,9 +361,17 @@ class AccountRepository {
         );
       }
     }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(groupId: Value(groupId)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(groupId: Value(groupId)),
+      );
+      await _emit(
+        entityType: 'account',
+        entityId: id,
+        field: 'groupId',
+        value: groupId,
+      );
+    });
   }
 
   /// Changes an account group's currency. Rejected while the group has at
@@ -383,8 +406,16 @@ class AccountRepository {
         code: AppErrorCode.cannotChangeGroupCurrencyWithAccounts,
       );
     }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(groupId)))
-        .write(AccountGroupsCompanion(currency: Value(currency)));
+    await _db.transaction(() async {
+      await (_db.update(_db.accountGroups)..where((g) => g.id.equals(groupId)))
+          .write(AccountGroupsCompanion(currency: Value(currency)));
+      await _emit(
+        entityType: 'account_group',
+        entityId: groupId,
+        field: 'currency',
+        value: currency,
+      );
+    });
   }
 
   Future<void> archiveFinancialAccount(String id) async {
@@ -402,9 +433,18 @@ class AccountRepository {
         'Cannot archive the last active financial account.',
       );
     }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(archivedAt: Value(DateTime.now())),
-    );
+    final at = DateTime.now().toUtc();
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(archivedAt: Value(at)),
+      );
+      await _emit(
+        entityType: 'account',
+        entityId: id,
+        field: 'archivedAt',
+        value: at.toIso8601String(),
+      );
+    });
   }
 
   /// Restores an archived financial account to active status
@@ -430,6 +470,12 @@ class AccountRepository {
       await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
         const AccountsCompanion(archivedAt: Value(null)),
       );
+      await _emit(
+        entityType: 'account',
+        entityId: id,
+        field: 'archivedAt',
+        value: null,
+      );
       final groupId = account.groupId;
       if (groupId == null) return;
       final group = await (_db.select(
@@ -439,6 +485,12 @@ class AccountRepository {
         await (_db.update(_db.accountGroups)
               ..where((g) => g.id.equals(groupId)))
             .write(const AccountGroupsCompanion(archivedAt: Value(null)));
+        await _emit(
+          entityType: 'account_group',
+          entityId: groupId,
+          field: 'archivedAt',
+          value: null,
+        );
       }
     });
   }
@@ -456,9 +508,16 @@ class AccountRepository {
         code: AppErrorCode.groupNotFound,
       );
     }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      AccountGroupsCompanion(name: Value(newName)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id)))
+          .write(AccountGroupsCompanion(name: Value(newName)));
+      await _emit(
+        entityType: 'account_group',
+        entityId: id,
+        field: 'name',
+        value: newName,
+      );
+    });
   }
 
   /// Creates a user-created account group (custom-account-groups
@@ -486,18 +545,38 @@ class AccountRepository {
           (max, g) => g.sortOrder > max ? g.sortOrder : max,
         ) +
         1;
-    final created = await _db
-        .into(_db.accountGroups)
-        .insertReturning(
-          AccountGroupsCompanion.insert(
-            name: name,
-            kind: kind,
-            sortOrder: nextSortOrder,
-            isSystem: false,
-            currency: Value(currency),
-          ),
-        );
-    return _toDomainGroup(created);
+    return _db.transaction(() async {
+      final created = await _db
+          .into(_db.accountGroups)
+          .insertReturning(
+            AccountGroupsCompanion.insert(
+              name: name,
+              kind: kind,
+              sortOrder: nextSortOrder,
+              isSystem: false,
+              currency: Value(currency),
+            ),
+          );
+      await _emit(
+        entityType: 'account_group',
+        entityId: created.id,
+        field: 'kind',
+        value: kind.name,
+      );
+      await _emit(
+        entityType: 'account_group',
+        entityId: created.id,
+        field: 'name',
+        value: name,
+      );
+      await _emit(
+        entityType: 'account_group',
+        entityId: created.id,
+        field: 'currency',
+        value: currency,
+      );
+      return _toDomainGroup(created);
+    });
   }
 
   /// Archives a user-created account group once it has zero active member
@@ -544,9 +623,17 @@ class AccountRepository {
         code: AppErrorCode.cannotArchiveGroupWithAccounts,
       );
     }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      AccountGroupsCompanion(archivedAt: Value(DateTime.now())),
-    );
+    final at = DateTime.now().toUtc();
+    await _db.transaction(() async {
+      await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id)))
+          .write(AccountGroupsCompanion(archivedAt: Value(at)));
+      await _emit(
+        entityType: 'account_group',
+        entityId: id,
+        field: 'archivedAt',
+        value: at.toIso8601String(),
+      );
+    });
   }
 
   /// Restores an archived user-created account group to active status
@@ -572,9 +659,16 @@ class AccountRepository {
         code: AppErrorCode.systemGroupNeverArchived,
       );
     }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      const AccountGroupsCompanion(archivedAt: Value(null)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id)))
+          .write(const AccountGroupsCompanion(archivedAt: Value(null)));
+      await _emit(
+        entityType: 'account_group',
+        entityId: id,
+        field: 'archivedAt',
+        value: null,
+      );
+    });
   }
 
   /// No account group - system or user-created, archived or not - can be
@@ -738,5 +832,25 @@ class AccountRepository {
             );
       }
     }
+  }
+
+  Future<void> _emit({
+    required String entityType,
+    required String entityId,
+    required String field,
+    required Object? value,
+  }) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: entityType,
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
+    );
   }
 }

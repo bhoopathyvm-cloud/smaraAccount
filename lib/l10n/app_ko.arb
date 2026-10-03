@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "이 장부에는 소유자가 한 명뿐입니다. 다른 연결 기기도 소유자로 지정하는 것을 고려하세요.",
   "settingsLinkedDevicesSyncNow": "지금 동기화",
   "settingsLinkedDevicesSyncNowBusy": "따라잡는 중…",
-  "translateCategoryWithAi": "AI로 번역"
+  "translateCategoryWithAi": "AI로 번역",
+  "settingsLinkedDevicesCodesDontMatch": "일치하지 않습니다",
+  "settingsLinkedDevicesConnectByAddress": "주소로 연결",
+  "settingsLinkedDevicesConnectByAddressBody": "검색으로 연결된 기기를 찾을 수 없으면 LAN 주소와 포트를 입력하세요.",
+  "settingsLinkedDevicesConnectByAddressTitle": "주소로 연결",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "대신 코드 입력",
+  "settingsLinkedDevicesEnterCodeSubmit": "기기 찾기",
+  "settingsLinkedDevicesEnterCodeTitle": "참여 코드 입력",
+  "settingsLinkedDevicesJoinCodeExpired": "이 코드가 만료되었습니다 — 새 코드를 요청하세요",
+  "settingsLinkedDevicesJoinCodeLabel": "참여 코드",
+  "settingsLinkedDevicesJoinCodeNotFound": "이 Wi-Fi에 해당 코드의 기기가 없습니다",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} 남음",
+  "settingsLinkedDevicesJoinCodeTryAgain": "다시 시도",
+  "settingsLinkedDevicesJoinCodeUsed": "이 코드는 이미 사용되었습니다. 새 코드를 요청하세요.",
+  "settingsLinkedDevicesJoinCheckCode": "확인 코드 — 다른 기기와 일치하는지 확인하세요",
+  "settingsLinkedDevicesScanQr": "참여 QR 스캔",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "확인 코드 확인",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "이 코드가 다른 기기의 코드와 일치하나요?",
+  "settingsLinkedDevicesCodesMatch": "코드가 일치합니다",
+  "settingsLinkedDevicesJoinExpired": "이 참여 QR이 만료되었습니다. 새 코드를 요청하세요.",
+  "settingsLinkedDevicesJoinReused": "이 참여 QR은 이미 사용되었습니다. 새 코드를 요청하세요.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "호스트",
+  "settingsLinkedDevicesPort": "포트",
+  "settingsLinkedDevicesPeer": "기기",
+  "settingsLinkedDevicesSaveAddress": "주소 저장",
+  "claimsPersonalLimitsTitle": "청구 한도",
+  "claimsPersonalLimitsTitleFor": "{name}의 청구 한도",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "{limit} 한도 초과",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "개인 한도가 설정되지 않았습니다.",
+  "claimsClearPersonalLimit": "한도 지우기"
 }

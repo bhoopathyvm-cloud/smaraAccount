@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "У цих книг лише один Власник. Розгляньте можливість зробити Власником і інший пов''язаний пристрій.",
   "settingsLinkedDevicesSyncNow": "Синхронізувати зараз",
   "settingsLinkedDevicesSyncNowBusy": "Наздоганяємо…",
-  "translateCategoryWithAi": "Перекласти за допомогою AI"
+  "translateCategoryWithAi": "Перекласти за допомогою AI",
+  "settingsLinkedDevicesCodesDontMatch": "Не збігаються",
+  "settingsLinkedDevicesConnectByAddress": "Підключитися за адресою",
+  "settingsLinkedDevicesConnectByAddressBody": "Якщо виявлення не знаходить повязаний пристрій, введіть його LAN-адресу та порт.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Підключитися за адресою",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Ввести код замість цього",
+  "settingsLinkedDevicesEnterCodeSubmit": "Знайти пристрій",
+  "settingsLinkedDevicesEnterCodeTitle": "Ввести код приєднання",
+  "settingsLinkedDevicesJoinCodeExpired": "Термін цього коду минув — попросіть новий",
+  "settingsLinkedDevicesJoinCodeLabel": "Код приєднання",
+  "settingsLinkedDevicesJoinCodeNotFound": "Немає пристрою з цим кодом у цій мережі Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "Залишилось {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Спробувати знову",
+  "settingsLinkedDevicesJoinCodeUsed": "Цей код уже використано. Попросіть новий.",
+  "settingsLinkedDevicesJoinCheckCode": "Код перевірки — підтвердіть, що він збігається на іншому пристрої",
+  "settingsLinkedDevicesScanQr": "Сканувати QR приєднання",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Підтвердити код перевірки",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Чи збігається цей код з кодом на іншому пристрої?",
+  "settingsLinkedDevicesCodesMatch": "Коди збігаються",
+  "settingsLinkedDevicesJoinExpired": "Термін цього QR приєднання минув. Попросіть новий код.",
+  "settingsLinkedDevicesJoinReused": "Цей QR приєднання вже використано. Попросіть новий код.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Хост",
+  "settingsLinkedDevicesPort": "Порт",
+  "settingsLinkedDevicesPeer": "Пристрій",
+  "settingsLinkedDevicesSaveAddress": "Зберегти адресу",
+  "claimsPersonalLimitsTitle": "Ліміти заявок",
+  "claimsPersonalLimitsTitleFor": "Ліміти заявок для {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "Вище ліміту {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Особисті ліміти не задано.",
+  "claimsClearPersonalLimit": "Очистити ліміт"
 }

@@ -5,14 +5,26 @@ import 'package:cryptography/cryptography.dart';
 import 'package:uuid/uuid.dart';
 
 /// Device TLS certificate material exchanged at join (design Decision 2).
-/// Real X.509 generation is a follow-up when section 5 TLS lands;
-/// [FakeDeviceCertificateStore] issues stand-in DER bytes and fingerprints
-/// for membership/QR tests.
+///
+/// [derBytes] / [fingerprint] travel in the QR payload. [certificatePem] and
+/// [privateKeyPem] stay on the owning device for [TlsSyncTransport] and are
+/// never included in sync or QR payloads (ADR 0004).
 class DeviceCertificate {
-  const DeviceCertificate({required this.derBytes, required this.fingerprint});
+  const DeviceCertificate({
+    required this.derBytes,
+    required this.fingerprint,
+    this.certificatePem,
+    this.privateKeyPem,
+  });
 
   final List<int> derBytes;
   final String fingerprint;
+
+  /// PEM-encoded certificate for [SecurityContext], when available.
+  final String? certificatePem;
+
+  /// PEM-encoded private key for the local TLS identity, when available.
+  final String? privateKeyPem;
 }
 
 abstract class DeviceCertificateStore {

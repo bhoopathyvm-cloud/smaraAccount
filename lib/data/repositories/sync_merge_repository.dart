@@ -4,14 +4,19 @@ import 'package:uuid/uuid.dart';
 import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/models/membership_notice.dart';
+import '../../domain/models/transaction_direction.dart';
 import '../../domain/peer_sync/competing_fix_resolver.dart';
 import '../../domain/peer_sync/metadata_lww.dart';
 import '../../domain/peer_sync/peer_sync_session.dart';
 import '../../domain/peer_sync/sync_payloads.dart';
 import '../../domain/peer_sync/sync_settings_allowlist.dart';
 import '../database/app_database.dart';
+import '../database/tables/account_groups_table.dart';
+import '../database/tables/accounts_table.dart';
 import 'ledger_chain_store.dart';
 import 'ledger_posting.dart';
+import 'metadata_clock_store.dart';
+import 'personal_claim_limit_repository.dart';
 import 'repository_date_utils.dart';
 
 /// Result of applying a peer [EntryBatch] (task 6.1–6.3).
@@ -193,6 +198,15 @@ class SyncMergeRepository implements SyncLedgerView {
         continue;
       }
 
+      if (await _isRefusedAfterDeviceRemoval(entry)) {
+        rejected++;
+        await _recordNotAcceptedNotice(
+          fromDeviceId: fromDeviceId,
+          fromDeviceDisplayName: fromDeviceDisplayName,
+        );
+        continue;
+      }
+
       await _insertPeerEntry(entry);
       inserted++;
     }
@@ -209,8 +223,14 @@ class SyncMergeRepository implements SyncLedgerView {
 
   /// Applies MetadataOps with per-field LWW. Settings ops only apply when the
   /// field is a books setting (task 6.5). Category translation ops persist to
-  /// `category_translations` (shared-categories task 7.1).
+  /// `category_translations` (shared-categories task 7.1). Winners persist in
+  /// `metadata_lww_state` (task 5.2).
   Future<List<MetadataOperation>> applyMetadataOps(MetadataOps ops) async {
+    final clockStore = MetadataClockStore(database: _db);
+    if (metadataState.isEmpty) {
+      metadataState.addAll(await clockStore.loadWinners());
+    }
+
     final filtered = <MetadataOperation>[];
     for (final op in ops.operations) {
       if (op.entityType == 'settings') {
@@ -228,6 +248,7 @@ class SyncMergeRepository implements SyncLedgerView {
       ..addEntries(merged.map((o) => MapEntry(MetadataLww.fieldKey(o), o)));
 
     for (final op in merged) {
+      await clockStore.saveWinner(op);
       await _persistMetadataOp(op);
     }
     return merged;
@@ -249,6 +270,316 @@ class SyncMergeRepository implements SyncLedgerView {
               ),
             );
           }
+        }
+      case 'category':
+        switch (op.field) {
+          case 'type':
+            if (op.value is String) {
+              final typeName = op.value! as String;
+              AccountType? type;
+              for (final candidate in AccountType.values) {
+                if (candidate.name == typeName) {
+                  type = candidate;
+                  break;
+                }
+              }
+              if (type == null) return;
+              final existing = await (_db.select(
+                _db.accounts,
+              )..where((a) => a.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accounts)
+                    .insert(
+                      AccountsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: 'Category',
+                        type: type,
+                      ),
+                    );
+              }
+            }
+          case 'name':
+            if (op.value is String) {
+              final existing = await (_db.select(
+                _db.accounts,
+              )..where((a) => a.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accounts)
+                    .insert(
+                      AccountsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: op.value! as String,
+                        type: AccountType.expense,
+                      ),
+                    );
+              } else {
+                await (_db.update(_db.accounts)
+                      ..where((a) => a.id.equals(op.entityId)))
+                    .write(AccountsCompanion(name: Value(op.value! as String)));
+              }
+            }
+          case 'archivedAt':
+            final archivedAt = op.value == null
+                ? null
+                : DateTime.tryParse(op.value! as String)?.toUtc();
+            await (_db.update(_db.accounts)
+                  ..where((a) => a.id.equals(op.entityId)))
+                .write(AccountsCompanion(archivedAt: Value(archivedAt)));
+          case 'monthlyLimitMinor':
+            final limit = op.value is int ? op.value as int : null;
+            await (_db.update(_db.accounts)
+                  ..where((a) => a.id.equals(op.entityId)))
+                .write(AccountsCompanion(monthlyLimitMinor: Value(limit)));
+        }
+      case 'account':
+        switch (op.field) {
+          case 'name':
+            if (op.value is String) {
+              await (_db.update(_db.accounts)
+                    ..where((a) => a.id.equals(op.entityId)))
+                  .write(AccountsCompanion(name: Value(op.value! as String)));
+            }
+          case 'groupId':
+            if (op.value is String) {
+              await (_db.update(
+                _db.accounts,
+              )..where((a) => a.id.equals(op.entityId))).write(
+                AccountsCompanion(groupId: Value(op.value! as String)),
+              );
+            }
+          case 'archivedAt':
+            final archivedAt = op.value == null
+                ? null
+                : DateTime.tryParse(op.value! as String)?.toUtc();
+            await (_db.update(_db.accounts)
+                  ..where((a) => a.id.equals(op.entityId)))
+                .write(AccountsCompanion(archivedAt: Value(archivedAt)));
+        }
+      case 'account_group':
+        switch (op.field) {
+          case 'kind':
+            if (op.value is String) {
+              AccountGroupKind? kind;
+              for (final candidate in AccountGroupKind.values) {
+                if (candidate.name == op.value) {
+                  kind = candidate;
+                  break;
+                }
+              }
+              if (kind == null) return;
+              final existing = await (_db.select(
+                _db.accountGroups,
+              )..where((g) => g.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accountGroups)
+                    .insert(
+                      AccountGroupsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: 'Group',
+                        kind: kind,
+                        sortOrder: 0,
+                        isSystem: false,
+                      ),
+                    );
+              }
+            }
+          case 'name':
+            if (op.value is String) {
+              final existing = await (_db.select(
+                _db.accountGroups,
+              )..where((g) => g.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accountGroups)
+                    .insert(
+                      AccountGroupsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: op.value! as String,
+                        kind: AccountGroupKind.assetGroup,
+                        sortOrder: 0,
+                        isSystem: false,
+                      ),
+                    );
+              } else {
+                await (_db.update(
+                  _db.accountGroups,
+                )..where((g) => g.id.equals(op.entityId))).write(
+                  AccountGroupsCompanion(name: Value(op.value! as String)),
+                );
+              }
+            }
+          case 'currency':
+            if (op.value is String) {
+              await (_db.update(
+                _db.accountGroups,
+              )..where((g) => g.id.equals(op.entityId))).write(
+                AccountGroupsCompanion(currency: Value(op.value! as String)),
+              );
+            }
+          case 'archivedAt':
+            final archivedAt = op.value == null
+                ? null
+                : DateTime.tryParse(op.value! as String)?.toUtc();
+            await (_db.update(_db.accountGroups)
+                  ..where((g) => g.id.equals(op.entityId)))
+                .write(AccountGroupsCompanion(archivedAt: Value(archivedAt)));
+        }
+      case 'payee':
+        switch (op.field) {
+          case 'name':
+            if (op.value is String) {
+              final existing = await (_db.select(
+                _db.payees,
+              )..where((p) => p.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.payees)
+                    .insert(
+                      PayeesCompanion.insert(
+                        id: Value(op.entityId),
+                        name: op.value! as String,
+                        createdAt: op.updatedAt,
+                      ),
+                    );
+              } else {
+                await (_db.update(_db.payees)
+                      ..where((p) => p.id.equals(op.entityId)))
+                    .write(PayeesCompanion(name: Value(op.value! as String)));
+              }
+            }
+          case 'defaultCategoryId':
+            if (op.value is String) {
+              await (_db.update(
+                _db.payees,
+              )..where((p) => p.id.equals(op.entityId))).write(
+                PayeesCompanion(defaultCategoryId: Value(op.value! as String)),
+              );
+            }
+          case 'deleted':
+            if (op.value == true) {
+              await (_db.delete(
+                _db.payees,
+              )..where((p) => p.id.equals(op.entityId))).go();
+            }
+        }
+      case 'category_rule':
+        switch (op.field) {
+          case 'keyword':
+            if (op.value is String) {
+              final existing = await (_db.select(
+                _db.categoryRules,
+              )..where((r) => r.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.categoryRules)
+                    .insert(
+                      CategoryRulesCompanion.insert(
+                        id: Value(op.entityId),
+                        keyword: op.value! as String,
+                        categoryId: '',
+                        createdAt: op.updatedAt,
+                      ),
+                    );
+              } else {
+                await (_db.update(
+                  _db.categoryRules,
+                )..where((r) => r.id.equals(op.entityId))).write(
+                  CategoryRulesCompanion(keyword: Value(op.value! as String)),
+                );
+              }
+            }
+          case 'categoryId':
+            if (op.value is String) {
+              final existing = await (_db.select(
+                _db.categoryRules,
+              )..where((r) => r.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.categoryRules)
+                    .insert(
+                      CategoryRulesCompanion.insert(
+                        id: Value(op.entityId),
+                        keyword: '',
+                        categoryId: op.value! as String,
+                        createdAt: op.updatedAt,
+                      ),
+                    );
+              } else {
+                await (_db.update(
+                  _db.categoryRules,
+                )..where((r) => r.id.equals(op.entityId))).write(
+                  CategoryRulesCompanion(
+                    categoryId: Value(op.value! as String),
+                  ),
+                );
+              }
+            }
+          case 'deleted':
+            if (op.value == true) {
+              await (_db.delete(
+                _db.categoryRules,
+              )..where((r) => r.id.equals(op.entityId))).go();
+            }
+        }
+      case 'recurring_template':
+        switch (op.field) {
+          case 'deleted':
+            if (op.value == true) {
+              await (_db.delete(
+                _db.recurringTemplates,
+              )..where((t) => t.id.equals(op.entityId))).go();
+            }
+          case 'name':
+          case 'direction':
+          case 'financialAccountId':
+          case 'categoryId':
+          case 'amountMinor':
+          case 'dayOfMonth':
+            await _upsertRecurringTemplateField(op);
+        }
+      case 'personal_claim_limit':
+        final parsed = PersonalClaimLimitRepository.parseEntityId(op.entityId);
+        if (parsed == null) return;
+        final (personDeviceId, categoryId) = parsed;
+        final existing =
+            await (_db.select(_db.personalClaimLimits)..where(
+                  (t) =>
+                      t.personDeviceId.equals(personDeviceId) &
+                      t.categoryId.equals(categoryId),
+                ))
+                .getSingleOrNull();
+        switch (op.field) {
+          case 'amountMinor':
+            final amount = op.value is int ? op.value as int : null;
+            await _db
+                .into(_db.personalClaimLimits)
+                .insertOnConflictUpdate(
+                  PersonalClaimLimitsCompanion.insert(
+                    personDeviceId: personDeviceId,
+                    categoryId: categoryId,
+                    amountMinor: Value(amount),
+                    unitLabel: Value(existing?.unitLabel),
+                    updatedAt: op.updatedAt,
+                    updatedByIdentityId: op.updatedByIdentityId,
+                  ),
+                );
+          case 'unitLabel':
+            final unit = op.value is String ? op.value as String : null;
+            await _db
+                .into(_db.personalClaimLimits)
+                .insertOnConflictUpdate(
+                  PersonalClaimLimitsCompanion.insert(
+                    personDeviceId: personDeviceId,
+                    categoryId: categoryId,
+                    amountMinor: Value(existing?.amountMinor),
+                    unitLabel: Value(unit),
+                    updatedAt: op.updatedAt,
+                    updatedByIdentityId: op.updatedByIdentityId,
+                  ),
+                );
         }
       case 'category_translation':
         final name = op.value;
@@ -280,6 +611,68 @@ class SyncMergeRepository implements SyncLedgerView {
     }
   }
 
+  Future<void> _upsertRecurringTemplateField(MetadataOperation op) async {
+    final existing = await (_db.select(
+      _db.recurringTemplates,
+    )..where((t) => t.id.equals(op.entityId))).getSingleOrNull();
+    var name = existing?.name ?? 'Template';
+    var direction = existing?.direction ?? TransactionDirection.moneyOut;
+    var financialAccountId = existing?.financialAccountId ?? '';
+    var categoryId = existing?.categoryId ?? '';
+    var amountMinor = existing?.amountMinor ?? 1;
+    var dayOfMonth = existing?.dayOfMonth ?? 1;
+    switch (op.field) {
+      case 'name':
+        if (op.value is String) name = op.value! as String;
+      case 'direction':
+        if (op.value is String) {
+          for (final d in TransactionDirection.values) {
+            if (d.name == op.value) {
+              direction = d;
+              break;
+            }
+          }
+        }
+      case 'financialAccountId':
+        if (op.value is String) financialAccountId = op.value! as String;
+      case 'categoryId':
+        if (op.value is String) categoryId = op.value! as String;
+      case 'amountMinor':
+        if (op.value is int) amountMinor = op.value! as int;
+      case 'dayOfMonth':
+        if (op.value is int) dayOfMonth = op.value! as int;
+    }
+    if (existing == null) {
+      await _db
+          .into(_db.recurringTemplates)
+          .insert(
+            RecurringTemplatesCompanion.insert(
+              id: Value(op.entityId),
+              name: name,
+              direction: direction,
+              financialAccountId: financialAccountId,
+              categoryId: categoryId,
+              amountMinor: amountMinor,
+              dayOfMonth: dayOfMonth,
+              createdAt: op.updatedAt,
+            ),
+          );
+    } else {
+      await (_db.update(
+        _db.recurringTemplates,
+      )..where((t) => t.id.equals(op.entityId))).write(
+        RecurringTemplatesCompanion(
+          name: Value(name),
+          direction: Value(direction),
+          financialAccountId: Value(financialAccountId),
+          categoryId: Value(categoryId),
+          amountMinor: Value(amountMinor),
+          dayOfMonth: Value(dayOfMonth),
+        ),
+      );
+    }
+  }
+
   Future<JournalEntryRow?> _findDuplicate({
     required String identityId,
     required int sequence,
@@ -290,6 +683,22 @@ class SyncMergeRepository implements SyncLedgerView {
               e.deviceChainSequence.equals(sequence),
         ))
         .getSingleOrNull();
+  }
+
+  /// Task 5.3: refuse entries signed by a removed device when recorded after
+  /// that device's removal time.
+  Future<bool> _isRefusedAfterDeviceRemoval(SyncJournalEntry entry) async {
+    final devices = await _db.select(_db.linkedDevices).get();
+    LinkedDeviceRow? membership;
+    for (final d in devices) {
+      if (d.signingIdentityId == entry.signedByIdentityId) {
+        membership = d;
+        break;
+      }
+    }
+    final removedAt = membership?.removedAt;
+    if (removedAt == null) return false;
+    return entry.recordedAt.toUtc().isAfter(removedAt.toUtc());
   }
 
   Future<bool> _verifyPeerEntry(SyncJournalEntry entry) async {

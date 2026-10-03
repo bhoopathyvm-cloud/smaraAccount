@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Pembukuan ini hanya punya satu Pemilik. Pertimbangkan menjadikan perangkat tertaut lain sebagai Pemilik juga.",
   "settingsLinkedDevicesSyncNow": "Sinkronkan sekarang",
   "settingsLinkedDevicesSyncNowBusy": "Sedang mengejar…",
-  "translateCategoryWithAi": "Terjemahkan dengan AI"
+  "translateCategoryWithAi": "Terjemahkan dengan AI",
+  "settingsLinkedDevicesCodesDontMatch": "Tidak cocok",
+  "settingsLinkedDevicesConnectByAddress": "Hubungkan lewat alamat",
+  "settingsLinkedDevicesConnectByAddressBody": "Jika penemuan tidak menemukan perangkat tertaut, masukkan alamat LAN dan port-nya.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Hubungkan lewat alamat",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Masukkan kode saja",
+  "settingsLinkedDevicesEnterCodeSubmit": "Cari perangkat",
+  "settingsLinkedDevicesEnterCodeTitle": "Masukkan kode bergabung",
+  "settingsLinkedDevicesJoinCodeExpired": "Kode ini telah kedaluwarsa — minta yang baru",
+  "settingsLinkedDevicesJoinCodeLabel": "Kode bergabung",
+  "settingsLinkedDevicesJoinCodeNotFound": "Tidak ada perangkat dengan kode ini di Wi-Fi ini",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} tersisa",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Coba lagi",
+  "settingsLinkedDevicesJoinCodeUsed": "Kode ini sudah digunakan. Minta yang baru.",
+  "settingsLinkedDevicesJoinCheckCode": "Kode cek — pastikan cocok di perangkat lain",
+  "settingsLinkedDevicesScanQr": "Pindai QR bergabung",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Konfirmasi kode cek",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Apakah kode ini cocok dengan di perangkat lain?",
+  "settingsLinkedDevicesCodesMatch": "Kode cocok",
+  "settingsLinkedDevicesJoinExpired": "QR bergabung ini telah kedaluwarsa. Minta kode baru.",
+  "settingsLinkedDevicesJoinReused": "QR bergabung ini sudah digunakan. Minta kode baru.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Perangkat",
+  "settingsLinkedDevicesSaveAddress": "Simpan alamat",
+  "claimsPersonalLimitsTitle": "Batas klaim",
+  "claimsPersonalLimitsTitleFor": "Batas klaim untuk {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "Di atas batas {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Belum ada batas pribadi.",
+  "claimsClearPersonalLimit": "Hapus batas"
 }

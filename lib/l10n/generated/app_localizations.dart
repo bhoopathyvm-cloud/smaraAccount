@@ -2028,6 +2028,156 @@ abstract class AppLocalizations {
   /// **'Catching up…'**
   String get settingsLinkedDevicesSyncNowBusy;
 
+  /// No description provided for @settingsLinkedDevicesJoinCheckCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Check code — confirm it matches on the other device'**
+  String get settingsLinkedDevicesJoinCheckCode;
+
+  /// No description provided for @settingsLinkedDevicesScanQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan join QR'**
+  String get settingsLinkedDevicesScanQr;
+
+  /// No description provided for @settingsLinkedDevicesConfirmCheckCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm check code'**
+  String get settingsLinkedDevicesConfirmCheckCodeTitle;
+
+  /// No description provided for @settingsLinkedDevicesConfirmCheckCodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Does this code match the one on the other device?'**
+  String get settingsLinkedDevicesConfirmCheckCodeBody;
+
+  /// No description provided for @settingsLinkedDevicesCodesMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes match'**
+  String get settingsLinkedDevicesCodesMatch;
+
+  /// No description provided for @settingsLinkedDevicesCodesDontMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'They don\'\'t match'**
+  String get settingsLinkedDevicesCodesDontMatch;
+
+  /// No description provided for @settingsLinkedDevicesJoinExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This join QR has expired. Ask for a new code.'**
+  String get settingsLinkedDevicesJoinExpired;
+
+  /// No description provided for @settingsLinkedDevicesJoinReused.
+  ///
+  /// In en, this message translates to:
+  /// **'This join QR was already used. Ask for a new code.'**
+  String get settingsLinkedDevicesJoinReused;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Join code'**
+  String get settingsLinkedDevicesJoinCodeLabel;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeTimeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}:{seconds} left'**
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds);
+
+  /// No description provided for @settingsLinkedDevicesEnterCodeInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter code instead'**
+  String get settingsLinkedDevicesEnterCodeInstead;
+
+  /// No description provided for @settingsLinkedDevicesEnterCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter join code'**
+  String get settingsLinkedDevicesEnterCodeTitle;
+
+  /// No description provided for @settingsLinkedDevicesEnterCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'XXXX-XXXX'**
+  String get settingsLinkedDevicesEnterCodeHint;
+
+  /// No description provided for @settingsLinkedDevicesEnterCodeSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Find device'**
+  String get settingsLinkedDevicesEnterCodeSubmit;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This code has expired — ask for a new one'**
+  String get settingsLinkedDevicesJoinCodeExpired;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'This code was already used. Ask for a new one.'**
+  String get settingsLinkedDevicesJoinCodeUsed;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No device with this code on this Wi-Fi'**
+  String get settingsLinkedDevicesJoinCodeNotFound;
+
+  /// No description provided for @settingsLinkedDevicesJoinCodeTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get settingsLinkedDevicesJoinCodeTryAgain;
+
+  /// No description provided for @settingsLinkedDevicesConnectByAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect by address'**
+  String get settingsLinkedDevicesConnectByAddress;
+
+  /// No description provided for @settingsLinkedDevicesConnectByAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect by address'**
+  String get settingsLinkedDevicesConnectByAddressTitle;
+
+  /// No description provided for @settingsLinkedDevicesConnectByAddressBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When discovery cannot find a linked device, enter its LAN address and port.'**
+  String get settingsLinkedDevicesConnectByAddressBody;
+
+  /// No description provided for @settingsLinkedDevicesHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Host'**
+  String get settingsLinkedDevicesHost;
+
+  /// No description provided for @settingsLinkedDevicesPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get settingsLinkedDevicesPort;
+
+  /// No description provided for @settingsLinkedDevicesPeer.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get settingsLinkedDevicesPeer;
+
+  /// No description provided for @settingsLinkedDevicesSaveAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save address'**
+  String get settingsLinkedDevicesSaveAddress;
+
   /// No description provided for @membershipNoticeDeviceAdded.
   ///
   /// In en, this message translates to:
@@ -3897,6 +4047,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hint: at most {amount} per {unit}'**
   String claimsSpendingHint(String amount, String unit);
+
+  /// No description provided for @claimsPersonalLimitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim limits'**
+  String get claimsPersonalLimitsTitle;
+
+  /// No description provided for @claimsPersonalLimitsTitleFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim limits for {name}'**
+  String claimsPersonalLimitsTitleFor(String name);
+
+  /// No description provided for @claimsMyLimitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My claim limits'**
+  String get claimsMyLimitsTitle;
+
+  /// No description provided for @claimsMyLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'My limits'**
+  String get claimsMyLimits;
+
+  /// No description provided for @claimsPersonalLimitsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal limits'**
+  String get claimsPersonalLimitsHeading;
+
+  /// No description provided for @claimsCompanyLimitsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Company limits'**
+  String get claimsCompanyLimitsHeading;
+
+  /// No description provided for @claimsBalancesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Balances to settle'**
+  String get claimsBalancesHeading;
+
+  /// No description provided for @claimsPayBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String claimsPayBalance(String amount);
+
+  /// No description provided for @claimsRecordPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get claimsRecordPayment;
+
+  /// No description provided for @claimsAboveLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the {limit} limit'**
+  String claimsAboveLimit(String limit);
+
+  /// No description provided for @claimsNoPersonalLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'No personal limits set.'**
+  String get claimsNoPersonalLimits;
+
+  /// No description provided for @claimsClearPersonalLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear limit'**
+  String get claimsClearPersonalLimit;
 
   /// No description provided for @claimsNoClaimsYet.
   ///

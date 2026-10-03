@@ -515,6 +515,41 @@
   "settingsLinkedDevicesEmpty": "Only this device is linked so far.",
   "settingsLinkedDevicesSyncNow": "Sync now",
   "settingsLinkedDevicesSyncNowBusy": "Catching up…",
+  "settingsLinkedDevicesJoinCheckCode": "Check code — confirm it matches on the other device",
+  "settingsLinkedDevicesScanQr": "Scan join QR",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Confirm check code",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Does this code match the one on the other device?",
+  "settingsLinkedDevicesCodesMatch": "Codes match",
+  "settingsLinkedDevicesCodesDontMatch": "They don''t match",
+  "settingsLinkedDevicesJoinExpired": "This join QR has expired. Ask for a new code.",
+  "settingsLinkedDevicesJoinReused": "This join QR was already used. Ask for a new code.",
+  "settingsLinkedDevicesJoinCodeLabel": "Join code",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} left",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesEnterCodeInstead": "Enter code instead",
+  "settingsLinkedDevicesEnterCodeTitle": "Enter join code",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeSubmit": "Find device",
+  "settingsLinkedDevicesJoinCodeExpired": "This code has expired — ask for a new one",
+  "settingsLinkedDevicesJoinCodeUsed": "This code was already used. Ask for a new one.",
+  "settingsLinkedDevicesJoinCodeNotFound": "No device with this code on this Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Try again",
+  "settingsLinkedDevicesConnectByAddress": "Connect by address",
+  "settingsLinkedDevicesConnectByAddressTitle": "Connect by address",
+  "settingsLinkedDevicesConnectByAddressBody": "When discovery cannot find a linked device, enter its LAN address and port.",
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Device",
+  "settingsLinkedDevicesSaveAddress": "Save address",
   "membershipNoticeDeviceAdded": "A device was added: {name}",
   "@membershipNoticeDeviceAdded": {
     "placeholders": {
@@ -1342,6 +1377,33 @@
       "unit": { "type": "String" }
     }
   },
+  "claimsPersonalLimitsTitle": "Claim limits",
+  "claimsPersonalLimitsTitleFor": "Claim limits for {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "claimsMyLimitsTitle": "My claim limits",
+  "claimsMyLimits": "My limits",
+  "claimsPersonalLimitsHeading": "Your personal limits",
+  "claimsCompanyLimitsHeading": "Company limits",
+  "claimsBalancesHeading": "Balances to settle",
+  "claimsPayBalance": "Pay {amount}",
+  "@claimsPayBalance": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "claimsRecordPayment": "Record payment",
+  "claimsAboveLimit": "Above the {limit} limit",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": { "type": "String" }
+    }
+  },
+  "claimsNoPersonalLimits": "No personal limits set.",
+  "claimsClearPersonalLimit": "Clear limit",
   "claimsNoClaimsYet": "No claims yet.",
   "claimsNoClaimsToReview": "No claims to review.",
   "claimsAdvanceDefault": "Advance",

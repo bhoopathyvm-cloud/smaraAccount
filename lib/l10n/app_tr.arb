@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Bu defterlerin yalnızca bir Sahibi var. Bağlı başka bir cihazı da Sahip yapmayı düşünün.",
   "settingsLinkedDevicesSyncNow": "Şimdi senkronize et",
   "settingsLinkedDevicesSyncNowBusy": "Yakalanıyor…",
-  "translateCategoryWithAi": "AI ile çevir"
+  "translateCategoryWithAi": "AI ile çevir",
+  "settingsLinkedDevicesCodesDontMatch": "Eşleşmiyorlar",
+  "settingsLinkedDevicesConnectByAddress": "Adresle bağlan",
+  "settingsLinkedDevicesConnectByAddressBody": "Keşif bağlı bir cihazı bulamazsa LAN adresini ve bağlantı noktasını girin.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Adresle bağlan",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Bunun yerine kod gir",
+  "settingsLinkedDevicesEnterCodeSubmit": "Cihazı bul",
+  "settingsLinkedDevicesEnterCodeTitle": "Katılma kodunu gir",
+  "settingsLinkedDevicesJoinCodeExpired": "Bu kodun süresi doldu — yeni bir tane isteyin",
+  "settingsLinkedDevicesJoinCodeLabel": "Katılma kodu",
+  "settingsLinkedDevicesJoinCodeNotFound": "Bu Wi-Fide bu koda sahip cihaz yok",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} kaldı",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Yeniden dene",
+  "settingsLinkedDevicesJoinCodeUsed": "Bu kod zaten kullanıldı. Yeni bir tane isteyin.",
+  "settingsLinkedDevicesJoinCheckCode": "Kontrol kodu — diğer cihazda eşleştiğini onaylayın",
+  "settingsLinkedDevicesScanQr": "Katılma QRını tara",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Kontrol kodunu onayla",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Bu kod diğer cihazdakiyle eşleşiyor mu?",
+  "settingsLinkedDevicesCodesMatch": "Kodlar eşleşiyor",
+  "settingsLinkedDevicesJoinExpired": "Bu katılma QRının süresi doldu. Yeni bir kod isteyin.",
+  "settingsLinkedDevicesJoinReused": "Bu katılma QRı zaten kullanıldı. Yeni bir kod isteyin.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Ana bilgisayar",
+  "settingsLinkedDevicesPort": "Bağlantı noktası",
+  "settingsLinkedDevicesPeer": "Cihaz",
+  "settingsLinkedDevicesSaveAddress": "Adresi kaydet",
+  "claimsPersonalLimitsTitle": "Masraf limitleri",
+  "claimsPersonalLimitsTitleFor": "{name} için masraf limitleri",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "{limit} limitinin üzerinde",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Kişisel limit ayarlanmadı.",
+  "claimsClearPersonalLimit": "Limiti temizle"
 }

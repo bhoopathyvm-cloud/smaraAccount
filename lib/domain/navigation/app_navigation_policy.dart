@@ -20,6 +20,7 @@ abstract final class AppNavPaths {
   static const claimEditor = '/claims/edit';
   static const claimDetail = '/claims/detail';
   static const claimantBalance = '/claims/balance';
+  static const myClaimLimits = '/claims/limits';
   static const approverQueue = '/claims/review';
   static const settings = '/settings';
 
@@ -29,6 +30,7 @@ abstract final class AppNavPaths {
     claimEditor,
     claimDetail,
     claimantBalance,
+    myClaimLimits,
     home,
     lock,
     settings,

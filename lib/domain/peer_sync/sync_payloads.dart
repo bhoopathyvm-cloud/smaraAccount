@@ -183,14 +183,24 @@ class MetadataOperation {
     required this.value,
     required this.updatedAt,
     required this.updatedByIdentityId,
+    this.hlcCounter = 0,
+    this.hlcDeviceId = '',
   });
 
   final String entityType;
   final String entityId;
   final String field;
   final Object? value;
+
+  /// Wall component of the hybrid logical clock (UTC).
   final DateTime updatedAt;
   final String updatedByIdentityId;
+
+  /// Logical counter within [updatedAt] (task 5.2).
+  final int hlcCounter;
+
+  /// Device id that minted the stamp (tie-break / HLC node id).
+  final String hlcDeviceId;
 
   Map<String, Object?> toJson() => {
     'entityType': entityType,
@@ -199,6 +209,8 @@ class MetadataOperation {
     'value': value,
     'updatedAt': updatedAt.toUtc().toIso8601String(),
     'updatedByIdentityId': updatedByIdentityId,
+    'hlcCounter': hlcCounter,
+    'hlcDeviceId': hlcDeviceId.isEmpty ? updatedByIdentityId : hlcDeviceId,
   };
 
   static MetadataOperation fromJson(Map<String, dynamic> json) =>
@@ -209,6 +221,11 @@ class MetadataOperation {
         value: json['value'],
         updatedAt: DateTime.parse(json['updatedAt'] as String),
         updatedByIdentityId: json['updatedByIdentityId'] as String,
+        hlcCounter: (json['hlcCounter'] as num?)?.toInt() ?? 0,
+        hlcDeviceId:
+            json['hlcDeviceId'] as String? ??
+            json['updatedByIdentityId'] as String? ??
+            '',
       );
 }
 

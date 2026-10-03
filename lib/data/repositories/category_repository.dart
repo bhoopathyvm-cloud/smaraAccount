@@ -8,6 +8,7 @@ import '../../domain/shared_categories/category_merge.dart';
 import '../../domain/summary/ledger_summary_engine.dart';
 import '../database/app_database.dart';
 import 'account_chart_reader.dart';
+import 'metadata_outbox.dart';
 import 'repository_date_utils.dart';
 
 /// One translation row for a category (locale → display name).
@@ -31,12 +32,20 @@ class CategoryTranslation {
 /// `LedgerRepository` (architecture-deepening design.md D1); a leaf with
 /// no dependency on any other repository.
 class CategoryRepository {
-  CategoryRepository({required AppDatabase database, AccountChartReader? chart})
-    : _db = database,
-      _chart = chart ?? AccountChartReader(database);
+  CategoryRepository({
+    required AppDatabase database,
+    AccountChartReader? chart,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
+  }) : _db = database,
+       _chart = chart ?? AccountChartReader(database),
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final AppDatabase _db;
   final AccountChartReader _chart;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   /// Categories for pickers ([includeArchived] false, the default) or
   /// historical views ([includeArchived] true). Allowlist: income/expense
@@ -68,9 +77,23 @@ class CategoryRepository {
     if (type != AccountType.income && type != AccountType.expense) {
       throw ArgumentError.value(type, 'type', 'must be income or expense');
     }
-    await _db
-        .into(_db.accounts)
-        .insert(AccountsCompanion.insert(name: name, type: type));
+    await _db.transaction(() async {
+      final created = await _db
+          .into(_db.accounts)
+          .insertReturning(AccountsCompanion.insert(name: name, type: type));
+      await _emit(
+        entityType: 'category',
+        entityId: created.id,
+        field: 'type',
+        value: type.name,
+      );
+      await _emit(
+        entityType: 'category',
+        entityId: created.id,
+        field: 'name',
+        value: name,
+      );
+    });
     await applyAutomaticMerges();
   }
 
@@ -78,25 +101,50 @@ class CategoryRepository {
     required String id,
     required String newName,
   }) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(name: Value(newName)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(name: Value(newName)),
+      );
+      await _emit(
+        entityType: 'category',
+        entityId: id,
+        field: 'name',
+        value: newName,
+      );
+    });
     await applyAutomaticMerges();
   }
 
   Future<void> archiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(archivedAt: Value(DateTime.now())),
-    );
+    final at = DateTime.now().toUtc();
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(archivedAt: Value(at)),
+      );
+      await _emit(
+        entityType: 'category',
+        entityId: id,
+        field: 'archivedAt',
+        value: at.toIso8601String(),
+      );
+    });
   }
 
   /// Restores an archived income or expense category to active status
   /// (unarchive-accounts-categories spec: "Unarchive Income or Expense
   /// Category").
   Future<void> unarchiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      const AccountsCompanion(archivedAt: Value(null)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        const AccountsCompanion(archivedAt: Value(null)),
+      );
+      await _emit(
+        entityType: 'category',
+        entityId: id,
+        field: 'archivedAt',
+        value: null,
+      );
+    });
   }
 
   /// Sets or clears (`null`) an Expense category's optional monthly
@@ -126,9 +174,17 @@ class CategoryRepository {
         );
       }
     }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(monthlyLimitMinor: Value(monthlyLimitMinor)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+        AccountsCompanion(monthlyLimitMinor: Value(monthlyLimitMinor)),
+      );
+      await _emit(
+        entityType: 'category',
+        entityId: id,
+        field: 'monthlyLimitMinor',
+        value: monthlyLimitMinor,
+      );
+    });
   }
 
   /// Books-level default language for category names (design Decision 8 / 9).
@@ -149,11 +205,19 @@ class CategoryRepository {
         'Books set metadata is missing; cannot set default category locale.',
       );
     }
-    await (_db.update(
-      _db.booksSetMetadata,
-    )..where((t) => t.id.equals(row.id))).write(
-      BooksSetMetadataCompanion(defaultCategoryLocale: Value(normalized)),
-    );
+    await _db.transaction(() async {
+      await (_db.update(
+        _db.booksSetMetadata,
+      )..where((t) => t.id.equals(row.id))).write(
+        BooksSetMetadataCompanion(defaultCategoryLocale: Value(normalized)),
+      );
+      await _emit(
+        entityType: 'settings',
+        entityId: 'books',
+        field: 'defaultCategoryLocale',
+        value: normalized,
+      );
+    });
   }
 
   /// Upserts a translation for [categoryId] in [locale]. Returns a suggested
@@ -178,16 +242,24 @@ class CategoryRepository {
       throw ArgumentError.value(categoryId, 'categoryId', 'must be a category');
     }
     final when = updatedAt ?? DateTime.now();
-    await _db
-        .into(_db.categoryTranslations)
-        .insertOnConflictUpdate(
-          CategoryTranslationsCompanion.insert(
-            categoryId: categoryId,
-            locale: normalizedLocale,
-            name: trimmed,
-            updatedAt: when,
-          ),
-        );
+    await _db.transaction(() async {
+      await _db
+          .into(_db.categoryTranslations)
+          .insertOnConflictUpdate(
+            CategoryTranslationsCompanion.insert(
+              categoryId: categoryId,
+              locale: normalizedLocale,
+              name: trimmed,
+              updatedAt: when,
+            ),
+          );
+      await _emit(
+        entityType: 'category_translation',
+        entityId: categoryId,
+        field: normalizedLocale,
+        value: trimmed,
+      );
+    });
 
     final suggestion = await _suggestMergeForNewTranslation(
       categoryId: categoryId,
@@ -472,6 +544,26 @@ class CategoryRepository {
       type: type,
       newTranslation: translation,
       others: catalog,
+    );
+  }
+
+  Future<void> _emit({
+    required String entityType,
+    required String entityId,
+    required String field,
+    required Object? value,
+  }) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: entityType,
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
     );
   }
 }

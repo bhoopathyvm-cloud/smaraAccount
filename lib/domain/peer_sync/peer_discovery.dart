@@ -55,8 +55,9 @@ class DiscoveredPeer {
   final int protocolVersion;
 }
 
-/// mDNS advertise/browse seam. Real Bonjour/Avahi adapters land in section 8;
-/// tests use [FakePeerDiscovery].
+/// mDNS advertise/browse seam. Production uses [BonsoirPeerDiscovery];
+/// [DirectAddressPeerDiscovery] covers blocked discovery; tests use
+/// [FakePeerDiscovery].
 abstract class PeerDiscovery {
   /// Starts advertising [advertisement] on the local link.
   Future<void> startAdvertising(PeerAdvertisement advertisement);
@@ -79,6 +80,9 @@ class PermissionGatedPeerDiscovery implements PeerDiscovery {
 
   final PeerDiscovery _inner;
   final LocalNetworkPermission _permission;
+
+  /// Underlying discovery (for adapters that need the direct-address path).
+  PeerDiscovery get inner => _inner;
 
   @override
   Future<void> startAdvertising(PeerAdvertisement advertisement) async {

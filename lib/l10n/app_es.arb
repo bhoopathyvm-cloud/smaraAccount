@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Estos libros tienen solo un Propietario. Considera hacer Propietario también a otro dispositivo vinculado.",
   "settingsLinkedDevicesSyncNow": "Sincronizar ahora",
   "settingsLinkedDevicesSyncNowBusy": "Poniéndose al día…",
-  "translateCategoryWithAi": "Traducir con IA"
+  "translateCategoryWithAi": "Traducir con IA",
+  "settingsLinkedDevicesCodesDontMatch": "No coinciden",
+  "settingsLinkedDevicesConnectByAddress": "Conectar por dirección",
+  "settingsLinkedDevicesConnectByAddressBody": "Cuando el descubrimiento no encuentre un dispositivo vinculado, introduce su dirección LAN y puerto.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Conectar por dirección",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Introducir código en su lugar",
+  "settingsLinkedDevicesEnterCodeSubmit": "Buscar dispositivo",
+  "settingsLinkedDevicesEnterCodeTitle": "Introducir código de unión",
+  "settingsLinkedDevicesJoinCodeExpired": "Este código ha caducado — pide uno nuevo",
+  "settingsLinkedDevicesJoinCodeLabel": "Código de unión",
+  "settingsLinkedDevicesJoinCodeNotFound": "Ningún dispositivo con este código en este Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} restantes",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Intentar de nuevo",
+  "settingsLinkedDevicesJoinCodeUsed": "Este código ya se usó. Pide uno nuevo.",
+  "settingsLinkedDevicesJoinCheckCode": "Código de verificación — confirma que coincida en el otro dispositivo",
+  "settingsLinkedDevicesScanQr": "Escanear QR de unión",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Confirmar código de verificación",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "¿Coincide este código con el del otro dispositivo?",
+  "settingsLinkedDevicesCodesMatch": "Los códigos coinciden",
+  "settingsLinkedDevicesJoinExpired": "Este QR de unión ha caducado. Pide un código nuevo.",
+  "settingsLinkedDevicesJoinReused": "Este QR de unión ya se usó. Pide un código nuevo.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Puerto",
+  "settingsLinkedDevicesPeer": "Dispositivo",
+  "settingsLinkedDevicesSaveAddress": "Guardar dirección",
+  "claimsPersonalLimitsTitle": "Límites de gastos",
+  "claimsPersonalLimitsTitleFor": "Límites de gastos de {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "Por encima del límite de {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "No hay límites personales.",
+  "claimsClearPersonalLimit": "Borrar límite"
 }

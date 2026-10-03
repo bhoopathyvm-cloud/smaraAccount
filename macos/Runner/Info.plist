@@ -45,6 +45,7 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_smara._tcp</string>
+		<string>_smara-join._tcp</string>
 	</array>
 	<!-- Claim receipts: camera / photo library (shared-accounts task 10.2). -->
 	<key>NSCameraUsageDescription</key>

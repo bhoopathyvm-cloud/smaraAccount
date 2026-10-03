@@ -1023,6 +1023,94 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Bijwerken…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Controlecode — bevestig dat deze overeenkomt op het andere apparaat';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Koppel-QR scannen';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Controlecode bevestigen';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Komt deze code overeen met die op het andere apparaat?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Codes komen overeen';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Ze komen niet overeen';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Deze koppel-QR is verlopen. Vraag om een nieuwe code.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Deze koppel-QR is al gebruikt. Vraag om een nieuwe code.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Koppelcode';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds over';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'In plaats daarvan code invoeren';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Koppelcode invoeren';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Apparaat zoeken';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Deze code is verlopen — vraag om een nieuwe';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Deze code is al gebruikt. Vraag om een nieuwe.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Geen apparaat met deze code op dit wifi-netwerk';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Opnieuw proberen';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Verbinden via adres';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Verbinden via adres';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Als ontdekking een gekoppeld apparaat niet vindt, voer dan het LAN-adres en de poort in.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Host';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Poort';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Apparaat';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Adres opslaan';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Apparaat toegevoegd: $name';
   }
@@ -2208,6 +2296,48 @@ class AppLocalizationsNl extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Tip: hoogstens $amount per $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Declaratielimieten';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Declaratielimieten voor $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'My claim limits';
+
+  @override
+  String get claimsMyLimits => 'My limits';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Your personal limits';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Company limits';
+
+  @override
+  String get claimsBalancesHeading => 'Balances to settle';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Record payment';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Boven de limiet van $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Geen persoonlijke limieten ingesteld.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Limiet wissen';
 
   @override
   String get claimsNoClaimsYet => 'Nog geen declaraties.';

@@ -15982,6 +15982,1918 @@ class ClaimSpendingHintsCompanion
   }
 }
 
+class $MetadataOperationsTable extends MetadataOperations
+    with TableInfo<$MetadataOperationsTable, MetadataOperationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MetadataOperationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _entityTypeMeta = const VerificationMeta(
+    'entityType',
+  );
+  @override
+  late final GeneratedColumn<String> entityType = GeneratedColumn<String>(
+    'entity_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityIdMeta = const VerificationMeta(
+    'entityId',
+  );
+  @override
+  late final GeneratedColumn<String> entityId = GeneratedColumn<String>(
+    'entity_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fieldMeta = const VerificationMeta('field');
+  @override
+  late final GeneratedColumn<String> field = GeneratedColumn<String>(
+    'field',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueJsonMeta = const VerificationMeta(
+    'valueJson',
+  );
+  @override
+  late final GeneratedColumn<String> valueJson = GeneratedColumn<String>(
+    'value_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedByIdentityIdMeta =
+      const VerificationMeta('updatedByIdentityId');
+  @override
+  late final GeneratedColumn<String> updatedByIdentityId =
+      GeneratedColumn<String>(
+        'updated_by_identity_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _hlcCounterMeta = const VerificationMeta(
+    'hlcCounter',
+  );
+  @override
+  late final GeneratedColumn<int> hlcCounter = GeneratedColumn<int>(
+    'hlc_counter',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _hlcDeviceIdMeta = const VerificationMeta(
+    'hlcDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> hlcDeviceId = GeneratedColumn<String>(
+    'hlc_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    entityType,
+    entityId,
+    field,
+    valueJson,
+    updatedAt,
+    updatedByIdentityId,
+    hlcCounter,
+    hlcDeviceId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'metadata_operations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MetadataOperationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('entity_type')) {
+      context.handle(
+        _entityTypeMeta,
+        entityType.isAcceptableOrUnknown(data['entity_type']!, _entityTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityTypeMeta);
+    }
+    if (data.containsKey('entity_id')) {
+      context.handle(
+        _entityIdMeta,
+        entityId.isAcceptableOrUnknown(data['entity_id']!, _entityIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityIdMeta);
+    }
+    if (data.containsKey('field')) {
+      context.handle(
+        _fieldMeta,
+        field.isAcceptableOrUnknown(data['field']!, _fieldMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldMeta);
+    }
+    if (data.containsKey('value_json')) {
+      context.handle(
+        _valueJsonMeta,
+        valueJson.isAcceptableOrUnknown(data['value_json']!, _valueJsonMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('updated_by_identity_id')) {
+      context.handle(
+        _updatedByIdentityIdMeta,
+        updatedByIdentityId.isAcceptableOrUnknown(
+          data['updated_by_identity_id']!,
+          _updatedByIdentityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedByIdentityIdMeta);
+    }
+    if (data.containsKey('hlc_counter')) {
+      context.handle(
+        _hlcCounterMeta,
+        hlcCounter.isAcceptableOrUnknown(data['hlc_counter']!, _hlcCounterMeta),
+      );
+    }
+    if (data.containsKey('hlc_device_id')) {
+      context.handle(
+        _hlcDeviceIdMeta,
+        hlcDeviceId.isAcceptableOrUnknown(
+          data['hlc_device_id']!,
+          _hlcDeviceIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MetadataOperationRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MetadataOperationRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_id'],
+      )!,
+      field: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field'],
+      )!,
+      valueJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value_json'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedByIdentityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_identity_id'],
+      )!,
+      hlcCounter: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hlc_counter'],
+      )!,
+      hlcDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc_device_id'],
+      )!,
+    );
+  }
+
+  @override
+  $MetadataOperationsTable createAlias(String alias) {
+    return $MetadataOperationsTable(attachedDatabase, alias);
+  }
+}
+
+class MetadataOperationRow extends DataClass
+    implements Insertable<MetadataOperationRow> {
+  final int id;
+  final String entityType;
+  final String entityId;
+  final String field;
+
+  /// JSON-encoded value (string / number / bool / null).
+  final String? valueJson;
+  final DateTime updatedAt;
+  final String updatedByIdentityId;
+  final int hlcCounter;
+  final String hlcDeviceId;
+  const MetadataOperationRow({
+    required this.id,
+    required this.entityType,
+    required this.entityId,
+    required this.field,
+    this.valueJson,
+    required this.updatedAt,
+    required this.updatedByIdentityId,
+    required this.hlcCounter,
+    required this.hlcDeviceId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['entity_type'] = Variable<String>(entityType);
+    map['entity_id'] = Variable<String>(entityId);
+    map['field'] = Variable<String>(field);
+    if (!nullToAbsent || valueJson != null) {
+      map['value_json'] = Variable<String>(valueJson);
+    }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['updated_by_identity_id'] = Variable<String>(updatedByIdentityId);
+    map['hlc_counter'] = Variable<int>(hlcCounter);
+    map['hlc_device_id'] = Variable<String>(hlcDeviceId);
+    return map;
+  }
+
+  MetadataOperationsCompanion toCompanion(bool nullToAbsent) {
+    return MetadataOperationsCompanion(
+      id: Value(id),
+      entityType: Value(entityType),
+      entityId: Value(entityId),
+      field: Value(field),
+      valueJson: valueJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(valueJson),
+      updatedAt: Value(updatedAt),
+      updatedByIdentityId: Value(updatedByIdentityId),
+      hlcCounter: Value(hlcCounter),
+      hlcDeviceId: Value(hlcDeviceId),
+    );
+  }
+
+  factory MetadataOperationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MetadataOperationRow(
+      id: serializer.fromJson<int>(json['id']),
+      entityType: serializer.fromJson<String>(json['entityType']),
+      entityId: serializer.fromJson<String>(json['entityId']),
+      field: serializer.fromJson<String>(json['field']),
+      valueJson: serializer.fromJson<String?>(json['valueJson']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      updatedByIdentityId: serializer.fromJson<String>(
+        json['updatedByIdentityId'],
+      ),
+      hlcCounter: serializer.fromJson<int>(json['hlcCounter']),
+      hlcDeviceId: serializer.fromJson<String>(json['hlcDeviceId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'entityType': serializer.toJson<String>(entityType),
+      'entityId': serializer.toJson<String>(entityId),
+      'field': serializer.toJson<String>(field),
+      'valueJson': serializer.toJson<String?>(valueJson),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'updatedByIdentityId': serializer.toJson<String>(updatedByIdentityId),
+      'hlcCounter': serializer.toJson<int>(hlcCounter),
+      'hlcDeviceId': serializer.toJson<String>(hlcDeviceId),
+    };
+  }
+
+  MetadataOperationRow copyWith({
+    int? id,
+    String? entityType,
+    String? entityId,
+    String? field,
+    Value<String?> valueJson = const Value.absent(),
+    DateTime? updatedAt,
+    String? updatedByIdentityId,
+    int? hlcCounter,
+    String? hlcDeviceId,
+  }) => MetadataOperationRow(
+    id: id ?? this.id,
+    entityType: entityType ?? this.entityType,
+    entityId: entityId ?? this.entityId,
+    field: field ?? this.field,
+    valueJson: valueJson.present ? valueJson.value : this.valueJson,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+    hlcCounter: hlcCounter ?? this.hlcCounter,
+    hlcDeviceId: hlcDeviceId ?? this.hlcDeviceId,
+  );
+  MetadataOperationRow copyWithCompanion(MetadataOperationsCompanion data) {
+    return MetadataOperationRow(
+      id: data.id.present ? data.id.value : this.id,
+      entityType: data.entityType.present
+          ? data.entityType.value
+          : this.entityType,
+      entityId: data.entityId.present ? data.entityId.value : this.entityId,
+      field: data.field.present ? data.field.value : this.field,
+      valueJson: data.valueJson.present ? data.valueJson.value : this.valueJson,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedByIdentityId: data.updatedByIdentityId.present
+          ? data.updatedByIdentityId.value
+          : this.updatedByIdentityId,
+      hlcCounter: data.hlcCounter.present
+          ? data.hlcCounter.value
+          : this.hlcCounter,
+      hlcDeviceId: data.hlcDeviceId.present
+          ? data.hlcDeviceId.value
+          : this.hlcDeviceId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataOperationRow(')
+          ..write('id: $id, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('field: $field, ')
+          ..write('valueJson: $valueJson, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId, ')
+          ..write('hlcCounter: $hlcCounter, ')
+          ..write('hlcDeviceId: $hlcDeviceId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    entityType,
+    entityId,
+    field,
+    valueJson,
+    updatedAt,
+    updatedByIdentityId,
+    hlcCounter,
+    hlcDeviceId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MetadataOperationRow &&
+          other.id == this.id &&
+          other.entityType == this.entityType &&
+          other.entityId == this.entityId &&
+          other.field == this.field &&
+          other.valueJson == this.valueJson &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedByIdentityId == this.updatedByIdentityId &&
+          other.hlcCounter == this.hlcCounter &&
+          other.hlcDeviceId == this.hlcDeviceId);
+}
+
+class MetadataOperationsCompanion
+    extends UpdateCompanion<MetadataOperationRow> {
+  final Value<int> id;
+  final Value<String> entityType;
+  final Value<String> entityId;
+  final Value<String> field;
+  final Value<String?> valueJson;
+  final Value<DateTime> updatedAt;
+  final Value<String> updatedByIdentityId;
+  final Value<int> hlcCounter;
+  final Value<String> hlcDeviceId;
+  const MetadataOperationsCompanion({
+    this.id = const Value.absent(),
+    this.entityType = const Value.absent(),
+    this.entityId = const Value.absent(),
+    this.field = const Value.absent(),
+    this.valueJson = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedByIdentityId = const Value.absent(),
+    this.hlcCounter = const Value.absent(),
+    this.hlcDeviceId = const Value.absent(),
+  });
+  MetadataOperationsCompanion.insert({
+    this.id = const Value.absent(),
+    required String entityType,
+    required String entityId,
+    required String field,
+    this.valueJson = const Value.absent(),
+    required DateTime updatedAt,
+    required String updatedByIdentityId,
+    this.hlcCounter = const Value.absent(),
+    this.hlcDeviceId = const Value.absent(),
+  }) : entityType = Value(entityType),
+       entityId = Value(entityId),
+       field = Value(field),
+       updatedAt = Value(updatedAt),
+       updatedByIdentityId = Value(updatedByIdentityId);
+  static Insertable<MetadataOperationRow> custom({
+    Expression<int>? id,
+    Expression<String>? entityType,
+    Expression<String>? entityId,
+    Expression<String>? field,
+    Expression<String>? valueJson,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? updatedByIdentityId,
+    Expression<int>? hlcCounter,
+    Expression<String>? hlcDeviceId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (entityType != null) 'entity_type': entityType,
+      if (entityId != null) 'entity_id': entityId,
+      if (field != null) 'field': field,
+      if (valueJson != null) 'value_json': valueJson,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedByIdentityId != null)
+        'updated_by_identity_id': updatedByIdentityId,
+      if (hlcCounter != null) 'hlc_counter': hlcCounter,
+      if (hlcDeviceId != null) 'hlc_device_id': hlcDeviceId,
+    });
+  }
+
+  MetadataOperationsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? entityType,
+    Value<String>? entityId,
+    Value<String>? field,
+    Value<String?>? valueJson,
+    Value<DateTime>? updatedAt,
+    Value<String>? updatedByIdentityId,
+    Value<int>? hlcCounter,
+    Value<String>? hlcDeviceId,
+  }) {
+    return MetadataOperationsCompanion(
+      id: id ?? this.id,
+      entityType: entityType ?? this.entityType,
+      entityId: entityId ?? this.entityId,
+      field: field ?? this.field,
+      valueJson: valueJson ?? this.valueJson,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+      hlcCounter: hlcCounter ?? this.hlcCounter,
+      hlcDeviceId: hlcDeviceId ?? this.hlcDeviceId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (entityType.present) {
+      map['entity_type'] = Variable<String>(entityType.value);
+    }
+    if (entityId.present) {
+      map['entity_id'] = Variable<String>(entityId.value);
+    }
+    if (field.present) {
+      map['field'] = Variable<String>(field.value);
+    }
+    if (valueJson.present) {
+      map['value_json'] = Variable<String>(valueJson.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (updatedByIdentityId.present) {
+      map['updated_by_identity_id'] = Variable<String>(
+        updatedByIdentityId.value,
+      );
+    }
+    if (hlcCounter.present) {
+      map['hlc_counter'] = Variable<int>(hlcCounter.value);
+    }
+    if (hlcDeviceId.present) {
+      map['hlc_device_id'] = Variable<String>(hlcDeviceId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataOperationsCompanion(')
+          ..write('id: $id, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('field: $field, ')
+          ..write('valueJson: $valueJson, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId, ')
+          ..write('hlcCounter: $hlcCounter, ')
+          ..write('hlcDeviceId: $hlcDeviceId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MetadataLwwStateTable extends MetadataLwwState
+    with TableInfo<$MetadataLwwStateTable, MetadataLwwStateRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MetadataLwwStateTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _fieldKeyMeta = const VerificationMeta(
+    'fieldKey',
+  );
+  @override
+  late final GeneratedColumn<String> fieldKey = GeneratedColumn<String>(
+    'field_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityTypeMeta = const VerificationMeta(
+    'entityType',
+  );
+  @override
+  late final GeneratedColumn<String> entityType = GeneratedColumn<String>(
+    'entity_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityIdMeta = const VerificationMeta(
+    'entityId',
+  );
+  @override
+  late final GeneratedColumn<String> entityId = GeneratedColumn<String>(
+    'entity_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fieldMeta = const VerificationMeta('field');
+  @override
+  late final GeneratedColumn<String> field = GeneratedColumn<String>(
+    'field',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueJsonMeta = const VerificationMeta(
+    'valueJson',
+  );
+  @override
+  late final GeneratedColumn<String> valueJson = GeneratedColumn<String>(
+    'value_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcWallMeta = const VerificationMeta(
+    'hlcWall',
+  );
+  @override
+  late final GeneratedColumn<DateTime> hlcWall = GeneratedColumn<DateTime>(
+    'hlc_wall',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hlcCounterMeta = const VerificationMeta(
+    'hlcCounter',
+  );
+  @override
+  late final GeneratedColumn<int> hlcCounter = GeneratedColumn<int>(
+    'hlc_counter',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hlcDeviceIdMeta = const VerificationMeta(
+    'hlcDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> hlcDeviceId = GeneratedColumn<String>(
+    'hlc_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedByIdentityIdMeta =
+      const VerificationMeta('updatedByIdentityId');
+  @override
+  late final GeneratedColumn<String> updatedByIdentityId =
+      GeneratedColumn<String>(
+        'updated_by_identity_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    fieldKey,
+    entityType,
+    entityId,
+    field,
+    valueJson,
+    hlcWall,
+    hlcCounter,
+    hlcDeviceId,
+    updatedByIdentityId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'metadata_lww_state';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MetadataLwwStateRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('field_key')) {
+      context.handle(
+        _fieldKeyMeta,
+        fieldKey.isAcceptableOrUnknown(data['field_key']!, _fieldKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldKeyMeta);
+    }
+    if (data.containsKey('entity_type')) {
+      context.handle(
+        _entityTypeMeta,
+        entityType.isAcceptableOrUnknown(data['entity_type']!, _entityTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityTypeMeta);
+    }
+    if (data.containsKey('entity_id')) {
+      context.handle(
+        _entityIdMeta,
+        entityId.isAcceptableOrUnknown(data['entity_id']!, _entityIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityIdMeta);
+    }
+    if (data.containsKey('field')) {
+      context.handle(
+        _fieldMeta,
+        field.isAcceptableOrUnknown(data['field']!, _fieldMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldMeta);
+    }
+    if (data.containsKey('value_json')) {
+      context.handle(
+        _valueJsonMeta,
+        valueJson.isAcceptableOrUnknown(data['value_json']!, _valueJsonMeta),
+      );
+    }
+    if (data.containsKey('hlc_wall')) {
+      context.handle(
+        _hlcWallMeta,
+        hlcWall.isAcceptableOrUnknown(data['hlc_wall']!, _hlcWallMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hlcWallMeta);
+    }
+    if (data.containsKey('hlc_counter')) {
+      context.handle(
+        _hlcCounterMeta,
+        hlcCounter.isAcceptableOrUnknown(data['hlc_counter']!, _hlcCounterMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hlcCounterMeta);
+    }
+    if (data.containsKey('hlc_device_id')) {
+      context.handle(
+        _hlcDeviceIdMeta,
+        hlcDeviceId.isAcceptableOrUnknown(
+          data['hlc_device_id']!,
+          _hlcDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_hlcDeviceIdMeta);
+    }
+    if (data.containsKey('updated_by_identity_id')) {
+      context.handle(
+        _updatedByIdentityIdMeta,
+        updatedByIdentityId.isAcceptableOrUnknown(
+          data['updated_by_identity_id']!,
+          _updatedByIdentityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedByIdentityIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {fieldKey};
+  @override
+  MetadataLwwStateRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MetadataLwwStateRow(
+      fieldKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field_key'],
+      )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_id'],
+      )!,
+      field: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field'],
+      )!,
+      valueJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value_json'],
+      ),
+      hlcWall: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}hlc_wall'],
+      )!,
+      hlcCounter: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hlc_counter'],
+      )!,
+      hlcDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc_device_id'],
+      )!,
+      updatedByIdentityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_identity_id'],
+      )!,
+    );
+  }
+
+  @override
+  $MetadataLwwStateTable createAlias(String alias) {
+    return $MetadataLwwStateTable(attachedDatabase, alias);
+  }
+}
+
+class MetadataLwwStateRow extends DataClass
+    implements Insertable<MetadataLwwStateRow> {
+  final String fieldKey;
+  final String entityType;
+  final String entityId;
+  final String field;
+  final String? valueJson;
+  final DateTime hlcWall;
+  final int hlcCounter;
+  final String hlcDeviceId;
+  final String updatedByIdentityId;
+  const MetadataLwwStateRow({
+    required this.fieldKey,
+    required this.entityType,
+    required this.entityId,
+    required this.field,
+    this.valueJson,
+    required this.hlcWall,
+    required this.hlcCounter,
+    required this.hlcDeviceId,
+    required this.updatedByIdentityId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['field_key'] = Variable<String>(fieldKey);
+    map['entity_type'] = Variable<String>(entityType);
+    map['entity_id'] = Variable<String>(entityId);
+    map['field'] = Variable<String>(field);
+    if (!nullToAbsent || valueJson != null) {
+      map['value_json'] = Variable<String>(valueJson);
+    }
+    map['hlc_wall'] = Variable<DateTime>(hlcWall);
+    map['hlc_counter'] = Variable<int>(hlcCounter);
+    map['hlc_device_id'] = Variable<String>(hlcDeviceId);
+    map['updated_by_identity_id'] = Variable<String>(updatedByIdentityId);
+    return map;
+  }
+
+  MetadataLwwStateCompanion toCompanion(bool nullToAbsent) {
+    return MetadataLwwStateCompanion(
+      fieldKey: Value(fieldKey),
+      entityType: Value(entityType),
+      entityId: Value(entityId),
+      field: Value(field),
+      valueJson: valueJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(valueJson),
+      hlcWall: Value(hlcWall),
+      hlcCounter: Value(hlcCounter),
+      hlcDeviceId: Value(hlcDeviceId),
+      updatedByIdentityId: Value(updatedByIdentityId),
+    );
+  }
+
+  factory MetadataLwwStateRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MetadataLwwStateRow(
+      fieldKey: serializer.fromJson<String>(json['fieldKey']),
+      entityType: serializer.fromJson<String>(json['entityType']),
+      entityId: serializer.fromJson<String>(json['entityId']),
+      field: serializer.fromJson<String>(json['field']),
+      valueJson: serializer.fromJson<String?>(json['valueJson']),
+      hlcWall: serializer.fromJson<DateTime>(json['hlcWall']),
+      hlcCounter: serializer.fromJson<int>(json['hlcCounter']),
+      hlcDeviceId: serializer.fromJson<String>(json['hlcDeviceId']),
+      updatedByIdentityId: serializer.fromJson<String>(
+        json['updatedByIdentityId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'fieldKey': serializer.toJson<String>(fieldKey),
+      'entityType': serializer.toJson<String>(entityType),
+      'entityId': serializer.toJson<String>(entityId),
+      'field': serializer.toJson<String>(field),
+      'valueJson': serializer.toJson<String?>(valueJson),
+      'hlcWall': serializer.toJson<DateTime>(hlcWall),
+      'hlcCounter': serializer.toJson<int>(hlcCounter),
+      'hlcDeviceId': serializer.toJson<String>(hlcDeviceId),
+      'updatedByIdentityId': serializer.toJson<String>(updatedByIdentityId),
+    };
+  }
+
+  MetadataLwwStateRow copyWith({
+    String? fieldKey,
+    String? entityType,
+    String? entityId,
+    String? field,
+    Value<String?> valueJson = const Value.absent(),
+    DateTime? hlcWall,
+    int? hlcCounter,
+    String? hlcDeviceId,
+    String? updatedByIdentityId,
+  }) => MetadataLwwStateRow(
+    fieldKey: fieldKey ?? this.fieldKey,
+    entityType: entityType ?? this.entityType,
+    entityId: entityId ?? this.entityId,
+    field: field ?? this.field,
+    valueJson: valueJson.present ? valueJson.value : this.valueJson,
+    hlcWall: hlcWall ?? this.hlcWall,
+    hlcCounter: hlcCounter ?? this.hlcCounter,
+    hlcDeviceId: hlcDeviceId ?? this.hlcDeviceId,
+    updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+  );
+  MetadataLwwStateRow copyWithCompanion(MetadataLwwStateCompanion data) {
+    return MetadataLwwStateRow(
+      fieldKey: data.fieldKey.present ? data.fieldKey.value : this.fieldKey,
+      entityType: data.entityType.present
+          ? data.entityType.value
+          : this.entityType,
+      entityId: data.entityId.present ? data.entityId.value : this.entityId,
+      field: data.field.present ? data.field.value : this.field,
+      valueJson: data.valueJson.present ? data.valueJson.value : this.valueJson,
+      hlcWall: data.hlcWall.present ? data.hlcWall.value : this.hlcWall,
+      hlcCounter: data.hlcCounter.present
+          ? data.hlcCounter.value
+          : this.hlcCounter,
+      hlcDeviceId: data.hlcDeviceId.present
+          ? data.hlcDeviceId.value
+          : this.hlcDeviceId,
+      updatedByIdentityId: data.updatedByIdentityId.present
+          ? data.updatedByIdentityId.value
+          : this.updatedByIdentityId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataLwwStateRow(')
+          ..write('fieldKey: $fieldKey, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('field: $field, ')
+          ..write('valueJson: $valueJson, ')
+          ..write('hlcWall: $hlcWall, ')
+          ..write('hlcCounter: $hlcCounter, ')
+          ..write('hlcDeviceId: $hlcDeviceId, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    fieldKey,
+    entityType,
+    entityId,
+    field,
+    valueJson,
+    hlcWall,
+    hlcCounter,
+    hlcDeviceId,
+    updatedByIdentityId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MetadataLwwStateRow &&
+          other.fieldKey == this.fieldKey &&
+          other.entityType == this.entityType &&
+          other.entityId == this.entityId &&
+          other.field == this.field &&
+          other.valueJson == this.valueJson &&
+          other.hlcWall == this.hlcWall &&
+          other.hlcCounter == this.hlcCounter &&
+          other.hlcDeviceId == this.hlcDeviceId &&
+          other.updatedByIdentityId == this.updatedByIdentityId);
+}
+
+class MetadataLwwStateCompanion extends UpdateCompanion<MetadataLwwStateRow> {
+  final Value<String> fieldKey;
+  final Value<String> entityType;
+  final Value<String> entityId;
+  final Value<String> field;
+  final Value<String?> valueJson;
+  final Value<DateTime> hlcWall;
+  final Value<int> hlcCounter;
+  final Value<String> hlcDeviceId;
+  final Value<String> updatedByIdentityId;
+  final Value<int> rowid;
+  const MetadataLwwStateCompanion({
+    this.fieldKey = const Value.absent(),
+    this.entityType = const Value.absent(),
+    this.entityId = const Value.absent(),
+    this.field = const Value.absent(),
+    this.valueJson = const Value.absent(),
+    this.hlcWall = const Value.absent(),
+    this.hlcCounter = const Value.absent(),
+    this.hlcDeviceId = const Value.absent(),
+    this.updatedByIdentityId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MetadataLwwStateCompanion.insert({
+    required String fieldKey,
+    required String entityType,
+    required String entityId,
+    required String field,
+    this.valueJson = const Value.absent(),
+    required DateTime hlcWall,
+    required int hlcCounter,
+    required String hlcDeviceId,
+    required String updatedByIdentityId,
+    this.rowid = const Value.absent(),
+  }) : fieldKey = Value(fieldKey),
+       entityType = Value(entityType),
+       entityId = Value(entityId),
+       field = Value(field),
+       hlcWall = Value(hlcWall),
+       hlcCounter = Value(hlcCounter),
+       hlcDeviceId = Value(hlcDeviceId),
+       updatedByIdentityId = Value(updatedByIdentityId);
+  static Insertable<MetadataLwwStateRow> custom({
+    Expression<String>? fieldKey,
+    Expression<String>? entityType,
+    Expression<String>? entityId,
+    Expression<String>? field,
+    Expression<String>? valueJson,
+    Expression<DateTime>? hlcWall,
+    Expression<int>? hlcCounter,
+    Expression<String>? hlcDeviceId,
+    Expression<String>? updatedByIdentityId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (fieldKey != null) 'field_key': fieldKey,
+      if (entityType != null) 'entity_type': entityType,
+      if (entityId != null) 'entity_id': entityId,
+      if (field != null) 'field': field,
+      if (valueJson != null) 'value_json': valueJson,
+      if (hlcWall != null) 'hlc_wall': hlcWall,
+      if (hlcCounter != null) 'hlc_counter': hlcCounter,
+      if (hlcDeviceId != null) 'hlc_device_id': hlcDeviceId,
+      if (updatedByIdentityId != null)
+        'updated_by_identity_id': updatedByIdentityId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MetadataLwwStateCompanion copyWith({
+    Value<String>? fieldKey,
+    Value<String>? entityType,
+    Value<String>? entityId,
+    Value<String>? field,
+    Value<String?>? valueJson,
+    Value<DateTime>? hlcWall,
+    Value<int>? hlcCounter,
+    Value<String>? hlcDeviceId,
+    Value<String>? updatedByIdentityId,
+    Value<int>? rowid,
+  }) {
+    return MetadataLwwStateCompanion(
+      fieldKey: fieldKey ?? this.fieldKey,
+      entityType: entityType ?? this.entityType,
+      entityId: entityId ?? this.entityId,
+      field: field ?? this.field,
+      valueJson: valueJson ?? this.valueJson,
+      hlcWall: hlcWall ?? this.hlcWall,
+      hlcCounter: hlcCounter ?? this.hlcCounter,
+      hlcDeviceId: hlcDeviceId ?? this.hlcDeviceId,
+      updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (fieldKey.present) {
+      map['field_key'] = Variable<String>(fieldKey.value);
+    }
+    if (entityType.present) {
+      map['entity_type'] = Variable<String>(entityType.value);
+    }
+    if (entityId.present) {
+      map['entity_id'] = Variable<String>(entityId.value);
+    }
+    if (field.present) {
+      map['field'] = Variable<String>(field.value);
+    }
+    if (valueJson.present) {
+      map['value_json'] = Variable<String>(valueJson.value);
+    }
+    if (hlcWall.present) {
+      map['hlc_wall'] = Variable<DateTime>(hlcWall.value);
+    }
+    if (hlcCounter.present) {
+      map['hlc_counter'] = Variable<int>(hlcCounter.value);
+    }
+    if (hlcDeviceId.present) {
+      map['hlc_device_id'] = Variable<String>(hlcDeviceId.value);
+    }
+    if (updatedByIdentityId.present) {
+      map['updated_by_identity_id'] = Variable<String>(
+        updatedByIdentityId.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataLwwStateCompanion(')
+          ..write('fieldKey: $fieldKey, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('field: $field, ')
+          ..write('valueJson: $valueJson, ')
+          ..write('hlcWall: $hlcWall, ')
+          ..write('hlcCounter: $hlcCounter, ')
+          ..write('hlcDeviceId: $hlcDeviceId, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $HlcStateTable extends HlcState
+    with TableInfo<$HlcStateTable, HlcStateRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HlcStateTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastWallMeta = const VerificationMeta(
+    'lastWall',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastWall = GeneratedColumn<DateTime>(
+    'last_wall',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _counterMeta = const VerificationMeta(
+    'counter',
+  );
+  @override
+  late final GeneratedColumn<int> counter = GeneratedColumn<int>(
+    'counter',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, lastWall, counter, deviceId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'hlc_state';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HlcStateRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('last_wall')) {
+      context.handle(
+        _lastWallMeta,
+        lastWall.isAcceptableOrUnknown(data['last_wall']!, _lastWallMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lastWallMeta);
+    }
+    if (data.containsKey('counter')) {
+      context.handle(
+        _counterMeta,
+        counter.isAcceptableOrUnknown(data['counter']!, _counterMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_counterMeta);
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HlcStateRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HlcStateRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      lastWall: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_wall'],
+      )!,
+      counter: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}counter'],
+      )!,
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+    );
+  }
+
+  @override
+  $HlcStateTable createAlias(String alias) {
+    return $HlcStateTable(attachedDatabase, alias);
+  }
+}
+
+class HlcStateRow extends DataClass implements Insertable<HlcStateRow> {
+  /// Always `local` — one row per books database.
+  final String id;
+  final DateTime lastWall;
+  final int counter;
+  final String deviceId;
+  const HlcStateRow({
+    required this.id,
+    required this.lastWall,
+    required this.counter,
+    required this.deviceId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['last_wall'] = Variable<DateTime>(lastWall);
+    map['counter'] = Variable<int>(counter);
+    map['device_id'] = Variable<String>(deviceId);
+    return map;
+  }
+
+  HlcStateCompanion toCompanion(bool nullToAbsent) {
+    return HlcStateCompanion(
+      id: Value(id),
+      lastWall: Value(lastWall),
+      counter: Value(counter),
+      deviceId: Value(deviceId),
+    );
+  }
+
+  factory HlcStateRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HlcStateRow(
+      id: serializer.fromJson<String>(json['id']),
+      lastWall: serializer.fromJson<DateTime>(json['lastWall']),
+      counter: serializer.fromJson<int>(json['counter']),
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'lastWall': serializer.toJson<DateTime>(lastWall),
+      'counter': serializer.toJson<int>(counter),
+      'deviceId': serializer.toJson<String>(deviceId),
+    };
+  }
+
+  HlcStateRow copyWith({
+    String? id,
+    DateTime? lastWall,
+    int? counter,
+    String? deviceId,
+  }) => HlcStateRow(
+    id: id ?? this.id,
+    lastWall: lastWall ?? this.lastWall,
+    counter: counter ?? this.counter,
+    deviceId: deviceId ?? this.deviceId,
+  );
+  HlcStateRow copyWithCompanion(HlcStateCompanion data) {
+    return HlcStateRow(
+      id: data.id.present ? data.id.value : this.id,
+      lastWall: data.lastWall.present ? data.lastWall.value : this.lastWall,
+      counter: data.counter.present ? data.counter.value : this.counter,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HlcStateRow(')
+          ..write('id: $id, ')
+          ..write('lastWall: $lastWall, ')
+          ..write('counter: $counter, ')
+          ..write('deviceId: $deviceId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, lastWall, counter, deviceId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HlcStateRow &&
+          other.id == this.id &&
+          other.lastWall == this.lastWall &&
+          other.counter == this.counter &&
+          other.deviceId == this.deviceId);
+}
+
+class HlcStateCompanion extends UpdateCompanion<HlcStateRow> {
+  final Value<String> id;
+  final Value<DateTime> lastWall;
+  final Value<int> counter;
+  final Value<String> deviceId;
+  final Value<int> rowid;
+  const HlcStateCompanion({
+    this.id = const Value.absent(),
+    this.lastWall = const Value.absent(),
+    this.counter = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  HlcStateCompanion.insert({
+    required String id,
+    required DateTime lastWall,
+    required int counter,
+    required String deviceId,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       lastWall = Value(lastWall),
+       counter = Value(counter),
+       deviceId = Value(deviceId);
+  static Insertable<HlcStateRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? lastWall,
+    Expression<int>? counter,
+    Expression<String>? deviceId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (lastWall != null) 'last_wall': lastWall,
+      if (counter != null) 'counter': counter,
+      if (deviceId != null) 'device_id': deviceId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  HlcStateCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? lastWall,
+    Value<int>? counter,
+    Value<String>? deviceId,
+    Value<int>? rowid,
+  }) {
+    return HlcStateCompanion(
+      id: id ?? this.id,
+      lastWall: lastWall ?? this.lastWall,
+      counter: counter ?? this.counter,
+      deviceId: deviceId ?? this.deviceId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (lastWall.present) {
+      map['last_wall'] = Variable<DateTime>(lastWall.value);
+    }
+    if (counter.present) {
+      map['counter'] = Variable<int>(counter.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HlcStateCompanion(')
+          ..write('id: $id, ')
+          ..write('lastWall: $lastWall, ')
+          ..write('counter: $counter, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PersonalClaimLimitsTable extends PersonalClaimLimits
+    with TableInfo<$PersonalClaimLimitsTable, PersonalClaimLimitRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PersonalClaimLimitsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _personDeviceIdMeta = const VerificationMeta(
+    'personDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> personDeviceId = GeneratedColumn<String>(
+    'person_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMinorMeta = const VerificationMeta(
+    'amountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> amountMinor = GeneratedColumn<int>(
+    'amount_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitLabelMeta = const VerificationMeta(
+    'unitLabel',
+  );
+  @override
+  late final GeneratedColumn<String> unitLabel = GeneratedColumn<String>(
+    'unit_label',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedByIdentityIdMeta =
+      const VerificationMeta('updatedByIdentityId');
+  @override
+  late final GeneratedColumn<String> updatedByIdentityId =
+      GeneratedColumn<String>(
+        'updated_by_identity_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    personDeviceId,
+    categoryId,
+    amountMinor,
+    unitLabel,
+    updatedAt,
+    updatedByIdentityId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'personal_claim_limits';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PersonalClaimLimitRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('person_device_id')) {
+      context.handle(
+        _personDeviceIdMeta,
+        personDeviceId.isAcceptableOrUnknown(
+          data['person_device_id']!,
+          _personDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_personDeviceIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('amount_minor')) {
+      context.handle(
+        _amountMinorMeta,
+        amountMinor.isAcceptableOrUnknown(
+          data['amount_minor']!,
+          _amountMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('unit_label')) {
+      context.handle(
+        _unitLabelMeta,
+        unitLabel.isAcceptableOrUnknown(data['unit_label']!, _unitLabelMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('updated_by_identity_id')) {
+      context.handle(
+        _updatedByIdentityIdMeta,
+        updatedByIdentityId.isAcceptableOrUnknown(
+          data['updated_by_identity_id']!,
+          _updatedByIdentityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedByIdentityIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {personDeviceId, categoryId};
+  @override
+  PersonalClaimLimitRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PersonalClaimLimitRow(
+      personDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}person_device_id'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      amountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_minor'],
+      ),
+      unitLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_label'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedByIdentityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_identity_id'],
+      )!,
+    );
+  }
+
+  @override
+  $PersonalClaimLimitsTable createAlias(String alias) {
+    return $PersonalClaimLimitsTable(attachedDatabase, alias);
+  }
+}
+
+class PersonalClaimLimitRow extends DataClass
+    implements Insertable<PersonalClaimLimitRow> {
+  final String personDeviceId;
+  final String categoryId;
+
+  /// Amount in company currency minor units; null means cleared.
+  final int? amountMinor;
+  final String? unitLabel;
+  final DateTime updatedAt;
+  final String updatedByIdentityId;
+  const PersonalClaimLimitRow({
+    required this.personDeviceId,
+    required this.categoryId,
+    this.amountMinor,
+    this.unitLabel,
+    required this.updatedAt,
+    required this.updatedByIdentityId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['person_device_id'] = Variable<String>(personDeviceId);
+    map['category_id'] = Variable<String>(categoryId);
+    if (!nullToAbsent || amountMinor != null) {
+      map['amount_minor'] = Variable<int>(amountMinor);
+    }
+    if (!nullToAbsent || unitLabel != null) {
+      map['unit_label'] = Variable<String>(unitLabel);
+    }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['updated_by_identity_id'] = Variable<String>(updatedByIdentityId);
+    return map;
+  }
+
+  PersonalClaimLimitsCompanion toCompanion(bool nullToAbsent) {
+    return PersonalClaimLimitsCompanion(
+      personDeviceId: Value(personDeviceId),
+      categoryId: Value(categoryId),
+      amountMinor: amountMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(amountMinor),
+      unitLabel: unitLabel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unitLabel),
+      updatedAt: Value(updatedAt),
+      updatedByIdentityId: Value(updatedByIdentityId),
+    );
+  }
+
+  factory PersonalClaimLimitRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PersonalClaimLimitRow(
+      personDeviceId: serializer.fromJson<String>(json['personDeviceId']),
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      amountMinor: serializer.fromJson<int?>(json['amountMinor']),
+      unitLabel: serializer.fromJson<String?>(json['unitLabel']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      updatedByIdentityId: serializer.fromJson<String>(
+        json['updatedByIdentityId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'personDeviceId': serializer.toJson<String>(personDeviceId),
+      'categoryId': serializer.toJson<String>(categoryId),
+      'amountMinor': serializer.toJson<int?>(amountMinor),
+      'unitLabel': serializer.toJson<String?>(unitLabel),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'updatedByIdentityId': serializer.toJson<String>(updatedByIdentityId),
+    };
+  }
+
+  PersonalClaimLimitRow copyWith({
+    String? personDeviceId,
+    String? categoryId,
+    Value<int?> amountMinor = const Value.absent(),
+    Value<String?> unitLabel = const Value.absent(),
+    DateTime? updatedAt,
+    String? updatedByIdentityId,
+  }) => PersonalClaimLimitRow(
+    personDeviceId: personDeviceId ?? this.personDeviceId,
+    categoryId: categoryId ?? this.categoryId,
+    amountMinor: amountMinor.present ? amountMinor.value : this.amountMinor,
+    unitLabel: unitLabel.present ? unitLabel.value : this.unitLabel,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+  );
+  PersonalClaimLimitRow copyWithCompanion(PersonalClaimLimitsCompanion data) {
+    return PersonalClaimLimitRow(
+      personDeviceId: data.personDeviceId.present
+          ? data.personDeviceId.value
+          : this.personDeviceId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      amountMinor: data.amountMinor.present
+          ? data.amountMinor.value
+          : this.amountMinor,
+      unitLabel: data.unitLabel.present ? data.unitLabel.value : this.unitLabel,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedByIdentityId: data.updatedByIdentityId.present
+          ? data.updatedByIdentityId.value
+          : this.updatedByIdentityId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PersonalClaimLimitRow(')
+          ..write('personDeviceId: $personDeviceId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('unitLabel: $unitLabel, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    personDeviceId,
+    categoryId,
+    amountMinor,
+    unitLabel,
+    updatedAt,
+    updatedByIdentityId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PersonalClaimLimitRow &&
+          other.personDeviceId == this.personDeviceId &&
+          other.categoryId == this.categoryId &&
+          other.amountMinor == this.amountMinor &&
+          other.unitLabel == this.unitLabel &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedByIdentityId == this.updatedByIdentityId);
+}
+
+class PersonalClaimLimitsCompanion
+    extends UpdateCompanion<PersonalClaimLimitRow> {
+  final Value<String> personDeviceId;
+  final Value<String> categoryId;
+  final Value<int?> amountMinor;
+  final Value<String?> unitLabel;
+  final Value<DateTime> updatedAt;
+  final Value<String> updatedByIdentityId;
+  final Value<int> rowid;
+  const PersonalClaimLimitsCompanion({
+    this.personDeviceId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.amountMinor = const Value.absent(),
+    this.unitLabel = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedByIdentityId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PersonalClaimLimitsCompanion.insert({
+    required String personDeviceId,
+    required String categoryId,
+    this.amountMinor = const Value.absent(),
+    this.unitLabel = const Value.absent(),
+    required DateTime updatedAt,
+    required String updatedByIdentityId,
+    this.rowid = const Value.absent(),
+  }) : personDeviceId = Value(personDeviceId),
+       categoryId = Value(categoryId),
+       updatedAt = Value(updatedAt),
+       updatedByIdentityId = Value(updatedByIdentityId);
+  static Insertable<PersonalClaimLimitRow> custom({
+    Expression<String>? personDeviceId,
+    Expression<String>? categoryId,
+    Expression<int>? amountMinor,
+    Expression<String>? unitLabel,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? updatedByIdentityId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (personDeviceId != null) 'person_device_id': personDeviceId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (amountMinor != null) 'amount_minor': amountMinor,
+      if (unitLabel != null) 'unit_label': unitLabel,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedByIdentityId != null)
+        'updated_by_identity_id': updatedByIdentityId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PersonalClaimLimitsCompanion copyWith({
+    Value<String>? personDeviceId,
+    Value<String>? categoryId,
+    Value<int?>? amountMinor,
+    Value<String?>? unitLabel,
+    Value<DateTime>? updatedAt,
+    Value<String>? updatedByIdentityId,
+    Value<int>? rowid,
+  }) {
+    return PersonalClaimLimitsCompanion(
+      personDeviceId: personDeviceId ?? this.personDeviceId,
+      categoryId: categoryId ?? this.categoryId,
+      amountMinor: amountMinor ?? this.amountMinor,
+      unitLabel: unitLabel ?? this.unitLabel,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedByIdentityId: updatedByIdentityId ?? this.updatedByIdentityId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (personDeviceId.present) {
+      map['person_device_id'] = Variable<String>(personDeviceId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (amountMinor.present) {
+      map['amount_minor'] = Variable<int>(amountMinor.value);
+    }
+    if (unitLabel.present) {
+      map['unit_label'] = Variable<String>(unitLabel.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (updatedByIdentityId.present) {
+      map['updated_by_identity_id'] = Variable<String>(
+        updatedByIdentityId.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PersonalClaimLimitsCompanion(')
+          ..write('personDeviceId: $personDeviceId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('unitLabel: $unitLabel, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedByIdentityId: $updatedByIdentityId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -16044,6 +17956,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $ClaimCategoryAllowlistTable(this);
   late final $ClaimSpendingHintsTable claimSpendingHints =
       $ClaimSpendingHintsTable(this);
+  late final $MetadataOperationsTable metadataOperations =
+      $MetadataOperationsTable(this);
+  late final $MetadataLwwStateTable metadataLwwState = $MetadataLwwStateTable(
+    this,
+  );
+  late final $HlcStateTable hlcState = $HlcStateTable(this);
+  late final $PersonalClaimLimitsTable personalClaimLimits =
+      $PersonalClaimLimitsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -16081,6 +18001,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     claimAdvances,
     claimCategoryAllowlist,
     claimSpendingHints,
+    metadataOperations,
+    metadataLwwState,
+    hlcState,
+    personalClaimLimits,
   ];
 }
 
@@ -32439,6 +34363,1054 @@ typedef $$ClaimSpendingHintsTableProcessedTableManager =
       ClaimSpendingHintRow,
       PrefetchHooks Function({bool categoryId})
     >;
+typedef $$MetadataOperationsTableCreateCompanionBuilder =
+    MetadataOperationsCompanion Function({
+      Value<int> id,
+      required String entityType,
+      required String entityId,
+      required String field,
+      Value<String?> valueJson,
+      required DateTime updatedAt,
+      required String updatedByIdentityId,
+      Value<int> hlcCounter,
+      Value<String> hlcDeviceId,
+    });
+typedef $$MetadataOperationsTableUpdateCompanionBuilder =
+    MetadataOperationsCompanion Function({
+      Value<int> id,
+      Value<String> entityType,
+      Value<String> entityId,
+      Value<String> field,
+      Value<String?> valueJson,
+      Value<DateTime> updatedAt,
+      Value<String> updatedByIdentityId,
+      Value<int> hlcCounter,
+      Value<String> hlcDeviceId,
+    });
+
+class $$MetadataOperationsTableFilterComposer
+    extends Composer<_$AppDatabase, $MetadataOperationsTable> {
+  $$MetadataOperationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get valueJson => $composableBuilder(
+    column: $table.valueJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MetadataOperationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MetadataOperationsTable> {
+  $$MetadataOperationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get valueJson => $composableBuilder(
+    column: $table.valueJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MetadataOperationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MetadataOperationsTable> {
+  $$MetadataOperationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get entityId =>
+      $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  GeneratedColumn<String> get field =>
+      $composableBuilder(column: $table.field, builder: (column) => column);
+
+  GeneratedColumn<String> get valueJson =>
+      $composableBuilder(column: $table.valueJson, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => column,
+  );
+}
+
+class $$MetadataOperationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MetadataOperationsTable,
+          MetadataOperationRow,
+          $$MetadataOperationsTableFilterComposer,
+          $$MetadataOperationsTableOrderingComposer,
+          $$MetadataOperationsTableAnnotationComposer,
+          $$MetadataOperationsTableCreateCompanionBuilder,
+          $$MetadataOperationsTableUpdateCompanionBuilder,
+          (
+            MetadataOperationRow,
+            BaseReferences<
+              _$AppDatabase,
+              $MetadataOperationsTable,
+              MetadataOperationRow
+            >,
+          ),
+          MetadataOperationRow,
+          PrefetchHooks Function()
+        > {
+  $$MetadataOperationsTableTableManager(
+    _$AppDatabase db,
+    $MetadataOperationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MetadataOperationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MetadataOperationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MetadataOperationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> entityType = const Value.absent(),
+                Value<String> entityId = const Value.absent(),
+                Value<String> field = const Value.absent(),
+                Value<String?> valueJson = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> updatedByIdentityId = const Value.absent(),
+                Value<int> hlcCounter = const Value.absent(),
+                Value<String> hlcDeviceId = const Value.absent(),
+              }) => MetadataOperationsCompanion(
+                id: id,
+                entityType: entityType,
+                entityId: entityId,
+                field: field,
+                valueJson: valueJson,
+                updatedAt: updatedAt,
+                updatedByIdentityId: updatedByIdentityId,
+                hlcCounter: hlcCounter,
+                hlcDeviceId: hlcDeviceId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String entityType,
+                required String entityId,
+                required String field,
+                Value<String?> valueJson = const Value.absent(),
+                required DateTime updatedAt,
+                required String updatedByIdentityId,
+                Value<int> hlcCounter = const Value.absent(),
+                Value<String> hlcDeviceId = const Value.absent(),
+              }) => MetadataOperationsCompanion.insert(
+                id: id,
+                entityType: entityType,
+                entityId: entityId,
+                field: field,
+                valueJson: valueJson,
+                updatedAt: updatedAt,
+                updatedByIdentityId: updatedByIdentityId,
+                hlcCounter: hlcCounter,
+                hlcDeviceId: hlcDeviceId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MetadataOperationsTable, MetadataOperationRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $MetadataOperationsTable,
+                    MetadataOperationRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MetadataOperationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MetadataOperationsTable,
+      MetadataOperationRow,
+      $$MetadataOperationsTableFilterComposer,
+      $$MetadataOperationsTableOrderingComposer,
+      $$MetadataOperationsTableAnnotationComposer,
+      $$MetadataOperationsTableCreateCompanionBuilder,
+      $$MetadataOperationsTableUpdateCompanionBuilder,
+      (
+        MetadataOperationRow,
+        BaseReferences<
+          _$AppDatabase,
+          $MetadataOperationsTable,
+          MetadataOperationRow
+        >,
+      ),
+      MetadataOperationRow,
+      PrefetchHooks Function()
+    >;
+typedef $$MetadataLwwStateTableCreateCompanionBuilder =
+    MetadataLwwStateCompanion Function({
+      required String fieldKey,
+      required String entityType,
+      required String entityId,
+      required String field,
+      Value<String?> valueJson,
+      required DateTime hlcWall,
+      required int hlcCounter,
+      required String hlcDeviceId,
+      required String updatedByIdentityId,
+      Value<int> rowid,
+    });
+typedef $$MetadataLwwStateTableUpdateCompanionBuilder =
+    MetadataLwwStateCompanion Function({
+      Value<String> fieldKey,
+      Value<String> entityType,
+      Value<String> entityId,
+      Value<String> field,
+      Value<String?> valueJson,
+      Value<DateTime> hlcWall,
+      Value<int> hlcCounter,
+      Value<String> hlcDeviceId,
+      Value<String> updatedByIdentityId,
+      Value<int> rowid,
+    });
+
+class $$MetadataLwwStateTableFilterComposer
+    extends Composer<_$AppDatabase, $MetadataLwwStateTable> {
+  $$MetadataLwwStateTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get fieldKey => $composableBuilder(
+    column: $table.fieldKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get valueJson => $composableBuilder(
+    column: $table.valueJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get hlcWall => $composableBuilder(
+    column: $table.hlcWall,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MetadataLwwStateTableOrderingComposer
+    extends Composer<_$AppDatabase, $MetadataLwwStateTable> {
+  $$MetadataLwwStateTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get fieldKey => $composableBuilder(
+    column: $table.fieldKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get valueJson => $composableBuilder(
+    column: $table.valueJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get hlcWall => $composableBuilder(
+    column: $table.hlcWall,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MetadataLwwStateTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MetadataLwwStateTable> {
+  $$MetadataLwwStateTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get fieldKey =>
+      $composableBuilder(column: $table.fieldKey, builder: (column) => column);
+
+  GeneratedColumn<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get entityId =>
+      $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  GeneratedColumn<String> get field =>
+      $composableBuilder(column: $table.field, builder: (column) => column);
+
+  GeneratedColumn<String> get valueJson =>
+      $composableBuilder(column: $table.valueJson, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get hlcWall =>
+      $composableBuilder(column: $table.hlcWall, builder: (column) => column);
+
+  GeneratedColumn<int> get hlcCounter => $composableBuilder(
+    column: $table.hlcCounter,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get hlcDeviceId => $composableBuilder(
+    column: $table.hlcDeviceId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => column,
+  );
+}
+
+class $$MetadataLwwStateTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MetadataLwwStateTable,
+          MetadataLwwStateRow,
+          $$MetadataLwwStateTableFilterComposer,
+          $$MetadataLwwStateTableOrderingComposer,
+          $$MetadataLwwStateTableAnnotationComposer,
+          $$MetadataLwwStateTableCreateCompanionBuilder,
+          $$MetadataLwwStateTableUpdateCompanionBuilder,
+          (
+            MetadataLwwStateRow,
+            BaseReferences<
+              _$AppDatabase,
+              $MetadataLwwStateTable,
+              MetadataLwwStateRow
+            >,
+          ),
+          MetadataLwwStateRow,
+          PrefetchHooks Function()
+        > {
+  $$MetadataLwwStateTableTableManager(
+    _$AppDatabase db,
+    $MetadataLwwStateTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MetadataLwwStateTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MetadataLwwStateTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MetadataLwwStateTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> fieldKey = const Value.absent(),
+                Value<String> entityType = const Value.absent(),
+                Value<String> entityId = const Value.absent(),
+                Value<String> field = const Value.absent(),
+                Value<String?> valueJson = const Value.absent(),
+                Value<DateTime> hlcWall = const Value.absent(),
+                Value<int> hlcCounter = const Value.absent(),
+                Value<String> hlcDeviceId = const Value.absent(),
+                Value<String> updatedByIdentityId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MetadataLwwStateCompanion(
+                fieldKey: fieldKey,
+                entityType: entityType,
+                entityId: entityId,
+                field: field,
+                valueJson: valueJson,
+                hlcWall: hlcWall,
+                hlcCounter: hlcCounter,
+                hlcDeviceId: hlcDeviceId,
+                updatedByIdentityId: updatedByIdentityId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String fieldKey,
+                required String entityType,
+                required String entityId,
+                required String field,
+                Value<String?> valueJson = const Value.absent(),
+                required DateTime hlcWall,
+                required int hlcCounter,
+                required String hlcDeviceId,
+                required String updatedByIdentityId,
+                Value<int> rowid = const Value.absent(),
+              }) => MetadataLwwStateCompanion.insert(
+                fieldKey: fieldKey,
+                entityType: entityType,
+                entityId: entityId,
+                field: field,
+                valueJson: valueJson,
+                hlcWall: hlcWall,
+                hlcCounter: hlcCounter,
+                hlcDeviceId: hlcDeviceId,
+                updatedByIdentityId: updatedByIdentityId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MetadataLwwStateTable, MetadataLwwStateRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $MetadataLwwStateTable,
+                    MetadataLwwStateRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MetadataLwwStateTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MetadataLwwStateTable,
+      MetadataLwwStateRow,
+      $$MetadataLwwStateTableFilterComposer,
+      $$MetadataLwwStateTableOrderingComposer,
+      $$MetadataLwwStateTableAnnotationComposer,
+      $$MetadataLwwStateTableCreateCompanionBuilder,
+      $$MetadataLwwStateTableUpdateCompanionBuilder,
+      (
+        MetadataLwwStateRow,
+        BaseReferences<
+          _$AppDatabase,
+          $MetadataLwwStateTable,
+          MetadataLwwStateRow
+        >,
+      ),
+      MetadataLwwStateRow,
+      PrefetchHooks Function()
+    >;
+typedef $$HlcStateTableCreateCompanionBuilder =
+    HlcStateCompanion Function({
+      required String id,
+      required DateTime lastWall,
+      required int counter,
+      required String deviceId,
+      Value<int> rowid,
+    });
+typedef $$HlcStateTableUpdateCompanionBuilder =
+    HlcStateCompanion Function({
+      Value<String> id,
+      Value<DateTime> lastWall,
+      Value<int> counter,
+      Value<String> deviceId,
+      Value<int> rowid,
+    });
+
+class $$HlcStateTableFilterComposer
+    extends Composer<_$AppDatabase, $HlcStateTable> {
+  $$HlcStateTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastWall => $composableBuilder(
+    column: $table.lastWall,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get counter => $composableBuilder(
+    column: $table.counter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HlcStateTableOrderingComposer
+    extends Composer<_$AppDatabase, $HlcStateTable> {
+  $$HlcStateTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastWall => $composableBuilder(
+    column: $table.lastWall,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get counter => $composableBuilder(
+    column: $table.counter,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HlcStateTableAnnotationComposer
+    extends Composer<_$AppDatabase, $HlcStateTable> {
+  $$HlcStateTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastWall =>
+      $composableBuilder(column: $table.lastWall, builder: (column) => column);
+
+  GeneratedColumn<int> get counter =>
+      $composableBuilder(column: $table.counter, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+}
+
+class $$HlcStateTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $HlcStateTable,
+          HlcStateRow,
+          $$HlcStateTableFilterComposer,
+          $$HlcStateTableOrderingComposer,
+          $$HlcStateTableAnnotationComposer,
+          $$HlcStateTableCreateCompanionBuilder,
+          $$HlcStateTableUpdateCompanionBuilder,
+          (
+            HlcStateRow,
+            BaseReferences<_$AppDatabase, $HlcStateTable, HlcStateRow>,
+          ),
+          HlcStateRow,
+          PrefetchHooks Function()
+        > {
+  $$HlcStateTableTableManager(_$AppDatabase db, $HlcStateTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HlcStateTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HlcStateTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HlcStateTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> lastWall = const Value.absent(),
+                Value<int> counter = const Value.absent(),
+                Value<String> deviceId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => HlcStateCompanion(
+                id: id,
+                lastWall: lastWall,
+                counter: counter,
+                deviceId: deviceId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime lastWall,
+                required int counter,
+                required String deviceId,
+                Value<int> rowid = const Value.absent(),
+              }) => HlcStateCompanion.insert(
+                id: id,
+                lastWall: lastWall,
+                counter: counter,
+                deviceId: deviceId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$HlcStateTable, HlcStateRow>(table),
+                  BaseReferences<_$AppDatabase, $HlcStateTable, HlcStateRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HlcStateTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $HlcStateTable,
+      HlcStateRow,
+      $$HlcStateTableFilterComposer,
+      $$HlcStateTableOrderingComposer,
+      $$HlcStateTableAnnotationComposer,
+      $$HlcStateTableCreateCompanionBuilder,
+      $$HlcStateTableUpdateCompanionBuilder,
+      (HlcStateRow, BaseReferences<_$AppDatabase, $HlcStateTable, HlcStateRow>),
+      HlcStateRow,
+      PrefetchHooks Function()
+    >;
+typedef $$PersonalClaimLimitsTableCreateCompanionBuilder =
+    PersonalClaimLimitsCompanion Function({
+      required String personDeviceId,
+      required String categoryId,
+      Value<int?> amountMinor,
+      Value<String?> unitLabel,
+      required DateTime updatedAt,
+      required String updatedByIdentityId,
+      Value<int> rowid,
+    });
+typedef $$PersonalClaimLimitsTableUpdateCompanionBuilder =
+    PersonalClaimLimitsCompanion Function({
+      Value<String> personDeviceId,
+      Value<String> categoryId,
+      Value<int?> amountMinor,
+      Value<String?> unitLabel,
+      Value<DateTime> updatedAt,
+      Value<String> updatedByIdentityId,
+      Value<int> rowid,
+    });
+
+class $$PersonalClaimLimitsTableFilterComposer
+    extends Composer<_$AppDatabase, $PersonalClaimLimitsTable> {
+  $$PersonalClaimLimitsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get personDeviceId => $composableBuilder(
+    column: $table.personDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unitLabel => $composableBuilder(
+    column: $table.unitLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PersonalClaimLimitsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PersonalClaimLimitsTable> {
+  $$PersonalClaimLimitsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get personDeviceId => $composableBuilder(
+    column: $table.personDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unitLabel => $composableBuilder(
+    column: $table.unitLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PersonalClaimLimitsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PersonalClaimLimitsTable> {
+  $$PersonalClaimLimitsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get personDeviceId => $composableBuilder(
+    column: $table.personDeviceId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get unitLabel =>
+      $composableBuilder(column: $table.unitLabel, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedByIdentityId => $composableBuilder(
+    column: $table.updatedByIdentityId,
+    builder: (column) => column,
+  );
+}
+
+class $$PersonalClaimLimitsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PersonalClaimLimitsTable,
+          PersonalClaimLimitRow,
+          $$PersonalClaimLimitsTableFilterComposer,
+          $$PersonalClaimLimitsTableOrderingComposer,
+          $$PersonalClaimLimitsTableAnnotationComposer,
+          $$PersonalClaimLimitsTableCreateCompanionBuilder,
+          $$PersonalClaimLimitsTableUpdateCompanionBuilder,
+          (
+            PersonalClaimLimitRow,
+            BaseReferences<
+              _$AppDatabase,
+              $PersonalClaimLimitsTable,
+              PersonalClaimLimitRow
+            >,
+          ),
+          PersonalClaimLimitRow,
+          PrefetchHooks Function()
+        > {
+  $$PersonalClaimLimitsTableTableManager(
+    _$AppDatabase db,
+    $PersonalClaimLimitsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PersonalClaimLimitsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PersonalClaimLimitsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PersonalClaimLimitsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> personDeviceId = const Value.absent(),
+                Value<String> categoryId = const Value.absent(),
+                Value<int?> amountMinor = const Value.absent(),
+                Value<String?> unitLabel = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> updatedByIdentityId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PersonalClaimLimitsCompanion(
+                personDeviceId: personDeviceId,
+                categoryId: categoryId,
+                amountMinor: amountMinor,
+                unitLabel: unitLabel,
+                updatedAt: updatedAt,
+                updatedByIdentityId: updatedByIdentityId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String personDeviceId,
+                required String categoryId,
+                Value<int?> amountMinor = const Value.absent(),
+                Value<String?> unitLabel = const Value.absent(),
+                required DateTime updatedAt,
+                required String updatedByIdentityId,
+                Value<int> rowid = const Value.absent(),
+              }) => PersonalClaimLimitsCompanion.insert(
+                personDeviceId: personDeviceId,
+                categoryId: categoryId,
+                amountMinor: amountMinor,
+                unitLabel: unitLabel,
+                updatedAt: updatedAt,
+                updatedByIdentityId: updatedByIdentityId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PersonalClaimLimitsTable, PersonalClaimLimitRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $PersonalClaimLimitsTable,
+                    PersonalClaimLimitRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PersonalClaimLimitsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PersonalClaimLimitsTable,
+      PersonalClaimLimitRow,
+      $$PersonalClaimLimitsTableFilterComposer,
+      $$PersonalClaimLimitsTableOrderingComposer,
+      $$PersonalClaimLimitsTableAnnotationComposer,
+      $$PersonalClaimLimitsTableCreateCompanionBuilder,
+      $$PersonalClaimLimitsTableUpdateCompanionBuilder,
+      (
+        PersonalClaimLimitRow,
+        BaseReferences<
+          _$AppDatabase,
+          $PersonalClaimLimitsTable,
+          PersonalClaimLimitRow
+        >,
+      ),
+      PersonalClaimLimitRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -32516,4 +35488,12 @@ class $AppDatabaseManager {
       );
   $$ClaimSpendingHintsTableTableManager get claimSpendingHints =>
       $$ClaimSpendingHintsTableTableManager(_db, _db.claimSpendingHints);
+  $$MetadataOperationsTableTableManager get metadataOperations =>
+      $$MetadataOperationsTableTableManager(_db, _db.metadataOperations);
+  $$MetadataLwwStateTableTableManager get metadataLwwState =>
+      $$MetadataLwwStateTableTableManager(_db, _db.metadataLwwState);
+  $$HlcStateTableTableManager get hlcState =>
+      $$HlcStateTableTableManager(_db, _db.hlcState);
+  $$PersonalClaimLimitsTableTableManager get personalClaimLimits =>
+      $$PersonalClaimLimitsTableTableManager(_db, _db.personalClaimLimits);
 }

@@ -1259,5 +1259,59 @@
   "settingsLinkedDevicesSuggestSecondOwner": "لهذه الدفاتر مالك واحد فقط. فكّر في جعل جهاز مرتبط آخر مالكاً أيضاً.",
   "settingsLinkedDevicesSyncNow": "مزامنة الآن",
   "settingsLinkedDevicesSyncNowBusy": "جارٍ التحديث…",
-  "translateCategoryWithAi": "الترجمة بالذكاء الاصطناعي"
+  "translateCategoryWithAi": "الترجمة بالذكاء الاصطناعي",
+  "settingsLinkedDevicesCodesDontMatch": "غير متطابقين",
+  "settingsLinkedDevicesConnectByAddress": "الاتصال بالعنوان",
+  "settingsLinkedDevicesConnectByAddressBody": "عندما يتعذر الاكتشاف العثور على جهاز مرتبط، أدخل عنوان LAN والمنفذ.",
+  "settingsLinkedDevicesConnectByAddressTitle": "الاتصال بالعنوان",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "أدخل الرمز بدلًا من ذلك",
+  "settingsLinkedDevicesEnterCodeSubmit": "البحث عن الجهاز",
+  "settingsLinkedDevicesEnterCodeTitle": "أدخل رمز الانضمام",
+  "settingsLinkedDevicesJoinCodeExpired": "انتهت صلاحية هذا الرمز — اطلب رمزًا جديدًا",
+  "settingsLinkedDevicesJoinCodeLabel": "رمز الانضمام",
+  "settingsLinkedDevicesJoinCodeNotFound": "لا يوجد جهاز بهذا الرمز على شبكة Wi-Fi هذه",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} متبقية",
+  "settingsLinkedDevicesJoinCodeTryAgain": "أعد المحاولة",
+  "settingsLinkedDevicesJoinCodeUsed": "استُخدم هذا الرمز من قبل. اطلب رمزًا جديدًا.",
+  "settingsLinkedDevicesJoinCheckCode": "رمز التحقق — أكّد أنه يطابق على الجهاز الآخر",
+  "settingsLinkedDevicesScanQr": "امسح رمز انضمام QR",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "تأكيد رمز التحقق",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "هل يطابق هذا الرمز الرمز على الجهاز الآخر؟",
+  "settingsLinkedDevicesCodesMatch": "الرمزان متطابقان",
+  "settingsLinkedDevicesJoinExpired": "انتهت صلاحية رمز انضمام QR هذا. اطلب رمزًا جديدًا.",
+  "settingsLinkedDevicesJoinReused": "استُخدم رمز انضمام QR هذا من قبل. اطلب رمزًا جديدًا.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "المضيف",
+  "settingsLinkedDevicesPort": "المنفذ",
+  "settingsLinkedDevicesPeer": "الجهاز",
+  "settingsLinkedDevicesSaveAddress": "حفظ العنوان",
+  "claimsPersonalLimitsTitle": "حدود المطالبات",
+  "claimsPersonalLimitsTitleFor": "حدود المطالبات لـ {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsAboveLimit": "فوق حد {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "لم تُعيَّن حدود شخصية.",
+  "claimsClearPersonalLimit": "مسح الحد"
 }
