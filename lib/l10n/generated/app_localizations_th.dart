@@ -572,30 +572,30 @@ class AppLocalizationsTh extends AppLocalizations {
       'แนวทางการใช้จ่ายสะสมตั้งแต่ต้นเดือนสำหรับหมวดหมู่รายจ่ายนี้ (ไม่บังคับ)';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'แปลด้วย AI';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'เพิ่มคำแปล';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'ภาษา';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'ชื่อที่แปลแล้ว';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'รวมหมวดหมู่';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'หมวดหมู่เหล่านี้ดูเหมือนกัน รวมกันหรือไม่?';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'ภาษาเริ่มต้นสำหรับชื่อหมวดหมู่';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'ใช้ร่วมกันในอุปกรณ์ที่เชื่อมโยง แต่ละอุปกรณ์ยังแสดงภาษาของตนเองเมื่อมีคำแปล';
 
   @override
   String get manageCategoryRules => 'จัดการกฎหมวดหมู่';
@@ -913,153 +913,154 @@ class AppLocalizationsTh extends AppLocalizations {
       'ซ่อนจนมีรายการใหม่จำนวนนี้หลังกดภายหลัง';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'สมุดบัญชีบนอุปกรณ์นี้';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'สมุดบัญชีแต่ละชุดมีกุญแจลงนามและประวัติของตัวเอง การสลับจะเปิดชุดนั้น — หน้าหลักและรายการจะแสดงเฉพาะรายการของชุดนั้น';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'เปิดอยู่ตอนนี้';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'สลับ';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'สมุดบัญชีใหม่';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'ตั้งชื่อสมุดบัญชีนี้';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'ชื่อ';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'ลบสมุดบัญชีนี้หรือไม่?';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'การดำเนินการนี้จะลบ \"$name\" ออกจากอุปกรณ์นี้ รวมถึงกุญแจลงนาม สมุดบัญชีอื่นบนอุปกรณ์นี้ไม่ได้รับผลกระทบ';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'ลบ';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'สมุดบัญชี $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'อุปกรณ์ที่เชื่อมโยง';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'อุปกรณ์ของคุณจะตามกันทันเมื่อทั้งสองเปิด Smara บน Wi-Fi เดียวกัน';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'เพื่อแชร์สมุดบัญชี Smara ต้องค้นหาอุปกรณ์อื่นของคุณบน Wi-Fi นี้ ไม่มีอะไรถูกส่งขึ้นอินเทอร์เน็ต';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'เพิ่มอุปกรณ์';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'ดำเนินการต่อ';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'เจ้าของ';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'สมาชิก';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'เพิ่มอุปกรณ์ได้';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'รอการลบ';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return 'ลบแล้วเมื่อ $date';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'สมุดบัญชีนี้มีเจ้าของเพียงคนเดียว พิจารณาให้อุปกรณ์ที่เชื่อมโยงอื่นเป็นเจ้าของด้วย';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'อุปกรณ์ทั้งสองต้องอยู่บน Wi-Fi เดียวกัน Smara ไม่เข้าร่วมผ่านอินเทอร์เน็ต';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'อนุมัติ';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'ปฏิเสธ';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name ต้องการเข้าร่วมสมุดบัญชีนี้';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty =>
+      'ขณะนี้มีเพียงอุปกรณ์นี้ที่เชื่อมโยง';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'ซิงค์ตอนนี้';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'กำลังตามทัน…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'เพิ่มอุปกรณ์แล้ว: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'ลบอุปกรณ์แล้ว: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return 'รอการลบสำหรับ $name';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return 'ลบ $name แล้วเมื่อ $date';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name ขอสิทธิ์เจ้าของคนเดียว';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return 'การขอเป็นเจ้าของคนเดียวของ $name ถูกยกเลิก';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name เป็นเจ้าของแล้ว';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'ไม่ยอมรับ: ยืนยันไม่ได้ (จาก $name)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return 'บันทึกจาก $name ยืนยันไม่ได้และไม่ได้รับการยอมรับ';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'การปรับแก้สองรายการสำหรับรายการเดียวกันได้รับการจัดการแล้ว — โปรดตรวจสอบ';
 
   @override
   String get whyWeDontEdit => 'ทำไมเราจึงไม่แก้ไขรายการเก่า';
@@ -2103,202 +2104,200 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'การเบิกจ่าย';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'ตรวจการเบิกจ่าย';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'ร่าง';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'ส่งแล้ว';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'อนุมัติบางส่วน';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'อนุมัติแล้ว';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'จ่ายแล้ว';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'ปฏิเสธแล้ว';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'อนุมัติ';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'อนุมัติจำนวนต่างกัน';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'ปฏิเสธ';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'ต้องระบุเหตุผล';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'เงินทดรอง';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'เพิ่มบุคคล';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'ผู้อนุมัติ';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'ผู้เบิก';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company ค้างจ่ายคุณ';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'คุณค้างจ่าย $company';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return 'เคลียร์บัญชีกับ $company แล้ว';
   }
 
   @override
-  String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+  String get claimsReceiptRequired => 'รายการเบิกนี้ต้องมีใบเสร็จ';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'PDF นี้ใหญ่กว่า 5 MB เลือกไฟล์ที่เล็กกว่า';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'คำใบ้: ไม่เกิน $amount ต่อ $unit';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'ยังไม่มีการเบิกจ่าย';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => 'ไม่มีการเบิกจ่ายที่ต้องตรวจ';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'เงินทดรอง';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count รายการ';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'เหตุผลที่ปฏิเสธ';
 
   @override
   String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+      'เหตุผลที่อนุมัติจำนวนต่างกัน';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'ชื่อบุคคล';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'ลบ';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return 'ลบ $name หรือไม่?';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name มีการเบิกจ่ายค้างอยู่ $openClaims รายการ และยอดค้างที่ไม่เป็นศูนย์ ประวัติและใบเสร็จยังอยู่ในสมุดบัญชีนี้';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name มีการเบิกจ่ายค้างอยู่ $openClaims รายการ ประวัติและใบเสร็จยังอยู่ในสมุดบัญชีนี้';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name มียอดค้างที่ไม่เป็นศูนย์ ประวัติและใบเสร็จยังอยู่ในสมุดบัญชีนี้';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return 'ลบ $name หรือไม่? ประวัติและใบเสร็จยังอยู่ในสมุดบัญชีนี้';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'ลบ';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'แก้ไขการเบิกจ่าย';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'ส่ง';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'เพิ่มรายการ';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'แก้ไขรายการ';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet => 'เพิ่มอย่างน้อยหนึ่งรายการก่อนส่ง';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'ยังไม่มีหมวดหมู่รายจ่ายที่อนุญาตสำหรับการเบิกจ่าย';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'หมวดหมู่';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'วันที่ใช้จ่าย';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'จำนวนที่จ่าย';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'สกุลเงินที่จ่าย';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'อัตราแลกเปลี่ยน (ไม่บังคับ)';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return 'จำนวนเป็น $currency';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'คำอธิบาย';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'ถ่ายรูป';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'เลือกรูป';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'เลือก PDF';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'ใบเสร็จ: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'จำนวนนี้ต้องมีใบเสร็จ';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'เพื่อแนบรูปใบเสร็จ Smara ต้องเข้าถึงกล้องหรือคลังรูปของคุณ รูปจะอยู่ในสมุดบัญชีนี้บนอุปกรณ์ของคุณ';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'การเบิกจ่าย · $status';
   }
 }

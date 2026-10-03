@@ -65,6 +65,7 @@ void main() {
 
     expect(find.text('Lebensmittel'), findsOneWidget);
     expect(find.text('Groceries'), findsNothing);
-    expect(find.text('Merge categories'), findsOneWidget);
+    final l10n = lookupAppLocalizations(const Locale('de'));
+    expect(find.text(l10n.mergeCategories), findsOneWidget);
   });
 }
