@@ -132,17 +132,28 @@ class LedgerChainStore {
   }
 
   /// Active (non-superseded, non-continued) signing identities, newest first.
+  ///
+  /// Ties on [SigningIdentities.createdAt] (SQLite/`CURRENT_TIMESTAMP` is
+  /// whole-second) break by `identityId` ascending so order is stable.
   Future<List<SigningIdentity>> activeSigningIdentities() async {
     final rows =
         await (_db.select(_db.signingIdentities)
               ..where((t) => t.supersededAt.isNull() & t.continuedAt.isNull())
-              ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
+              ..orderBy([
+                (t) => OrderingTerm.desc(t.createdAt),
+                (t) => OrderingTerm.asc(t.identityId),
+              ]))
             .get();
     return rows.map(_toDomain).toList();
   }
 
-  /// Active signing identity matching [publicKey], or the newest active
-  /// identity when [publicKey] is null / unmatched (single-device fallback).
+  /// Active signing identity matching [publicKey], or — when [publicKey] is
+  /// null / unmatched — the active identity whose tip mirrors the singleton
+  /// local write tip (peers stay active but are not "current" for
+  /// Continuation / posting fallback). Falls back to the oldest active
+  /// identity with a stable `identityId` tie-break; never picks "newest"
+  /// alone, because a peer linked in the same second (or a later second)
+  /// must not become the Continuation target.
   Future<SigningIdentity?> currentSigningIdentity({
     List<int>? matchingPublicKey,
   }) async {
@@ -155,7 +166,46 @@ class LedgerChainStore {
         }
       }
     }
-    return active.first;
+    return await _activeIdentityForLocalWriteTip(active);
+  }
+
+  /// Identity whose per-identity tip matches the singleton local write tip,
+  /// else the oldest active identity (original local before peer links).
+  Future<SigningIdentity> _activeIdentityForLocalWriteTip(
+    List<SigningIdentity> active,
+  ) async {
+    final state = await loadState();
+    if (state.trustedTipEntryId != null || state.trustedTipHash != null) {
+      for (final identity in active) {
+        final tip = await loadIdentityTip(identity.identityId);
+        if (tip == null) continue;
+        if (tip.trustedTipEntryId == state.trustedTipEntryId &&
+            _nullableBytesEqual(tip.trustedTipHash, state.trustedTipHash)) {
+          return identity;
+        }
+      }
+    }
+    return _oldestActiveByInsertion(active);
+  }
+
+  /// Oldest by `created_at`, then SQLite `rowid` (insertion order). Ties on
+  /// whole-second `created_at` are common when a peer is linked in the same
+  /// second as first-identity setup; UUID `identityId` order is unrelated
+  /// to which identity is local.
+  Future<SigningIdentity> _oldestActiveByInsertion(
+    List<SigningIdentity> active,
+  ) async {
+    final row = await _db
+        .customSelect(
+          'SELECT identity_id FROM signing_identities '
+          'WHERE superseded_at IS NULL AND continued_at IS NULL '
+          'ORDER BY created_at ASC, rowid ASC '
+          'LIMIT 1',
+          readsFrom: {_db.signingIdentities},
+        )
+        .getSingle();
+    final id = row.read<String>('identity_id');
+    return active.firstWhere((identity) => identity.identityId == id);
   }
 
   SigningIdentity _toDomain(IdentityRow row) {
@@ -177,5 +227,11 @@ class LedgerChainStore {
       if (a[i] != b[i]) return false;
     }
     return true;
+  }
+
+  bool _nullableBytesEqual(List<int>? a, List<int>? b) {
+    if (identical(a, b)) return true;
+    if (a == null || b == null) return false;
+    return _bytesEqual(a, b);
   }
 }

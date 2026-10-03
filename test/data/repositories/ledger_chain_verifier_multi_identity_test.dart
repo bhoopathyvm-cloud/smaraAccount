@@ -322,6 +322,18 @@ void main() {
       final peer = await identity.addLinkedPeerIdentity(
         publicKey: peerGenerated.keyMaterial.publicKey,
       );
+      // Force a later createdAt so Continuation cannot accidentally pick
+      // the peer via "newest active" when timestamps share second precision
+      // (SQLite CURRENT_TIMESTAMP) — the flake this test once hit in CI.
+      await (db.update(
+        db.signingIdentities,
+      )..where((t) => t.identityId.equals(peer.identityId))).write(
+        SigningIdentitiesCompanion(
+          createdAt: Value(
+            DateTime.now().toUtc().add(const Duration(seconds: 5)),
+          ),
+        ),
+      );
       final peerRow = await (db.select(
         db.signingIdentities,
       )..where((t) => t.identityId.equals(peer.identityId))).getSingle();
