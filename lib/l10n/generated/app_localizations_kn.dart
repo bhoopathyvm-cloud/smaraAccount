@@ -2448,4 +2448,86 @@ class AppLocalizationsKn extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'ಹಕ್ಕು · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'ನನ್ನ ಸಾಧನಗಳು';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'ನಿಮ್ಮ ಸ್ವಂತ ಫೋನ್‌ಗಳು ಮತ್ತು ಕಂಪ್ಯೂಟರ್‌ಗಳು. ಇವು ಪೂರ್ಣ ಲೆಕ್ಕಪುಸ್ತಕಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುತ್ತವೆ.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'ವ್ಯಕ್ತಿಗಳು';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'ಈ ಲೆಕ್ಕಗಳನ್ನು ಬಳಸುವ ಇತರರು, ಉದಾಹರಣೆಗೆ ಖರ್ಚಿನ ಹಕ್ಕುಗಳನ್ನು ಕಳುಹಿಸುವ ನೌಕರರು.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'ಸೇರಿ ಅಥವಾ ಸಿಂಕ್ ಮಾಡಿ';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“ಈಗ ಸಿಂಕ್ ಮಾಡಿ” ಈ Wi-Fi ನಲ್ಲಿರುವ ಎಲ್ಲಾ ಜೋಡಿಸಿದ ಸಾಧನಗಳನ್ನು ನವೀಕರಿಸುತ್ತದೆ. ಇನ್ನೊಂದು ಸಾಧನದ ಲೆಕ್ಕಗಳಿಗೆ ಸೇರಲು, ಅದು ತೋರಿಸುವ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.';
+
+  @override
+  String get linkedDevicesMoreWays => 'ಸಂಪರ್ಕಿಸಲು ಇನ್ನಷ್ಟು ಮಾರ್ಗಗಳು';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (ಈ ಸಾಧನ)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'ಮಾಲೀಕ – ಪೂರ್ಣ ಲೆಕ್ಕಗಳು';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'ಲೆಕ್ಕಿಗ';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'ಅನುಮೋದಕ – ಹಕ್ಕುಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಪಾವತಿಸುತ್ತಾರೆ';
+
+  @override
+  String get linkedDevicesRoleEmployee =>
+      'ನೌಕರ – ಖರ್ಚಿನ ಹಕ್ಕುಗಳನ್ನು ಕಳುಹಿಸುತ್ತಾರೆ';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'ತಮ್ಮ ಹಕ್ಕುಗಳನ್ನು ಮಾತ್ರ ನೋಡುತ್ತಾರೆ. ನೀವು ಅನುಮೋದಿಸಿ ಮರುಪಾವತಿಸುವ ಖರ್ಚುಗಳನ್ನು ಕಳುಹಿಸುತ್ತಾರೆ.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'ಎಲ್ಲರ ಹಕ್ಕುಗಳನ್ನು ಪರಿಶೀಲಿಸಿ, ಅನುಮೋದಿಸಿ, ಪಾವತಿಸುತ್ತಾರೆ; ಲೆಕ್ಕಗಳನ್ನೂ ಇಡಬಹುದು.';
+
+  @override
+  String get linkedDevicesNameTitle => 'ಈ ಸಾಧನಕ್ಕೆ ಹೆಸರು ನೀಡಿ';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'ನಿಮ್ಮ ಇತರ ಸಾಧನಗಳು ಮತ್ತು ವ್ಯಕ್ತಿಗಳು ಈ ಹೆಸರನ್ನು ನೋಡುತ್ತಾರೆ, ಹಾಗಾಗಿ ಸಾಧನಗಳನ್ನು ಗುರುತಿಸಬಹುದು.';
+
+  @override
+  String get linkedDevicesNameLabel => 'ಸಾಧನದ ಹೆಸರು';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'ನನ್ನ iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'ನನ್ನ iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'ನನ್ನ Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'ನನ್ನ Android ಫೋನ್';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'ನನ್ನ Android ಟ್ಯಾಬ್ಲೆಟ್';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'ನನ್ನ Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'ನನ್ನ Linux PC';
 }

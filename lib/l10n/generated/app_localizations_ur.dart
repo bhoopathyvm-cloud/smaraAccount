@@ -2444,4 +2444,85 @@ class AppLocalizationsUr extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'کلیم · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'میرے آلات';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'آپ کے اپنے فون اور کمپیوٹر۔ یہ مکمل کھاتے شیئر کرتے ہیں۔';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'لوگ';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'دوسرے جو یہ کھاتے استعمال کرتے ہیں، جیسے ملازمین جو اخراجات کے کلیمز بھیجتے ہیں۔';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'شامل ہوں یا سنک کریں';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«ابھی سنک کریں» اس Wi-Fi پر تمام منسلک آلات کو تازہ کر دیتا ہے۔ کسی دوسرے آلے کے کھاتوں میں شامل ہونے کے لیے اس کا دکھایا ہوا QR کوڈ اسکین کریں۔';
+
+  @override
+  String get linkedDevicesMoreWays => 'جڑنے کے مزید طریقے';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (یہ آلہ)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'مالک – مکمل کھاتے';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'کھاتہ دار';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'منظور کنندہ – کلیمز دیکھتا اور ادا کرتا ہے';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'ملازم – اخراجات کے کلیمز بھیجتا ہے';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'صرف اپنے کلیمز دیکھتا ہے۔ اخراجات بھیجتا ہے جنہیں آپ منظور کر کے واپس ادا کرتے ہیں۔';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'سب کے کلیمز دیکھتا، منظور کرتا اور ادا کرتا ہے، اور کھاتے بھی رکھ سکتا ہے۔';
+
+  @override
+  String get linkedDevicesNameTitle => 'اس آلے کا نام رکھیں';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'آپ کے دوسرے آلات اور لوگ یہ نام دیکھیں گے، تاکہ سب آلات میں فرق کر سکیں۔';
+
+  @override
+  String get linkedDevicesNameLabel => 'آلے کا نام';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'میرا iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'میرا iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'میرا Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'میرا Android فون';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'میرا Android ٹیبلٹ';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'میرا Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'میرا Linux PC';
 }

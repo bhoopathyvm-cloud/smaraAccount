@@ -2439,4 +2439,84 @@ class AppLocalizationsSa extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'दावः · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'मम यन्त्राणि';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'भवतः स्वकीयानि दूरभाषाणि सङ्गणकानि च। एतानि सम्पूर्णगणनापुस्तकानि विभजन्ति।';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'जनाः';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'अन्ये ये एतानि गणनापुस्तकानि उपयुञ्जते, यथा व्ययदावान् प्रेषयन्तः कर्मकराः।';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'सम्मिलतु समीकरोतु वा';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“सम्प्रति समीकरणम्” अस्मिन् Wi-Fi मध्ये सर्वाणि संयुक्तयन्त्राणि नवीकरोति। अन्यस्य यन्त्रस्य गणनापुस्तकेषु सम्मिलितुं, तेन दर्शितं QR सङ्केतं परीक्षताम्।';
+
+  @override
+  String get linkedDevicesMoreWays => 'संयोजनस्य अधिकाः उपायाः';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (इदं यन्त्रम्)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'स्वामी – सम्पूर्णगणना';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'गणकः';
+
+  @override
+  String get linkedDevicesRoleApprover => 'अनुमोदकः – दावान् परीक्ष्य ददाति';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'कर्मकरः – व्ययदावान् प्रेषयति';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'केवलं स्वदावान् पश्यति। व्ययान् प्रेषयति, यान् भवान् अनुमोद्य प्रतिददाति।';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'सर्वेषां दावान् परीक्षते, अनुमोदयति, ददाति च; गणनामपि रक्षितुं शक्नोति।';
+
+  @override
+  String get linkedDevicesNameTitle => 'अस्य यन्त्रस्य नाम ददातु';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'भवतः अन्यानि यन्त्राणि जनाः च इदं नाम द्रक्ष्यन्ति, येन यन्त्राणि भेदयितुं शक्यन्ते।';
+
+  @override
+  String get linkedDevicesNameLabel => 'यन्त्रनाम';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'मम iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'मम iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'मम Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'मम Android दूरभाषः';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'मम Android पटलकम्';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'मम Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'मम Linux PC';
 }

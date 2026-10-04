@@ -1353,19 +1353,25 @@
   "claimsBalanceCompanyOwesYou": "{company} owes you",
   "@claimsBalanceCompanyOwesYou": {
     "placeholders": {
-      "company": { "type": "String" }
+      "company": {
+        "type": "String"
+      }
     }
   },
   "claimsBalanceYouOweCompany": "You owe {company}",
   "@claimsBalanceYouOweCompany": {
     "placeholders": {
-      "company": { "type": "String" }
+      "company": {
+        "type": "String"
+      }
     }
   },
   "claimsBalanceSettled": "Settled with {company}",
   "@claimsBalanceSettled": {
     "placeholders": {
-      "company": { "type": "String" }
+      "company": {
+        "type": "String"
+      }
     }
   },
   "claimsReceiptRequired": "A receipt is required for this claim item",
@@ -1373,15 +1379,21 @@
   "claimsSpendingHint": "Hint: at most {amount} per {unit}",
   "@claimsSpendingHint": {
     "placeholders": {
-      "amount": { "type": "String" },
-      "unit": { "type": "String" }
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "claimsPersonalLimitsTitle": "Claim limits",
   "claimsPersonalLimitsTitleFor": "Claim limits for {name}",
   "@claimsPersonalLimitsTitleFor": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "claimsMyLimitsTitle": "My claim limits",
@@ -1392,14 +1404,18 @@
   "claimsPayBalance": "Pay {amount}",
   "@claimsPayBalance": {
     "placeholders": {
-      "amount": { "type": "String" }
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "claimsRecordPayment": "Record payment",
   "claimsAboveLimit": "Above the {limit} limit",
   "@claimsAboveLimit": {
     "placeholders": {
-      "limit": { "type": "String" }
+      "limit": {
+        "type": "String"
+      }
     }
   },
   "claimsNoPersonalLimits": "No personal limits set.",
@@ -1410,7 +1426,9 @@
   "claimsItemCount": "{count} item(s)",
   "@claimsItemCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "claimsRejectReasonTitle": "Reject reason",
@@ -1420,33 +1438,47 @@
   "claimsRemovePersonTitle": "Remove {name}?",
   "@claimsRemovePersonTitle": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "claimsRemovePersonWarning": "{name} has {openClaims} open Claims and a non-zero owed balance. History and receipts stay in these books.",
   "@claimsRemovePersonWarning": {
     "placeholders": {
-      "name": { "type": "String" },
-      "openClaims": { "type": "int" }
+      "name": {
+        "type": "String"
+      },
+      "openClaims": {
+        "type": "int"
+      }
     }
   },
   "claimsRemovePersonWarningOpenOnly": "{name} has {openClaims} open Claims. History and receipts stay in these books.",
   "@claimsRemovePersonWarningOpenOnly": {
     "placeholders": {
-      "name": { "type": "String" },
-      "openClaims": { "type": "int" }
+      "name": {
+        "type": "String"
+      },
+      "openClaims": {
+        "type": "int"
+      }
     }
   },
   "claimsRemovePersonWarningBalanceOnly": "{name} has a non-zero owed balance. History and receipts stay in these books.",
   "@claimsRemovePersonWarningBalanceOnly": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "claimsRemovePersonWarningClean": "Remove {name}? History and receipts stay in these books.",
   "@claimsRemovePersonWarningClean": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "claimsRemovePersonConfirm": "Remove",
@@ -1464,7 +1496,9 @@
   "claimsCompanyAmountLabel": "Amount in {currency}",
   "@claimsCompanyAmountLabel": {
     "placeholders": {
-      "currency": { "type": "String" }
+      "currency": {
+        "type": "String"
+      }
     }
   },
   "claimsDescriptionLabel": "Description",
@@ -1474,7 +1508,9 @@
   "claimsReceiptAttached": "Receipt: {fileName}",
   "@claimsReceiptAttached": {
     "placeholders": {
-      "fileName": { "type": "String" }
+      "fileName": {
+        "type": "String"
+      }
     }
   },
   "claimsReceiptRequiredHint": "A receipt is required for this amount.",
@@ -1482,7 +1518,41 @@
   "claimsReviewClaimHeading": "Claim · {status}",
   "@claimsReviewClaimHeading": {
     "placeholders": {
-      "status": { "type": "String" }
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "linkedDevicesMyDevicesHeading": "My devices",
+  "linkedDevicesMyDevicesHelp": "Your own phones and computers. They share the full books.",
+  "linkedDevicesPeopleHeading": "People",
+  "linkedDevicesPeopleHelp": "Others who use these books, such as employees who send expense claims.",
+  "linkedDevicesJoinSyncHeading": "Join or sync",
+  "linkedDevicesJoinSyncHelp": "Sync now brings every linked device on this Wi-Fi up to date. To join books from another device, scan the QR code it shows.",
+  "linkedDevicesMoreWays": "More ways to connect",
+  "linkedDevicesThisDevice": "{name} (this device)",
+  "linkedDevicesRoleOwner": "Owner – full books",
+  "linkedDevicesRoleBookkeeper": "Bookkeeper",
+  "linkedDevicesRoleApprover": "Approver – reviews and pays claims",
+  "linkedDevicesRoleEmployee": "Employee – sends expense claims",
+  "linkedDevicesRoleEmployeeHelp": "Sees only their own claims. Sends expenses for you to approve and pay back.",
+  "linkedDevicesRoleApproverHelp": "Reviews, approves and pays everyone''s claims, and can keep the books.",
+  "linkedDevicesNameTitle": "Name this device",
+  "linkedDevicesNameHelp": "Your other devices and people show this name, so everyone can tell the devices apart.",
+  "linkedDevicesNameLabel": "Device name",
+  "linkedDevicesDefaultNameIphone": "My iPhone",
+  "linkedDevicesDefaultNameIpad": "My iPad",
+  "linkedDevicesDefaultNameMac": "My Mac",
+  "linkedDevicesDefaultNameAndroidPhone": "My Android phone",
+  "linkedDevicesDefaultNameAndroidTablet": "My Android tablet",
+  "linkedDevicesDefaultNameWindows": "My Windows PC",
+  "linkedDevicesDefaultNameLinux": "My Linux PC",
+  "@linkedDevicesThisDevice": {
+    "description": "Linked devices entry for the device showing the screen.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
     }
   }
 }

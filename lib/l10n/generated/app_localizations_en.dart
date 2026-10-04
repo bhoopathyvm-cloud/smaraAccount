@@ -2442,4 +2442,84 @@ class AppLocalizationsEn extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Claim · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'My devices';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Your own phones and computers. They share the full books.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'People';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Others who use these books, such as employees who send expense claims.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Join or sync';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Sync now brings every linked device on this Wi-Fi up to date. To join books from another device, scan the QR code it shows.';
+
+  @override
+  String get linkedDevicesMoreWays => 'More ways to connect';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (this device)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Owner – full books';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Bookkeeper';
+
+  @override
+  String get linkedDevicesRoleApprover => 'Approver – reviews and pays claims';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Employee – sends expense claims';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Sees only their own claims. Sends expenses for you to approve and pay back.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Reviews, approves and pays everyone\'s claims, and can keep the books.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Name this device';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Your other devices and people show this name, so everyone can tell the devices apart.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Device name';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'My iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'My iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'My Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'My Android phone';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'My Android tablet';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'My Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'My Linux PC';
 }

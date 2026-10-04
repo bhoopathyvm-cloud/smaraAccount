@@ -4323,6 +4323,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Claim · {status}'**
   String claimsReviewClaimHeading(String status);
+
+  /// No description provided for @linkedDevicesMyDevicesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'My devices'**
+  String get linkedDevicesMyDevicesHeading;
+
+  /// No description provided for @linkedDevicesMyDevicesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own phones and computers. They share the full books.'**
+  String get linkedDevicesMyDevicesHelp;
+
+  /// No description provided for @linkedDevicesPeopleHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get linkedDevicesPeopleHeading;
+
+  /// No description provided for @linkedDevicesPeopleHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Others who use these books, such as employees who send expense claims.'**
+  String get linkedDevicesPeopleHelp;
+
+  /// No description provided for @linkedDevicesJoinSyncHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Join or sync'**
+  String get linkedDevicesJoinSyncHeading;
+
+  /// No description provided for @linkedDevicesJoinSyncHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now brings every linked device on this Wi-Fi up to date. To join books from another device, scan the QR code it shows.'**
+  String get linkedDevicesJoinSyncHelp;
+
+  /// No description provided for @linkedDevicesMoreWays.
+  ///
+  /// In en, this message translates to:
+  /// **'More ways to connect'**
+  String get linkedDevicesMoreWays;
+
+  /// Linked devices entry for the device showing the screen.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (this device)'**
+  String linkedDevicesThisDevice(String name);
+
+  /// No description provided for @linkedDevicesRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner – full books'**
+  String get linkedDevicesRoleOwner;
+
+  /// No description provided for @linkedDevicesRoleBookkeeper.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookkeeper'**
+  String get linkedDevicesRoleBookkeeper;
+
+  /// No description provided for @linkedDevicesRoleApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Approver – reviews and pays claims'**
+  String get linkedDevicesRoleApprover;
+
+  /// No description provided for @linkedDevicesRoleEmployee.
+  ///
+  /// In en, this message translates to:
+  /// **'Employee – sends expense claims'**
+  String get linkedDevicesRoleEmployee;
+
+  /// No description provided for @linkedDevicesRoleEmployeeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sees only their own claims. Sends expenses for you to approve and pay back.'**
+  String get linkedDevicesRoleEmployeeHelp;
+
+  /// No description provided for @linkedDevicesRoleApproverHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews, approves and pays everyone\'\'s claims, and can keep the books.'**
+  String get linkedDevicesRoleApproverHelp;
+
+  /// No description provided for @linkedDevicesNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name this device'**
+  String get linkedDevicesNameTitle;
+
+  /// No description provided for @linkedDevicesNameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your other devices and people show this name, so everyone can tell the devices apart.'**
+  String get linkedDevicesNameHelp;
+
+  /// No description provided for @linkedDevicesNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Device name'**
+  String get linkedDevicesNameLabel;
+
+  /// No description provided for @linkedDevicesDefaultNameIphone.
+  ///
+  /// In en, this message translates to:
+  /// **'My iPhone'**
+  String get linkedDevicesDefaultNameIphone;
+
+  /// No description provided for @linkedDevicesDefaultNameIpad.
+  ///
+  /// In en, this message translates to:
+  /// **'My iPad'**
+  String get linkedDevicesDefaultNameIpad;
+
+  /// No description provided for @linkedDevicesDefaultNameMac.
+  ///
+  /// In en, this message translates to:
+  /// **'My Mac'**
+  String get linkedDevicesDefaultNameMac;
+
+  /// No description provided for @linkedDevicesDefaultNameAndroidPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'My Android phone'**
+  String get linkedDevicesDefaultNameAndroidPhone;
+
+  /// No description provided for @linkedDevicesDefaultNameAndroidTablet.
+  ///
+  /// In en, this message translates to:
+  /// **'My Android tablet'**
+  String get linkedDevicesDefaultNameAndroidTablet;
+
+  /// No description provided for @linkedDevicesDefaultNameWindows.
+  ///
+  /// In en, this message translates to:
+  /// **'My Windows PC'**
+  String get linkedDevicesDefaultNameWindows;
+
+  /// No description provided for @linkedDevicesDefaultNameLinux.
+  ///
+  /// In en, this message translates to:
+  /// **'My Linux PC'**
+  String get linkedDevicesDefaultNameLinux;
 }
 
 class _AppLocalizationsDelegate

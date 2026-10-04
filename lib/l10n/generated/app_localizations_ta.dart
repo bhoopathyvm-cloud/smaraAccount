@@ -2466,4 +2466,86 @@ class AppLocalizationsTa extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'கோரிக்கை · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'என் சாதனங்கள்';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'உங்கள் சொந்த தொலைபேசிகளும் கணினிகளும். இவை முழு கணக்குப் புத்தகங்களையும் பகிர்கின்றன.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'நபர்கள்';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'இந்தக் கணக்குகளைப் பயன்படுத்தும் மற்றவர்கள், உதாரணமாக செலவுக் கோரிக்கைகளை அனுப்பும் ஊழியர்கள்.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'சேர் அல்லது ஒத்திசை';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“இப்போது ஒத்திசை” இந்த Wi-Fi-இல் உள்ள இணைக்கப்பட்ட எல்லா சாதனங்களையும் புதுப்பிக்கும். வேறொரு சாதனத்தின் கணக்குகளில் சேர, அது காட்டும் QR குறியீட்டை ஸ்கேன் செய்யுங்கள்.';
+
+  @override
+  String get linkedDevicesMoreWays => 'இணைய மேலும் வழிகள்';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (இந்தச் சாதனம்)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'உரிமையாளர் – முழு கணக்குகள்';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'கணக்காளர்';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'ஒப்புதலாளர் – கோரிக்கைகளைச் சரிபார்த்துச் செலுத்துபவர்';
+
+  @override
+  String get linkedDevicesRoleEmployee =>
+      'ஊழியர் – செலவுக் கோரிக்கைகளை அனுப்புபவர்';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'தன் கோரிக்கைகளை மட்டும் பார்க்கலாம். நீங்கள் ஒப்புதல் அளித்துத் திருப்பிச் செலுத்தும் செலவுகளை அனுப்புவார்.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'அனைவரின் கோரிக்கைகளையும் சரிபார்த்து, ஒப்புதல் அளித்து, செலுத்துவார்; கணக்குகளையும் பராமரிக்கலாம்.';
+
+  @override
+  String get linkedDevicesNameTitle => 'இந்தச் சாதனத்துக்குப் பெயரிடுங்கள்';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'உங்கள் மற்ற சாதனங்களும் நபர்களும் இந்தப் பெயரைப் பார்ப்பார்கள்; இதனால் சாதனங்களை வேறுபடுத்தலாம்.';
+
+  @override
+  String get linkedDevicesNameLabel => 'சாதனப் பெயர்';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'என் iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'என் iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'என் Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'என் Android தொலைபேசி';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'என் Android டேப்லெட்';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'என் Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'என் Linux PC';
 }

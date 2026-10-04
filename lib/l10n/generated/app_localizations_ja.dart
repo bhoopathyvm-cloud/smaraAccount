@@ -2358,4 +2358,80 @@ class AppLocalizationsJa extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return '申請 · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => '自分のデバイス';
+
+  @override
+  String get linkedDevicesMyDevicesHelp => 'あなた自身のスマートフォンやコンピュータ。帳簿全体を共有します。';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'メンバー';
+
+  @override
+  String get linkedDevicesPeopleHelp => 'この帳簿を使うほかの人。たとえば経費を申請する従業員など。';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => '参加・同期';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '「今すぐ同期」で、この Wi-Fi 上のリンク済みデバイスがすべて最新になります。別のデバイスの帳簿に参加するには、そのデバイスに表示された QR コードをスキャンしてください。';
+
+  @override
+  String get linkedDevicesMoreWays => 'その他の接続方法';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name（このデバイス）';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'オーナー – 帳簿全体';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => '帳簿担当';
+
+  @override
+  String get linkedDevicesRoleApprover => '承認者 – 経費申請を確認して支払う';
+
+  @override
+  String get linkedDevicesRoleEmployee => '従業員 – 経費を申請する';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      '自分の申請だけが見えます。あなたが承認して払い戻す経費を申請します。';
+
+  @override
+  String get linkedDevicesRoleApproverHelp => '全員の経費申請を確認・承認・支払いし、帳簿もつけられます。';
+
+  @override
+  String get linkedDevicesNameTitle => 'このデバイスに名前を付ける';
+
+  @override
+  String get linkedDevicesNameHelp => 'ほかのデバイスやメンバーにこの名前が表示され、デバイスを見分けられます。';
+
+  @override
+  String get linkedDevicesNameLabel => 'デバイス名';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => '自分の iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => '自分の iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => '自分の Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => '自分の Android スマートフォン';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => '自分の Android タブレット';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => '自分の Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => '自分の Linux PC';
 }

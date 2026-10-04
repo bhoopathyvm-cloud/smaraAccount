@@ -2324,4 +2324,79 @@ class AppLocalizationsZh extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return '报销 · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => '我的设备';
+
+  @override
+  String get linkedDevicesMyDevicesHelp => '你自己的手机和电脑，共享完整账本。';
+
+  @override
+  String get linkedDevicesPeopleHeading => '人员';
+
+  @override
+  String get linkedDevicesPeopleHelp => '使用这些账本的其他人，例如提交报销的员工。';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => '加入或同步';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“立即同步”会让此 Wi-Fi 上所有已关联设备更新到最新。要加入另一台设备的账本，请扫描它显示的二维码。';
+
+  @override
+  String get linkedDevicesMoreWays => '更多连接方式';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name（本设备）';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => '所有者 – 完整账本';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => '记账员';
+
+  @override
+  String get linkedDevicesRoleApprover => '审批人 – 审核并支付报销';
+
+  @override
+  String get linkedDevicesRoleEmployee => '员工 – 提交报销';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp => '只能看到自己的报销。提交费用，由你审批并报销。';
+
+  @override
+  String get linkedDevicesRoleApproverHelp => '审核、批准并支付所有人的报销，也可以记账。';
+
+  @override
+  String get linkedDevicesNameTitle => '为此设备命名';
+
+  @override
+  String get linkedDevicesNameHelp => '你的其他设备和人员会看到这个名称，方便区分设备。';
+
+  @override
+  String get linkedDevicesNameLabel => '设备名称';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => '我的 iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => '我的 iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => '我的 Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => '我的 Android 手机';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => '我的 Android 平板';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => '我的 Windows 电脑';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => '我的 Linux 电脑';
 }

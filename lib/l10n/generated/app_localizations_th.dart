@@ -2428,4 +2428,84 @@ class AppLocalizationsTh extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'การเบิกจ่าย · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'อุปกรณ์ของฉัน';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'โทรศัพท์และคอมพิวเตอร์ของคุณเอง ใช้สมุดบัญชีทั้งหมดร่วมกัน';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'บุคคล';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'คนอื่นที่ใช้สมุดบัญชีนี้ เช่น พนักงานที่ส่งคำขอเบิกค่าใช้จ่าย';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'เข้าร่วมหรือซิงค์';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“ซิงค์ตอนนี้” จะอัปเดตอุปกรณ์ที่เชื่อมโยงทั้งหมดบน Wi-Fi นี้ หากต้องการเข้าร่วมสมุดบัญชีจากอุปกรณ์อื่น ให้สแกนคิวอาร์โค้ดที่อุปกรณ์นั้นแสดง';
+
+  @override
+  String get linkedDevicesMoreWays => 'วิธีเชื่อมต่ออื่นๆ';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (อุปกรณ์นี้)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'เจ้าของ – สมุดบัญชีทั้งหมด';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'ผู้ทำบัญชี';
+
+  @override
+  String get linkedDevicesRoleApprover => 'ผู้อนุมัติ – ตรวจและจ่ายการเบิก';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'พนักงาน – ส่งคำขอเบิกค่าใช้จ่าย';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'เห็นเฉพาะการเบิกของตนเอง ส่งค่าใช้จ่ายให้คุณอนุมัติและจ่ายคืน';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'ตรวจ อนุมัติ และจ่ายการเบิกของทุกคน และทำบัญชีได้';
+
+  @override
+  String get linkedDevicesNameTitle => 'ตั้งชื่ออุปกรณ์นี้';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'อุปกรณ์อื่นและบุคคลจะเห็นชื่อนี้ เพื่อให้แยกอุปกรณ์ได้';
+
+  @override
+  String get linkedDevicesNameLabel => 'ชื่ออุปกรณ์';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'iPhone ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'iPad ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mac ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'โทรศัพท์ Android ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'แท็บเล็ต Android ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'พีซี Windows ของฉัน';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'พีซี Linux ของฉัน';
 }

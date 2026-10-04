@@ -290,6 +290,19 @@ class MembershipRepository {
     return (await findByDeviceId(targetDeviceId))!;
   }
 
+  /// Renames [deviceId]'s membership entry. Returns null when the device is
+  /// not a member yet (the stored name is used once it joins).
+  Future<LinkedDevice?> renameDevice({
+    required String deviceId,
+    required String displayName,
+  }) async {
+    if (await findByDeviceId(deviceId) == null) return null;
+    await (_db.update(_db.linkedDevices)
+          ..where((t) => t.deviceId.equals(deviceId)))
+        .write(LinkedDevicesCompanion(displayName: Value(displayName)));
+    return findByDeviceId(deviceId);
+  }
+
   Future<LinkedDevice> promoteToOwner({
     required String actorDeviceId,
     required String targetDeviceId,

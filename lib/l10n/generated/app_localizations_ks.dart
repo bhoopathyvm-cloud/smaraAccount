@@ -2428,4 +2428,85 @@ class AppLocalizationsKs extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'کلیم · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'میٲنۍ ڈیوایس';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'تُہٕندۍ پننۍ فون تہٕ کمپیوٹر۔ یِم چھِ پوٗرۍ حساب کتاب بٲگرٲوِتھ تھاوان۔';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'لُکھ';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'بییہ لُکھ یِم یِم حساب ورتاوان چھِ، مثلاً خرچُک کلیم سوزن وٲلۍ ملازم۔';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'شامل گژھیو یا سنک کریو';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«ونہٕ سنک کریو» چھُ یَتھ Wi-Fi پیٹھ سٲری جُڑمٕتۍ ڈیوایس تازٕ کران۔ بیٚیس ڈیوایسس حسابس منز شامل گژھنہٕ خٲطرٕ، تَمۍ ہاوٕنۍ QR کوڈ سکین کریو۔';
+
+  @override
+  String get linkedDevicesMoreWays => 'جُڑنُک مزید طریقہٕ';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (یہ ڈیوایس)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'مالک – پوٗرۍ حساب';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'منیم';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'منظوری دِنہٕ وول – کلیم وُچھان تہٕ ادا کران';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'ملازم – خرچُک کلیم سوزان';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'صرف پنٕنۍ کلیم وُچھان۔ خرچ سوزان، یِمن تُہۍ منظور کٔرِتھ واپس دِوان چھِو۔';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'سٲنۍ ہُندۍ کلیم وُچھان، منظور کران تہٕ ادا کران؛ حساب تہِ تھٲوِتھ ہیکان۔';
+
+  @override
+  String get linkedDevicesNameTitle => 'یَتھ ڈیوایسس ناو دِیو';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'تُہٕندۍ بییہ ڈیوایس تہٕ لُکھ وُچھن یہ ناو، تاکہ ڈیوایس پرٛزنٲوِتھ ہیکن۔';
+
+  @override
+  String get linkedDevicesNameLabel => 'ڈیوایسُک ناو';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'میون iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'میون iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'میون Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'میون Android فون';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'میون Android ٹیبلیٹ';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'میون Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'میون Linux PC';
 }

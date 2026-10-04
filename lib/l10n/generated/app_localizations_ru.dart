@@ -2454,4 +2454,86 @@ class AppLocalizationsRu extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Заявка · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Мои устройства';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Ваши собственные телефоны и компьютеры. Они используют полные книги.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Люди';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Другие, кто пользуется этими книгами, например сотрудники, подающие расходы.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading =>
+      'Подключиться или синхронизировать';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«Синхронизировать» обновляет все связанные устройства в этой сети Wi-Fi. Чтобы подключиться к книгам с другого устройства, отсканируйте показанный им QR-код.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Другие способы подключения';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (это устройство)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Владелец – полные книги';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Бухгалтер';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Утверждающий – проверяет и оплачивает расходы';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Сотрудник – подаёт расходы';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Видит только свои заявки. Отправляет расходы, которые вы утверждаете и возмещаете.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Проверяет, утверждает и оплачивает заявки всех и может вести книги.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Назовите это устройство';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Другие ваши устройства и люди увидят это имя, чтобы различать устройства.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Имя устройства';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'Мой iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'Мой iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Мой Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Мой Android-телефон';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Мой Android-планшет';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Мой ПК с Windows';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Мой ПК с Linux';
 }

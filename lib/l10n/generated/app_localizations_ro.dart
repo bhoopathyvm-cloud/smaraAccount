@@ -2467,4 +2467,85 @@ class AppLocalizationsRo extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Decont · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Dispozitivele mele';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Propriile dvs. telefoane și calculatoare. Ele împart registrele complete.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Persoane';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Alții care folosesc aceste registre, de exemplu angajați care trimit decontări.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Alăturați-vă sau sincronizați';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Sincronizați acum actualizează toate dispozitivele conectate din acest Wi-Fi. Pentru a vă alătura registrelor de pe alt dispozitiv, scanați codul QR afișat de acesta.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Alte moduri de conectare';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (acest dispozitiv)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Proprietar – registre complete';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Contabil';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Aprobator – verifică și plătește decontările';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Angajat – trimite decontări';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Vede doar propriile decontări. Trimite cheltuieli pe care dvs. le aprobați și le rambursați.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Verifică, aprobă și plătește decontările tuturor și poate ține registrele.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Denumiți acest dispozitiv';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Celelalte dispozitive și persoane vor vedea acest nume, ca toată lumea să distingă dispozitivele.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Numele dispozitivului';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'iPhone-ul meu';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'iPad-ul meu';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mac-ul meu';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Telefonul meu Android';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Tableta mea Android';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'PC-ul meu Windows';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'PC-ul meu Linux';
 }

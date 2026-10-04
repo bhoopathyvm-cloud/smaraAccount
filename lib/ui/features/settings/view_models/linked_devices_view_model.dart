@@ -129,6 +129,14 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   String? _localDeviceId;
   String? get localDeviceId => _localDeviceId;
 
+  /// This device's own name, or null until the user has given one.
+  String? _localDisplayName;
+  String? get localDisplayName => _localDisplayName;
+
+  /// True until this device has a name; the view asks for one before the
+  /// first add or join so other devices don't all show "This device".
+  bool get needsDeviceName => _localDisplayName == null;
+
   JoinQrPayload? _activeJoinQr;
   JoinQrPayload? get activeJoinQr => _activeJoinQr;
 
@@ -161,8 +169,9 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     try {
       await _membership.applyDueSoleOwnerClaims();
       _localDeviceId = await _ensureLocalDeviceId();
-      final displayName =
-          await _settings.localDeviceDisplayName() ?? 'This device';
+      final stored = (await _settings.localDeviceDisplayName())?.trim();
+      _localDisplayName = (stored == null || stored.isEmpty) ? null : stored;
+      final displayName = _localDisplayName ?? 'This device';
       await _membership.ensureLocalOwner(
         localDeviceId: _localDeviceId!,
         displayName: displayName,
@@ -196,6 +205,40 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   Future<void> refresh() => _load();
+
+  /// Names (or renames) this device. The new name is stored, written to this
+  /// device's membership entry and sent to linked devices with the next sync.
+  Future<bool> setLocalDeviceName(String name) async {
+    final trimmed = name.trim();
+    final deviceId = _localDeviceId;
+    if (trimmed.isEmpty || deviceId == null) return false;
+    try {
+      await _settings.setLocalDeviceDisplayName(trimmed);
+      _localDisplayName = trimmed;
+      final renamed = await _membership.renameDevice(
+        deviceId: deviceId,
+        displayName: trimmed,
+      );
+      final identityId = (await _identity?.currentIdentity())?.identityId;
+      if (renamed != null && identityId != null && identityId.isNotEmpty) {
+        await _outbox?.emit(
+          entityType: 'linked_device',
+          entityId: deviceId,
+          field: 'displayName',
+          value: trimmed,
+          updatedByIdentityId: identityId,
+        );
+      }
+      _devices = await _membership.listDevices();
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      if (!_disposed) notifyListeners();
+    }
+  }
 
   /// User read the in-app sentence; mark shown, then request OS permission.
   Future<void> continueAfterPermissionExplanation() async {
