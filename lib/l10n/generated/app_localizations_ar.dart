@@ -2426,4 +2426,92 @@ class AppLocalizationsAr extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'مطالبة · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'أجهزتي';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'هواتفك وحواسيبك الخاصة. تتشارك الدفاتر كاملة.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'الأشخاص';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'آخرون يستخدمون هذه الدفاتر، مثل الموظفين الذين يرسلون مطالبات المصاريف.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'الانضمام أو المزامنة';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«مزامنة الآن» تحدّث كل الأجهزة المرتبطة على شبكة Wi-Fi هذه. للانضمام إلى دفاتر من جهاز آخر، امسح رمز QR الذي يعرضه.';
+
+  @override
+  String get linkedDevicesMoreWays => 'طرق أخرى للاتصال';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (هذا الجهاز)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'المالك – الدفاتر كاملة';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'محاسب';
+
+  @override
+  String get linkedDevicesRoleApprover => 'المعتمِد – يراجع المطالبات ويدفعها';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'موظف – يرسل مطالبات المصاريف';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'يرى مطالباته فقط. يرسل المصاريف لتعتمدها وتعيد دفعها.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'يراجع مطالبات الجميع ويعتمدها ويدفعها، ويمكنه مسك الدفاتر.';
+
+  @override
+  String get linkedDevicesNameTitle => 'سمِّ هذا الجهاز';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'تعرض أجهزتك الأخرى والأشخاص هذا الاسم، ليميّز الجميع بين الأجهزة.';
+
+  @override
+  String get linkedDevicesNameLabel => 'اسم الجهاز';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'iPhone الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'iPad الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mac الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'هاتف Android الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet =>
+      'جهاز Android اللوحي الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'حاسوب Windows الخاص بي';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'حاسوب Linux الخاص بي';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'إعادة تسمية الدفاتر';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'هذا الاسم على هذا الجهاز فقط. اختر اسماً تعرفه، مثل «المكتب» أو «البيت».';
 }

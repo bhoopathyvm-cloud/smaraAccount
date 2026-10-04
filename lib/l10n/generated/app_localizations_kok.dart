@@ -2427,4 +2427,92 @@ class AppLocalizationsKok extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'क्लेम · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'म्हजीं उपकरणां';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'तुमचे स्वताचे फोन आनी कॉम्प्युटर. तीं पुराय हिशोब वह्यो वांटून घेतात.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'लोक';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'हे हिशोब वापरपी हेर लोक, देखीक खर्चाचे क्लेम धाडपी कामगार.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'जोडात वा सिंक करात';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“आतां सिंक करात” ह्या Wi-Fi चेर सगळीं जोडिल्लीं उपकरणां अद्ययावत करता. दुसऱ्या उपकरणाच्या हिशोबांत जोडपाक, तें दाखयता तो QR कोड स्कॅन करात.';
+
+  @override
+  String get linkedDevicesMoreWays => 'जोडपाच्यो आनीक वाटो';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (हें उपकरण)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'मालक – पुराय हिशोब';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'हिशोबनीस';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'मान्यताय दिवपी – क्लेम तपासता आनी पैशे दिता';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'कामगार – खर्चाचे क्लेम धाडटा';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'फकत आपले क्लेम पळयता. खर्च धाडटा, जे तुमी मान्य करून परत दितात.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'सगळ्यांचे क्लेम तपासता, मान्य करता आनी पैशे दिता; हिशोबूय दवरूंक शकता.';
+
+  @override
+  String get linkedDevicesNameTitle => 'ह्या उपकरणाक नांव दियात';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'तुमचीं हेर उपकरणां आनी लोक हें नांव पळयतले, जाका लागून उपकरणां वळखूंक मेळटलीं.';
+
+  @override
+  String get linkedDevicesNameLabel => 'उपकरणाचें नांव';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'म्हजो iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'म्हजो iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'म्हजो Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'म्हजो Android फोन';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'म्हजो Android टॅबलेट';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'म्हजो Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'म्हजो Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'हिशोबांचें नाव बदलात';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'हें नाव फकत ह्या उपकरणाचेर आसता. वळखूंक येता अशें नाव वेंचात, देखीक “ऑफिस” वा “घर”.';
 }

@@ -2434,4 +2434,92 @@ class AppLocalizationsSd extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'ڪليم · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'منهنجا ڊوائيس';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'توهان جا پنهنجا فون ۽ ڪمپيوٽر. اهي پورا حساب ڪتاب شيئر ڪن ٿا.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'ماڻهو';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'ٻيا جيڪي اهي حساب استعمال ڪن ٿا، جهڙوڪ خرچن جا ڪليم موڪليندڙ ملازم.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'شامل ٿيو يا سنڪ ڪريو';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«هاڻي سنڪ ڪريو» هن Wi-Fi تي سڀ ڳنڍيل ڊوائيس تازا ڪري ٿو. ٻئي ڊوائيس جي حسابن ۾ شامل ٿيڻ لاءِ، ان جو ڏيکاريل QR ڪوڊ اسڪين ڪريو.';
+
+  @override
+  String get linkedDevicesMoreWays => 'ڳنڍڻ جا وڌيڪ طريقا';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (هي ڊوائيس)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'مالڪ – پورا حساب';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'حساب رکندڙ';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'منظور ڪندڙ – ڪليم جانچي ادائگي ڪري ٿو';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'ملازم – خرچن جا ڪليم موڪلي ٿو';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'صرف پنهنجا ڪليم ڏسي ٿو. خرچ موڪلي ٿو، جيڪي توهان منظور ڪري واپس ڏيو ٿا.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'سڀني جا ڪليم جانچي، منظور ڪري ۽ ادائگي ڪري ٿو؛ حساب به رکي سگهي ٿو.';
+
+  @override
+  String get linkedDevicesNameTitle => 'هن ڊوائيس کي نالو ڏيو';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'توهان جا ٻيا ڊوائيس ۽ ماڻهو اهو نالو ڏسندا، ته جيئن ڊوائيس سڃاڻي سگهجن.';
+
+  @override
+  String get linkedDevicesNameLabel => 'ڊوائيس جو نالو';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'منهنجو iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'منهنجو iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'منهنجو Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'منهنجو Android فون';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'منهنجو Android ٽيبليٽ';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'منهنجو Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'منهنجو Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'حسابن جو نالو بدلايو';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'هي نالو صرف هن ڊوائيس تي رهي ٿو. سڃاتو وڃي اهڙو نالو چونڊيو، جهڙوڪ «آفيس» يا «گهر».';
 }

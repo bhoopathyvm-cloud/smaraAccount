@@ -2359,4 +2359,88 @@ class AppLocalizationsKo extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return '청구 · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => '내 기기';
+
+  @override
+  String get linkedDevicesMyDevicesHelp => '내가 쓰는 휴대폰과 컴퓨터입니다. 전체 장부를 함께 씁니다.';
+
+  @override
+  String get linkedDevicesPeopleHeading => '사람';
+
+  @override
+  String get linkedDevicesPeopleHelp => '이 장부를 쓰는 다른 사람입니다. 예: 경비를 청구하는 직원.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => '참여 또는 동기화';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '\'지금 동기화\'를 누르면 이 Wi-Fi의 모든 연결된 기기가 최신 상태가 됩니다. 다른 기기의 장부에 참여하려면 그 기기에 표시된 QR 코드를 스캔하세요.';
+
+  @override
+  String get linkedDevicesMoreWays => '다른 연결 방법';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (이 기기)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => '소유자 – 전체 장부';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => '장부 담당';
+
+  @override
+  String get linkedDevicesRoleApprover => '승인자 – 청구를 검토하고 지급';
+
+  @override
+  String get linkedDevicesRoleEmployee => '직원 – 경비 청구';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      '자기 청구만 볼 수 있습니다. 내가 승인하고 지급할 경비를 청구합니다.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      '모든 사람의 청구를 검토·승인·지급하고 장부도 관리할 수 있습니다.';
+
+  @override
+  String get linkedDevicesNameTitle => '이 기기 이름 지정';
+
+  @override
+  String get linkedDevicesNameHelp => '다른 기기와 사람에게 이 이름이 표시되어 기기를 구분할 수 있습니다.';
+
+  @override
+  String get linkedDevicesNameLabel => '기기 이름';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => '내 iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => '내 iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => '내 Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => '내 Android 휴대폰';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => '내 Android 태블릿';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => '내 Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => '내 Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => '장부 이름 바꾸기';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      '이 이름은 이 기기에서만 쓰입니다. ‘사무실’이나 ‘집’처럼 알아보기 쉬운 이름을 고르세요.';
 }

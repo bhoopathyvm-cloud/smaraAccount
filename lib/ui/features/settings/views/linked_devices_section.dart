@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,6 +38,32 @@ class LinkedDevicesSection extends StatelessWidget {
     return ListenableBuilder(
       listenable: viewModel,
       builder: (context, _) {
+        final active = viewModel.devices.where((d) => d.isActive).toList();
+        final removed = viewModel.devices.where((d) => !d.isActive).toList();
+        bool isPerson(LinkedDevice d) => d.personDisplayName != null;
+        final myDevices = [
+          ...active.where((d) => !isPerson(d)),
+          ...removed.where((d) => !isPerson(d)),
+        ];
+        final people = [...active.where(isPerson), ...removed.where(isPerson)];
+        final showPeople =
+            people.isNotEmpty || viewModel.canAdd || viewModel.canApproveClaims;
+        final hasPeers = active.length > 1;
+        Widget tile(LinkedDevice device) {
+          final isLocal = device.deviceId == viewModel.localDeviceId;
+          return _LinkedDeviceTile(
+            device: device,
+            isLocal: isLocal,
+            canRemove:
+                device.isActive && viewModel.canManageMembership && !isLocal,
+            enabled: device.isActive && !viewModel.isBusy,
+            onRemove: device.isActive
+                ? () => _confirmRemovePerson(context, device)
+                : null,
+            onRename: isLocal ? () => _renameThisDevice(context) : null,
+          );
+        }
+
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,27 +100,13 @@ class LinkedDevicesSection extends StatelessWidget {
                     onApprove: () => viewModel.approveJoin(request.requestId),
                     onRefuse: () => viewModel.refuseJoin(request.requestId),
                   ),
-                for (final device in viewModel.devices.where((d) => d.isActive))
-                  _LinkedDeviceTile(
-                    device: device,
-                    localDeviceId: viewModel.localDeviceId,
-                    canRemove:
-                        viewModel.canManageMembership &&
-                        device.deviceId != viewModel.localDeviceId,
-                    enabled: !viewModel.isBusy,
-                    onRemove: () => _confirmRemovePerson(context, device),
-                  ),
-                for (final device in viewModel.devices.where(
-                  (d) => !d.isActive,
-                ))
-                  _LinkedDeviceTile(
-                    device: device,
-                    localDeviceId: viewModel.localDeviceId,
-                    canRemove: false,
-                    enabled: false,
-                    onRemove: null,
-                  ),
-                if (viewModel.devices.where((d) => d.isActive).length <= 1)
+                _SectionHeading(
+                  key: const Key('linked-devices-my-devices'),
+                  title: l10n.linkedDevicesMyDevicesHeading,
+                  help: l10n.linkedDevicesMyDevicesHelp,
+                ),
+                for (final device in myDevices) tile(device),
+                if (!hasPeers)
                   Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.medium),
                     child: Text(
@@ -109,20 +122,46 @@ class LinkedDevicesSection extends StatelessWidget {
                     child: Text(l10n.settingsLinkedDevicesAddDevice),
                   ),
                   const SizedBox(height: AppSpacing.small),
-                  OutlinedButton(
-                    key: const Key('add-person-button'),
-                    onPressed: viewModel.isBusy
-                        ? null
-                        : () => _showAddPerson(context),
-                    child: Text(l10n.claimsAddPerson),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
                 ],
-                if (viewModel.canApproveClaims) ...[
-                  OutlinedButton(
-                    key: const Key('review-claims-button'),
-                    onPressed: () => context.push(AppNavPaths.approverQueue),
-                    child: Text(l10n.claimsReviewTitle),
+                if (showPeople) ...[
+                  _SectionHeading(
+                    key: const Key('linked-devices-people'),
+                    title: l10n.linkedDevicesPeopleHeading,
+                    help: l10n.linkedDevicesPeopleHelp,
+                  ),
+                  for (final device in people) tile(device),
+                  if (viewModel.canAdd) ...[
+                    OutlinedButton(
+                      key: const Key('add-person-button'),
+                      onPressed: viewModel.isBusy
+                          ? null
+                          : () => _showAddPerson(context),
+                      child: Text(l10n.claimsAddPerson),
+                    ),
+                    const SizedBox(height: AppSpacing.small),
+                  ],
+                  if (viewModel.canApproveClaims) ...[
+                    OutlinedButton(
+                      key: const Key('review-claims-button'),
+                      onPressed: () => context.push(AppNavPaths.approverQueue),
+                      child: Text(l10n.claimsReviewTitle),
+                    ),
+                    const SizedBox(height: AppSpacing.small),
+                  ],
+                ],
+                _SectionHeading(
+                  key: const Key('linked-devices-join-sync'),
+                  title: l10n.linkedDevicesJoinSyncHeading,
+                  help: l10n.linkedDevicesJoinSyncHelp,
+                ),
+                if (hasPeers) ...[
+                  ElevatedButton(
+                    onPressed: viewModel.isBusy ? null : viewModel.syncNow,
+                    child: Text(
+                      viewModel.isBusy
+                          ? l10n.settingsLinkedDevicesSyncNowBusy
+                          : l10n.settingsLinkedDevicesSyncNow,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.small),
                 ],
@@ -132,35 +171,33 @@ class LinkedDevicesSection extends StatelessWidget {
                       : () => _scanJoinQr(context),
                   child: Text(l10n.settingsLinkedDevicesScanQr),
                 ),
-                const SizedBox(height: AppSpacing.small),
-                TextButton(
-                  key: const Key('enter-code-instead'),
-                  onPressed: viewModel.isBusy
-                      ? null
-                      : () => _enterJoinCode(context),
-                  child: Text(l10n.settingsLinkedDevicesEnterCodeInstead),
-                ),
-                if (!viewModel.showingPermissionExplanation &&
-                    viewModel.devices.where((d) => d.isActive).length > 1) ...[
-                  const SizedBox(height: AppSpacing.small),
-                  OutlinedButton(
-                    onPressed:
-                        viewModel.isBusy ||
-                            viewModel.connectByAddressAction == null
-                        ? null
-                        : () => _showConnectByAddress(context),
-                    child: Text(l10n.settingsLinkedDevicesConnectByAddress),
+                ExpansionTile(
+                  key: const Key('linked-devices-more-ways'),
+                  tilePadding: EdgeInsets.zero,
+                  childrenPadding: EdgeInsets.zero,
+                  title: Text(
+                    l10n.linkedDevicesMoreWays,
+                    style: AppTypography.body,
                   ),
-                  const SizedBox(height: AppSpacing.medium),
-                  ElevatedButton(
-                    onPressed: viewModel.isBusy ? null : viewModel.syncNow,
-                    child: Text(
-                      viewModel.isBusy
-                          ? l10n.settingsLinkedDevicesSyncNowBusy
-                          : l10n.settingsLinkedDevicesSyncNow,
+                  children: [
+                    TextButton(
+                      key: const Key('enter-code-instead'),
+                      onPressed: viewModel.isBusy
+                          ? null
+                          : () => _enterJoinCode(context),
+                      child: Text(l10n.settingsLinkedDevicesEnterCodeInstead),
                     ),
-                  ),
-                ],
+                    if (hasPeers)
+                      OutlinedButton(
+                        onPressed:
+                            viewModel.isBusy ||
+                                viewModel.connectByAddressAction == null
+                            ? null
+                            : () => _showConnectByAddress(context),
+                        child: Text(l10n.settingsLinkedDevicesConnectByAddress),
+                      ),
+                  ],
+                ),
               ],
               if (viewModel.errorMessage != null) ...[
                 const SizedBox(height: AppSpacing.small),
@@ -178,7 +215,40 @@ class LinkedDevicesSection extends StatelessWidget {
     );
   }
 
+  /// Asks for this device's name the first time it adds or joins, so other
+  /// devices show a real name instead of "This device".
+  Future<bool> _ensureDeviceName(BuildContext context) async {
+    if (!viewModel.needsDeviceName) return true;
+    final name = await _askDeviceName(context, initial: null);
+    if (name == null) return false;
+    return viewModel.setLocalDeviceName(name);
+  }
+
+  Future<void> _renameThisDevice(BuildContext context) async {
+    final name = await _askDeviceName(
+      context,
+      initial: viewModel.localDisplayName,
+    );
+    if (name != null) await viewModel.setLocalDeviceName(name);
+  }
+
+  Future<String?> _askDeviceName(
+    BuildContext context, {
+    required String? initial,
+  }) async {
+    final l10n = l10nOf(context);
+    final name = await showDialog<String>(
+      context: context,
+      builder: (_) => _DeviceNameDialog(
+        initial: initial ?? defaultDeviceName(context, l10n),
+      ),
+    );
+    final trimmed = name?.trim();
+    return (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+  }
+
   Future<void> _showAddDevice(BuildContext context) async {
+    if (!await _ensureDeviceName(context) || !context.mounted) return;
     final payload = await viewModel.startAddDevice();
     if (payload == null || !context.mounted) return;
     final l10n = l10nOf(context);
@@ -253,6 +323,7 @@ class LinkedDevicesSection extends StatelessWidget {
   }
 
   Future<void> _showAddPerson(BuildContext context) async {
+    if (!await _ensureDeviceName(context) || !context.mounted) return;
     final l10n = l10nOf(context);
     final nameController = TextEditingController();
     final personName = await showDialog<String>(
@@ -295,13 +366,15 @@ class LinkedDevicesSection extends StatelessWidget {
             children: [
               ListTile(
                 key: const Key('add-person-role-claimant'),
-                title: Text(l10n.claimsRoleClaimant),
+                title: Text(l10n.linkedDevicesRoleEmployee),
+                subtitle: Text(l10n.linkedDevicesRoleEmployeeHelp),
                 onTap: () =>
                     Navigator.of(dialogContext).pop(LinkedDeviceRole.claimant),
               ),
               ListTile(
                 key: const Key('add-person-role-approver'),
-                title: Text(l10n.claimsRoleApprover),
+                title: Text(l10n.linkedDevicesRoleApprover),
+                subtitle: Text(l10n.linkedDevicesRoleApproverHelp),
                 onTap: () =>
                     Navigator.of(dialogContext).pop(LinkedDeviceRole.approver),
               ),
@@ -403,6 +476,7 @@ class LinkedDevicesSection extends StatelessWidget {
   }
 
   Future<void> _enterJoinCode(BuildContext context) async {
+    if (!await _ensureDeviceName(context) || !context.mounted) return;
     final l10n = l10nOf(context);
     String? entryError;
     final found = await showDialog<bool>(
@@ -506,6 +580,7 @@ class LinkedDevicesSection extends StatelessWidget {
   }
 
   Future<void> _scanJoinQr(BuildContext context) async {
+    if (!await _ensureDeviceName(context) || !context.mounted) return;
     final l10n = l10nOf(context);
     JoinQrPayload? payload;
     final scanner = joinQrScanner;
@@ -782,25 +857,109 @@ class _PendingJoinTile extends StatelessWidget {
   }
 }
 
-class _LinkedDeviceTile extends StatelessWidget {
-  const _LinkedDeviceTile({
-    required this.device,
-    required this.localDeviceId,
-    required this.canRemove,
-    required this.enabled,
-    required this.onRemove,
-  });
+/// "Name this device": owns its text controller so it outlives the dialog's
+/// closing animation.
+class _DeviceNameDialog extends StatefulWidget {
+  const _DeviceNameDialog({required this.initial});
 
-  final LinkedDevice device;
-  final String? localDeviceId;
-  final bool canRemove;
-  final bool enabled;
-  final VoidCallback? onRemove;
+  final String initial;
+
+  @override
+  State<_DeviceNameDialog> createState() => _DeviceNameDialogState();
+}
+
+class _DeviceNameDialogState extends State<_DeviceNameDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initial,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
-    final roleLabel = _roleLabel(l10n, device);
+    return AlertDialog(
+      title: Text(l10n.linkedDevicesNameTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l10n.linkedDevicesNameHelp, style: AppTypography.metadata),
+          const SizedBox(height: AppSpacing.small),
+          TextField(
+            key: const Key('device-name-field'),
+            controller: _controller,
+            autofocus: true,
+            decoration: InputDecoration(labelText: l10n.linkedDevicesNameLabel),
+            onSubmitted: (value) => Navigator.of(context).pop(value),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.actionCancel),
+        ),
+        TextButton(
+          key: const Key('device-name-save'),
+          onPressed: () => Navigator.of(context).pop(_controller.text),
+          child: Text(l10n.actionSave),
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionHeading extends StatelessWidget {
+  const _SectionHeading({super.key, required this.title, required this.help});
+
+  final String title;
+  final String help;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: AppSpacing.medium,
+        bottom: AppSpacing.small,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: AppTypography.sectionLabel),
+          const SizedBox(height: AppSpacing.base),
+          Text(help, style: AppTypography.metadata),
+        ],
+      ),
+    );
+  }
+}
+
+class _LinkedDeviceTile extends StatelessWidget {
+  const _LinkedDeviceTile({
+    required this.device,
+    required this.isLocal,
+    required this.canRemove,
+    required this.enabled,
+    required this.onRemove,
+    required this.onRename,
+  });
+
+  final LinkedDevice device;
+  final bool isLocal;
+  final bool canRemove;
+  final bool enabled;
+  final VoidCallback? onRemove;
+  final VoidCallback? onRename;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    final roleLabel = linkedDeviceRoleLabel(l10n, device.roles);
     String? status;
     if (device.isErasePending) {
       status = l10n.settingsLinkedDevicesErasePending;
@@ -812,9 +971,11 @@ class _LinkedDeviceTile extends StatelessWidget {
       status = l10n.membershipNoticeDeviceRemoved(device.displayName);
     }
 
-    final title = device.personDisplayName ?? device.displayName;
+    final name = device.personDisplayName ?? device.displayName;
+    final title = isLocal ? l10n.linkedDevicesThisDevice(name) : name;
 
     return ListTile(
+      key: isLocal ? const Key('linked-device-this-device') : null,
       contentPadding: EdgeInsets.zero,
       title: Text(title, style: AppTypography.body),
       subtitle: Text(
@@ -831,24 +992,50 @@ class _LinkedDeviceTile extends StatelessWidget {
               onPressed: enabled ? onRemove : null,
               child: Text(l10n.claimsRemovePerson),
             )
+          : onRename != null
+          ? TextButton(
+              key: const Key('rename-this-device'),
+              onPressed: enabled ? onRename : null,
+              child: Text(l10n.actionRename),
+            )
           : null,
     );
   }
+}
 
-  String _roleLabel(AppLocalizations l10n, LinkedDevice device) {
-    if (device.roles.contains(LinkedDeviceRole.owner)) {
-      return l10n.settingsLinkedDevicesRoleOwner;
-    }
-    if (device.roles.contains(LinkedDeviceRole.approver)) {
-      return l10n.claimsRoleApprover;
-    }
-    if (device.roles.contains(LinkedDeviceRole.claimant) &&
-        !device.roles.contains(LinkedDeviceRole.member)) {
-      return l10n.claimsRoleClaimant;
-    }
-    if (device.roles.contains(LinkedDeviceRole.member)) {
-      return l10n.settingsLinkedDevicesRoleMember;
-    }
-    return device.role.name;
+/// Role in plain words: what this person or device does in these books.
+String linkedDeviceRoleLabel(
+  AppLocalizations l10n,
+  Set<LinkedDeviceRole> roles,
+) {
+  if (roles.contains(LinkedDeviceRole.owner)) {
+    return l10n.linkedDevicesRoleOwner;
   }
+  if (roles.contains(LinkedDeviceRole.approver)) {
+    return l10n.linkedDevicesRoleApprover;
+  }
+  if (roles.contains(LinkedDeviceRole.claimant) &&
+      !roles.contains(LinkedDeviceRole.member)) {
+    return l10n.linkedDevicesRoleEmployee;
+  }
+  return l10n.linkedDevicesRoleBookkeeper;
+}
+
+/// The name a device suggests for itself before the user types one. iOS
+/// doesn't let apps read the phone's own name, so this is only the type.
+String defaultDeviceName(BuildContext context, AppLocalizations l10n) {
+  final tablet = MediaQuery.sizeOf(context).shortestSide >= 600;
+  return switch (defaultTargetPlatform) {
+    TargetPlatform.iOS =>
+      tablet
+          ? l10n.linkedDevicesDefaultNameIpad
+          : l10n.linkedDevicesDefaultNameIphone,
+    TargetPlatform.android =>
+      tablet
+          ? l10n.linkedDevicesDefaultNameAndroidTablet
+          : l10n.linkedDevicesDefaultNameAndroidPhone,
+    TargetPlatform.windows => l10n.linkedDevicesDefaultNameWindows,
+    TargetPlatform.linux => l10n.linkedDevicesDefaultNameLinux,
+    _ => l10n.linkedDevicesDefaultNameMac,
+  };
 }

@@ -47,6 +47,7 @@ class BooksSwitcherSection extends StatelessWidget {
                   onRemove: entry.set.isActive || viewModel.sets.length <= 1
                       ? null
                       : () => _confirmRemove(context, entry.set, entry.label),
+                  onRename: () => _showRenameDialog(context, entry.set),
                 ),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
@@ -88,37 +89,101 @@ class BooksSwitcherSection extends StatelessWidget {
 
   Future<void> _showCreateDialog(BuildContext context) async {
     final l10n = l10nOf(context);
-    final controller = TextEditingController();
     final name = await showDialog<String>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(l10n.settingsBooksSwitcherCreateTitle),
-          content: TextField(
-            controller: controller,
+      builder: (_) => _BooksNameDialog(
+        title: l10n.settingsBooksSwitcherCreateTitle,
+        confirmLabel: l10n.settingsBooksSwitcherCreate,
+      ),
+    );
+    if (name != null && context.mounted) {
+      await viewModel.createSet(name);
+    }
+  }
+
+  Future<void> _showRenameDialog(BuildContext context, BooksSetInfo set) async {
+    final l10n = l10nOf(context);
+    final name = await showDialog<String>(
+      context: context,
+      builder: (_) => _BooksNameDialog(
+        title: l10n.settingsBooksSwitcherRenameTitle,
+        help: l10n.settingsBooksSwitcherRenameHelp,
+        confirmLabel: l10n.actionRename,
+        initial: set.displayName,
+      ),
+    );
+    if (name != null && context.mounted) {
+      await viewModel.renameSet(set.id, name);
+    }
+  }
+}
+
+/// Name entry for new or renamed books. Owns its text controller so it
+/// outlives the dialog's closing animation.
+class _BooksNameDialog extends StatefulWidget {
+  const _BooksNameDialog({
+    required this.title,
+    required this.confirmLabel,
+    this.help,
+    this.initial = '',
+  });
+
+  final String title;
+  final String confirmLabel;
+  final String? help;
+  final String initial;
+
+  @override
+  State<_BooksNameDialog> createState() => _BooksNameDialogState();
+}
+
+class _BooksNameDialogState extends State<_BooksNameDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initial,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    return AlertDialog(
+      title: Text(widget.title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (widget.help != null) ...[
+            Text(widget.help!, style: AppTypography.metadata),
+            const SizedBox(height: AppSpacing.small),
+          ],
+          TextField(
+            key: const Key('books-name-field'),
+            controller: _controller,
             autofocus: true,
             decoration: InputDecoration(
               labelText: l10n.settingsBooksSwitcherNameLabel,
             ),
-            onSubmitted: (value) => Navigator.of(dialogContext).pop(value),
+            onSubmitted: (value) => Navigator.of(context).pop(value),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(l10n.actionCancel),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(controller.text),
-              child: Text(l10n.settingsBooksSwitcherCreate),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.actionCancel),
+        ),
+        TextButton(
+          key: const Key('books-name-save'),
+          onPressed: () => Navigator.of(context).pop(_controller.text),
+          child: Text(widget.confirmLabel),
+        ),
+      ],
     );
-    controller.dispose();
-    if (name != null && context.mounted) {
-      await viewModel.createSet(name);
-    }
   }
 }
 
@@ -153,6 +218,7 @@ class _BooksSetTile extends StatelessWidget {
     required this.enabled,
     required this.onSwitch,
     required this.onRemove,
+    required this.onRename,
   });
 
   final BooksSetInfo set;
@@ -160,6 +226,7 @@ class _BooksSetTile extends StatelessWidget {
   final bool enabled;
   final VoidCallback? onSwitch;
   final VoidCallback? onRemove;
+  final VoidCallback onRename;
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +243,12 @@ class _BooksSetTile extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          IconButton(
+            key: Key('books-rename-${set.id}'),
+            tooltip: l10n.actionRename,
+            onPressed: enabled ? onRename : null,
+            icon: const Icon(Icons.edit_outlined),
+          ),
           if (onSwitch != null)
             TextButton(
               onPressed: enabled ? onSwitch : null,

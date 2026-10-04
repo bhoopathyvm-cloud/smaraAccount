@@ -264,4 +264,66 @@ void main() {
     expect(find.text('Acme Travel Co'), findsOneWidget);
     expect(find.text('Books 1'), findsNothing);
   });
+
+  testWidgets('rename button asks for a name and renames that books set', (
+    tester,
+  ) async {
+    late _RecordingSwitcher switcher;
+    late String id;
+    await tester.runAsync(() async {
+      await session.ensureOpen();
+      id = (await session.activeBooksSetId())!;
+      switcher = _RecordingSwitcher(session: session);
+      await switcher.refresh();
+    });
+    addTearDown(switcher.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        home: Scaffold(body: BooksSwitcherSection(viewModel: switcher)),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('Books 1'), findsOneWidget);
+
+    await tester.tap(find.byKey(Key('books-rename-$id')));
+    await tester.pumpAndSettle();
+    expect(find.text('Rename books'), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('books-name-field')), 'Office');
+    await tester.tap(find.byKey(const Key('books-name-save')));
+    await tester.pumpAndSettle();
+
+    expect(switcher.renamed, [(id, 'Office')]);
+    expect(find.text('Rename books'), findsNothing);
+  });
+
+  test('renameSet stores the new name and rejects a blank one', () async {
+    await session.ensureOpen();
+    final id = (await session.activeBooksSetId())!;
+    final switcher = BooksSwitcherViewModel(session: session);
+    addTearDown(switcher.dispose);
+    await switcher.refresh();
+
+    expect(await switcher.renameSet(id, '  '), isFalse);
+    expect(await switcher.renameSet(id, ' Office '), isTrue);
+    expect(switcher.sets.singleWhere((s) => s.id == id).displayName, 'Office');
+    expect(
+      (await session.listSets()).singleWhere((s) => s.id == id).displayName,
+      'Office',
+    );
+  });
+}
+
+class _RecordingSwitcher extends BooksSwitcherViewModel {
+  _RecordingSwitcher({required super.session});
+
+  final renamed = <(String, String)>[];
+
+  @override
+  Future<bool> renameSet(String booksSetId, String displayName) async {
+    renamed.add((booksSetId, displayName));
+    return true;
+  }
 }

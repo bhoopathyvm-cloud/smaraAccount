@@ -2444,4 +2444,93 @@ class AppLocalizationsTr extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Talep · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Cihazlarım';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Kendi telefonlarınız ve bilgisayarlarınız. Tam defterleri paylaşırlar.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Kişiler';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Bu defterleri kullanan diğerleri, örneğin masraf talebi gönderen çalışanlar.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Katılın veya senkronize edin';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Şimdi senkronize et, bu Wi-Fi\'daki tüm bağlı cihazları günceller. Başka bir cihazın defterlerine katılmak için gösterdiği QR kodunu tarayın.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Diğer bağlanma yolları';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (bu cihaz)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Sahip – tam defterler';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Muhasebeci';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Onaylayan – talepleri inceler ve öder';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Çalışan – masraf talebi gönderir';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Yalnızca kendi taleplerini görür. Sizin onaylayıp geri ödeyeceğiniz masrafları gönderir.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Herkesin taleplerini inceler, onaylar ve öder; defterleri de tutabilir.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Bu cihaza ad verin';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Diğer cihazlarınız ve kişiler bu adı görür, böylece herkes cihazları ayırt edebilir.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Cihaz adı';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'iPhone\'um';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'iPad\'im';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mac\'im';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Android telefonum';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Android tabletim';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Windows bilgisayarım';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Linux bilgisayarım';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle =>
+      'Defterleri yeniden adlandırın';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Bu adı yalnızca bu cihaz kullanır. “Ofis” veya “Ev” gibi tanıyacağınız bir ad seçin.';
 }

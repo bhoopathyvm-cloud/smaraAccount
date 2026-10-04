@@ -2453,4 +2453,92 @@ class AppLocalizationsPl extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Wniosek · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Moje urządzenia';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Twoje własne telefony i komputery. Współdzielą pełne księgi.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Osoby';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Inne osoby korzystające z tych ksiąg, np. pracownicy zgłaszający wydatki.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Dołącz lub synchronizuj';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Synchronizuj teraz aktualizuje wszystkie połączone urządzenia w tej sieci Wi-Fi. Aby dołączyć do ksiąg z innego urządzenia, zeskanuj wyświetlany przez nie kod QR.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Więcej sposobów połączenia';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (to urządzenie)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Właściciel – pełne księgi';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Księgowy';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Zatwierdzający – sprawdza i wypłaca zwroty';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Pracownik – zgłasza wydatki';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Widzi tylko własne zgłoszenia. Wysyła wydatki, które zatwierdzasz i zwracasz.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Sprawdza, zatwierdza i wypłaca zwroty wszystkim oraz może prowadzić księgi.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Nazwij to urządzenie';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Twoje inne urządzenia i osoby zobaczą tę nazwę, aby można było odróżnić urządzenia.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Nazwa urządzenia';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'Mój iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'Mój iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mój Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Mój telefon z Androidem';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Mój tablet z Androidem';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Mój komputer z Windows';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Mój komputer z Linuksem';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Zmień nazwę ksiąg';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Ta nazwa jest używana tylko na tym urządzeniu. Wybierz taką, którą rozpoznasz, np. „Biuro” lub „Dom”.';
 }

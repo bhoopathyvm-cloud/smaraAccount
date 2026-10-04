@@ -90,6 +90,31 @@ class BooksSwitcherViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  /// Renames [booksSetId] on this device only; the name never syncs, so each
+  /// device can call the same books what makes sense to its owner.
+  Future<bool> renameSet(String booksSetId, String displayName) async {
+    final trimmed = displayName.trim();
+    if (trimmed.isEmpty) {
+      setFailure(const AppFailure(AppErrorCode.validationNameRequired));
+      return false;
+    }
+    if (_isBusy) return false;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      await _session.renameSet(booksSetId, trimmed);
+      _sets = await _session.listSets();
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      _isBusy = false;
+      notifyListeners();
+    }
+  }
+
   Future<bool> removeSet(String booksSetId) async {
     if (_isBusy) return false;
     _isBusy = true;

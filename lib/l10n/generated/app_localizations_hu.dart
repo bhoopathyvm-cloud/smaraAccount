@@ -2467,4 +2467,92 @@ class AppLocalizationsHu extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Elszámolás · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Saját eszközeim';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Saját telefonjai és számítógépei. A teljes könyveket használják.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Személyek';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Mások, akik ezeket a könyveket használják, például költségtérítést beküldő munkatársak.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Csatlakozás vagy szinkronizálás';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'A Szinkronizálás most frissíti az összes összekapcsolt eszközt ezen a Wi-Fi-n. Ha egy másik eszköz könyveihez csatlakozna, olvassa be az általa mutatott QR-kódot.';
+
+  @override
+  String get linkedDevicesMoreWays => 'További kapcsolódási módok';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (ez az eszköz)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Tulajdonos – teljes könyvek';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Könyvelő';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Jóváhagyó – ellenőrzi és kifizeti a költségtérítéseket';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Munkatárs – költségtérítést küld be';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Csak a saját igényeit látja. Kiadásokat küld be, amelyeket Ön jóváhagy és megtérít.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Mindenki igényeit ellenőrzi, jóváhagyja és kifizeti, és vezetheti a könyveket.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Nevezze el ezt az eszközt';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'A többi eszköze és a személyek ezt a nevet látják, hogy meg lehessen különböztetni az eszközöket.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Eszköz neve';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'Saját iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'Saját iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Saját Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Saját Android telefon';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Saját Android táblagép';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Saját Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Saját Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Könyvek átnevezése';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Ezt a nevet csak ez az eszköz használja. Válasszon felismerhető nevet, például „Iroda” vagy „Otthon”.';
 }

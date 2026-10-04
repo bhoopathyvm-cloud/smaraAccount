@@ -2444,4 +2444,92 @@ class AppLocalizationsHi extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'दावा · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'मेरे डिवाइस';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'आपके अपने फ़ोन और कंप्यूटर। ये पूरे खाते साझा करते हैं।';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'लोग';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'दूसरे लोग जो ये खाते इस्तेमाल करते हैं, जैसे खर्च के दावे भेजने वाले कर्मचारी।';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'जुड़ें या सिंक करें';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“अभी सिंक करें” इस Wi-Fi पर सभी जुड़े डिवाइस को अपडेट कर देता है। किसी दूसरे डिवाइस के खातों से जुड़ने के लिए, उसका दिखाया QR कोड स्कैन करें।';
+
+  @override
+  String get linkedDevicesMoreWays => 'जुड़ने के और तरीके';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (यह डिवाइस)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'मालिक – पूरे खाते';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'मुनीम';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'स्वीकृतकर्ता – दावे जाँचता और भुगतान करता है';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'कर्मचारी – खर्च के दावे भेजता है';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'सिर्फ़ अपने दावे देखता है। खर्च भेजता है, जिन्हें आप स्वीकृत करके लौटाते हैं।';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'सबके दावे जाँचता, स्वीकृत करता और भुगतान करता है, और खाते भी रख सकता है।';
+
+  @override
+  String get linkedDevicesNameTitle => 'इस डिवाइस को नाम दें';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'आपके दूसरे डिवाइस और लोग यही नाम देखेंगे, ताकि सब डिवाइस पहचान सकें।';
+
+  @override
+  String get linkedDevicesNameLabel => 'डिवाइस का नाम';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'मेरा iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'मेरा iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'मेरा Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'मेरा Android फ़ोन';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'मेरा Android टैबलेट';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'मेरा Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'मेरा Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'बहियों का नाम बदलें';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'यह नाम सिर्फ़ इसी डिवाइस पर रहता है। पहचानने लायक नाम चुनें, जैसे “दफ़्तर” या “घर”।';
 }

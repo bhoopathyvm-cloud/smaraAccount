@@ -2461,4 +2461,92 @@ class AppLocalizationsNl extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Declaratie · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Mijn apparaten';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Je eigen telefoons en computers. Ze delen de volledige boeken.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Personen';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Anderen die deze boeken gebruiken, zoals medewerkers die onkosten declareren.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Deelnemen of synchroniseren';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Nu synchroniseren werkt alle gekoppelde apparaten op deze wifi bij. Om boeken van een ander apparaat te gebruiken, scan je de QR-code die het toont.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Meer manieren om te verbinden';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (dit apparaat)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Eigenaar – volledige boeken';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Boekhouder';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Goedkeurder – controleert en betaalt declaraties';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Medewerker – dient declaraties in';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Ziet alleen de eigen declaraties. Dient uitgaven in die jij goedkeurt en terugbetaalt.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Controleert, keurt goed en betaalt ieders declaraties, en kan de boeken bijhouden.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Geef dit apparaat een naam';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Je andere apparaten en personen zien deze naam, zodat iedereen de apparaten uit elkaar kan houden.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Apparaatnaam';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'Mijn iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'Mijn iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mijn Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Mijn Android-telefoon';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Mijn Android-tablet';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Mijn Windows-pc';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Mijn Linux-pc';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Boeken hernoemen';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Alleen dit apparaat gebruikt deze naam. Kies er een die je herkent, zoals ‘Kantoor’ of ‘Thuis’.';
 }

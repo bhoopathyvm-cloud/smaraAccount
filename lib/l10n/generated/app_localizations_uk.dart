@@ -2458,4 +2458,92 @@ class AppLocalizationsUk extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Заявка · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Мої пристрої';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Ваші власні телефони й комп’ютери. Вони спільно використовують повні книги.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Люди';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Інші, хто користується цими книгами, наприклад працівники, що подають витрати.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Приєднатися або синхронізувати';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '«Синхронізувати» оновлює всі пов’язані пристрої в цій мережі Wi-Fi. Щоб приєднатися до книг з іншого пристрою, відскануйте показаний ним QR-код.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Інші способи підключення';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (цей пристрій)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Власник – повні книги';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Бухгалтер';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Затверджувач – перевіряє й оплачує витрати';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Працівник – подає витрати';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Бачить лише власні заявки. Надсилає витрати, які ви затверджуєте й відшкодовуєте.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Перевіряє, затверджує й оплачує заявки всіх і може вести книги.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Назвіть цей пристрій';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Інші ваші пристрої та люди бачитимуть цю назву, щоб розрізняти пристрої.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Назва пристрою';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'Мій iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'Мій iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Мій Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'Мій Android-телефон';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'Мій Android-планшет';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Мій ПК з Windows';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Мій ПК з Linux';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Перейменувати книги';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Цю назву видно лише на цьому пристрої. Виберіть зрозумілу, наприклад «Офіс» або «Дім».';
 }

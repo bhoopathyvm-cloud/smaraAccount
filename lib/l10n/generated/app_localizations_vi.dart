@@ -2452,4 +2452,94 @@ class AppLocalizationsVi extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'Đề nghị · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'Thiết bị của tôi';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'Điện thoại và máy tính của chính bạn. Chúng dùng chung toàn bộ sổ sách.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'Mọi người';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'Những người khác dùng sổ sách này, ví dụ nhân viên gửi đề nghị thanh toán.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'Tham gia hoặc đồng bộ';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      'Đồng bộ ngay sẽ cập nhật mọi thiết bị đã liên kết trên Wi-Fi này. Để tham gia sổ sách từ thiết bị khác, hãy quét mã QR mà thiết bị đó hiển thị.';
+
+  @override
+  String get linkedDevicesMoreWays => 'Cách kết nối khác';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (thiết bị này)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'Chủ sở hữu – toàn bộ sổ sách';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'Kế toán';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'Người duyệt – xem xét và thanh toán đề nghị';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'Nhân viên – gửi đề nghị thanh toán';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'Chỉ thấy đề nghị của chính mình. Gửi chi phí để bạn duyệt và hoàn trả.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'Xem xét, duyệt và thanh toán đề nghị của mọi người, và có thể ghi sổ.';
+
+  @override
+  String get linkedDevicesNameTitle => 'Đặt tên thiết bị này';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'Các thiết bị khác và mọi người sẽ thấy tên này để phân biệt các thiết bị.';
+
+  @override
+  String get linkedDevicesNameLabel => 'Tên thiết bị';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'iPhone của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'iPad của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'Mac của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone =>
+      'Điện thoại Android của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet =>
+      'Máy tính bảng Android của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'Máy tính Windows của tôi';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'Máy tính Linux của tôi';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Đổi tên sổ sách';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Tên này chỉ dùng trên thiết bị này. Hãy chọn tên dễ nhận ra, như “Văn phòng” hoặc “Nhà”.';
 }

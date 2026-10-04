@@ -2429,4 +2429,92 @@ class AppLocalizationsBrx extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'क्लेम · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'आंनि डिभाइसफोर';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'नोंनि गावनि फोन आरो कम्प्युटारफोर। बेफोरा आबुं हिसाबनि बिजाबफोरखौ राननाय मावो।';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'मानसिफोर';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'गुबुन मानसिफोर जाय बे हिसाबखौ बाहायो, जेरै खरसानि क्लेम दैथायनाय हाबसालिफोर।';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'जथाय जा एबा सिंक खालाम';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“दानि सिंक खालाम” आ बे Wi-Fi आव फोनांजाबनाय गासै डिभाइसफोरखौ गोदान खालामो। गुबुन डिभाइसनि हिसाबआव जथाय जानो, बेयो दिन्थिनाय QR कोडखौ स्केन खालाम।';
+
+  @override
+  String get linkedDevicesMoreWays => 'फोनांजाबनो गोबां राहाफोर';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (बे डिभाइस)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'मालिक – आबुं हिसाब';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'हिसाब दोनग्रा';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'गनायथि होग्रा – क्लेमफोरखौ नायसंनानै बेसेन होयो';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'हाबसालि – खरसानि क्लेम दैथायो';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'गावनि क्लेमखौल\' नुयो। खरसा दैथायो, जायखौ नों गनायथि होनानै बेसेन फिन होयो।';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'सासेनिबो क्लेमफोरखौ नायसंनानै, गनायथि होनानै बेसेन होयो; हिसाबबो दोनथे हायो।';
+
+  @override
+  String get linkedDevicesNameTitle => 'बे डिभाइसखौ मुं हो';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'नोंनि गुबुन डिभाइस आरो मानसिफोरा बे मुंखौ नुगोन, जाहाथे डिभाइसफोरखौ सिनायनो हायो।';
+
+  @override
+  String get linkedDevicesNameLabel => 'डिभाइसनि मुं';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'आंनि iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'आंनि iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'आंनि Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'आंनि Android फोन';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'आंनि Android टेबलेट';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'आंनि Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'आंनि Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'बुखिनि मुं सोलाय';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'बे मुंआ बे डिभाइसआवल\' थायो। सिनायनो हानाय मुं सायख, जेरै “अफिस” एबा “नओ”।';
 }

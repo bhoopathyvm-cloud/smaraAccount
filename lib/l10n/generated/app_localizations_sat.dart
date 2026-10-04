@@ -2442,4 +2442,91 @@ class AppLocalizationsSat extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'ᱫᱟᱹᱵᱤ · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'ᱤᱧᱟᱜ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱠᱚ';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'ᱟᱢᱟᱜ ᱟᱡᱟᱜ ᱯᱷᱚᱱ ᱟᱨ ᱠᱚᱢᱯᱭᱩᱴᱟᱨ ᱠᱚ᱾ ᱱᱚᱶᱟ ᱠᱚ ᱯᱩᱨᱟᱹ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱦᱤ ᱦᱟᱹᱴᱤᱧ ᱠᱟᱫᱟ᱾';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'ᱦᱚᱲ ᱠᱚ';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'ᱮᱴᱟᱜ ᱦᱚᱲ ᱡᱟᱦᱟᱸ ᱠᱚ ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱮᱵᱷᱟᱨ ᱠᱚ ᱠᱟᱱᱟ, ᱡᱮᱞᱮᱠᱟ ᱠᱷᱚᱨᱚᱪ ᱫᱟᱹᱵᱤ ᱠᱩᱞ ᱠᱟᱱ ᱠᱟᱹᱢᱤᱭᱟᱹ ᱠᱚ᱾';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'ᱥᱮᱞᱮᱫ ᱢᱮ ᱟᱨᱵᱟᱝ ᱥᱤᱱᱠ ᱢᱮ';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“ᱱᱤᱛᱚᱜ ᱥᱤᱱᱠ ᱢᱮ” ᱱᱚᱶᱟ Wi-Fi ᱨᱮ ᱡᱚᱛᱚ ᱡᱩᱲᱟᱹᱣ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱱᱟᱣᱟ ᱠᱚ ᱛᱮᱭᱟᱨᱟ᱾ ᱮᱴᱟᱜ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ, ᱩᱱᱤ ᱩᱫᱩᱜ ᱟᱠᱟᱫ QR ᱠᱳᱰ ᱥᱠᱮᱱ ᱢᱮ᱾';
+
+  @override
+  String get linkedDevicesMoreWays => 'ᱡᱩᱲᱟᱹᱣ ᱨᱮᱭᱟᱜ ᱟᱨᱦᱚᱸ ᱦᱚᱨ';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (ᱱᱚᱶᱟ ᱰᱤᱵᱷᱟᱭᱤᱥ)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'ᱢᱟᱞᱤᱠ – ᱯᱩᱨᱟᱹ ᱦᱤᱥᱟᱹᱵ';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'ᱦᱤᱥᱟᱹᱵ ᱫᱚᱦᱚᱭᱤᱡ';
+
+  @override
+  String get linkedDevicesRoleApprover => 'ᱢᱟᱱᱚᱛᱤᱡ – ᱫᱟᱹᱵᱤ ᱧᱮᱞ ᱠᱟᱛᱮ ᱯᱟᱭᱥᱟ ᱮᱢᱟᱭ';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'ᱠᱟᱹᱢᱤᱭᱟᱹ – ᱠᱷᱚᱨᱚᱪ ᱫᱟᱹᱵᱤ ᱠᱩᱞᱟᱭ';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'ᱟᱡᱟᱜ ᱫᱟᱹᱵᱤ ᱜᱮ ᱧᱮᱞᱟᱭ᱾ ᱠᱷᱚᱨᱚᱪ ᱠᱩᱞᱟᱭ, ᱡᱟᱦᱟᱸ ᱫᱚ ᱟᱢ ᱢᱟᱱᱟᱣ ᱠᱟᱛᱮ ᱨᱩᱣᱟᱹᱲ ᱮᱢᱟᱢ᱾';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'ᱡᱚᱛᱚᱭ ᱨᱮᱭᱟᱜ ᱫᱟᱹᱵᱤ ᱧᱮᱞ, ᱢᱟᱱᱟᱣ ᱟᱨ ᱯᱟᱭᱥᱟ ᱮᱢᱟᱭ; ᱦᱤᱥᱟᱹᱵ ᱦᱚᱸ ᱫᱚᱦᱚ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ᱾';
+
+  @override
+  String get linkedDevicesNameTitle => 'ᱱᱚᱶᱟ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'ᱟᱢᱟᱜ ᱮᱴᱟᱜ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱟᱨ ᱦᱚᱲ ᱠᱚ ᱱᱚᱶᱟ ᱧᱩᱛᱩᱢ ᱠᱚ ᱧᱮᱞᱟ, ᱡᱮᱢᱚᱱ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱠᱚ ᱪᱤᱱᱦᱟᱹᱣ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
+
+  @override
+  String get linkedDevicesNameLabel => 'ᱰᱤᱵᱷᱟᱭᱤᱥ ᱧᱩᱛᱩᱢ';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'ᱤᱧᱟᱜ iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'ᱤᱧᱟᱜ iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'ᱤᱧᱟᱜ Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'ᱤᱧᱟᱜ Android ᱯᱷᱚᱱ';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'ᱤᱧᱟᱜ Android ᱴᱮᱵᱞᱮᱴ';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'ᱤᱧᱟᱜ Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'ᱤᱧᱟᱜ Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ᱱᱚᱶᱟ ᱧᱩᱛᱩᱢ ᱫᱚ ᱱᱚᱶᱟ ᱥᱟᱫᱷᱚᱱ ᱨᱮ ᱜᱮ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱪᱤᱱᱦᱟᱹᱣ ᱫᱟᱲᱮᱭᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱡᱮᱞᱮᱠᱟ “ᱚᱯᱷᱤᱥ” ᱟᱨᱵᱟᱝ “ᱚᱲᱟᱜ”᱾';
 }

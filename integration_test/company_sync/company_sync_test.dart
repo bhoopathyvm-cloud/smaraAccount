@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
@@ -71,6 +72,9 @@ void main() {
       await artifacts.writeLog('startup', 'resetToFreshDevice start');
       await resetToFreshDevice(tester);
       await artifacts.writeLog('startup', 'resetToFreshDevice done');
+      // Named up front so Linked devices doesn't stop to ask, and so peers
+      // list each role by name.
+      await SettingsRepository().setLocalDeviceDisplayName('Smara $role');
       await _runRole(
         tester: tester,
         client: client,
@@ -518,6 +522,14 @@ Future<void> _joinByCode(
   }
   await openLinkedDevices(tester);
   final enterCode = find.text(l10n.settingsLinkedDevicesEnterCodeInstead);
+  // Code entry sits under "More ways to connect".
+  final moreWays = find.byKey(const Key('linked-devices-more-ways'));
+  await scrollSettingsUntilVisible(tester, moreWays);
+  await tapReliably(
+    tester,
+    () => moreWays,
+    () => enterCode.evaluate().isNotEmpty,
+  );
   await scrollSettingsUntilVisible(tester, enterCode);
   await tapReliably(
     tester,

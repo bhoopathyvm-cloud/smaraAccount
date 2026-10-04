@@ -2446,4 +2446,92 @@ class AppLocalizationsTe extends AppLocalizations {
   String claimsReviewClaimHeading(String status) {
     return 'దావా · $status';
   }
+
+  @override
+  String get linkedDevicesMyDevicesHeading => 'నా పరికరాలు';
+
+  @override
+  String get linkedDevicesMyDevicesHelp =>
+      'మీ సొంత ఫోన్లు, కంప్యూటర్లు. ఇవి పూర్తి ఖాతా పుస్తకాలను పంచుకుంటాయి.';
+
+  @override
+  String get linkedDevicesPeopleHeading => 'వ్యక్తులు';
+
+  @override
+  String get linkedDevicesPeopleHelp =>
+      'ఈ ఖాతాలను ఉపయోగించే ఇతరులు, ఉదాహరణకు ఖర్చు దావాలు పంపే ఉద్యోగులు.';
+
+  @override
+  String get linkedDevicesJoinSyncHeading => 'చేరండి లేదా సమకాలీకరించండి';
+
+  @override
+  String get linkedDevicesJoinSyncHelp =>
+      '“ఇప్పుడు సమకాలీకరించండి” ఈ Wi-Fiలోని లింక్ చేసిన అన్ని పరికరాలను తాజాగా చేస్తుంది. మరో పరికరం ఖాతాల్లో చేరడానికి, అది చూపే QR కోడ్‌ను స్కాన్ చేయండి.';
+
+  @override
+  String get linkedDevicesMoreWays => 'కనెక్ట్ అయ్యే మరిన్ని మార్గాలు';
+
+  @override
+  String linkedDevicesThisDevice(String name) {
+    return '$name (ఈ పరికరం)';
+  }
+
+  @override
+  String get linkedDevicesRoleOwner => 'యజమాని – పూర్తి ఖాతాలు';
+
+  @override
+  String get linkedDevicesRoleBookkeeper => 'లెక్కల నిర్వాహకుడు';
+
+  @override
+  String get linkedDevicesRoleApprover =>
+      'ఆమోదకుడు – దావాలను సమీక్షించి చెల్లిస్తారు';
+
+  @override
+  String get linkedDevicesRoleEmployee => 'ఉద్యోగి – ఖర్చు దావాలు పంపుతారు';
+
+  @override
+  String get linkedDevicesRoleEmployeeHelp =>
+      'తమ దావాలను మాత్రమే చూస్తారు. మీరు ఆమోదించి తిరిగి చెల్లించే ఖర్చులను పంపుతారు.';
+
+  @override
+  String get linkedDevicesRoleApproverHelp =>
+      'అందరి దావాలను సమీక్షించి, ఆమోదించి, చెల్లిస్తారు; ఖాతాలను కూడా నిర్వహించగలరు.';
+
+  @override
+  String get linkedDevicesNameTitle => 'ఈ పరికరానికి పేరు పెట్టండి';
+
+  @override
+  String get linkedDevicesNameHelp =>
+      'మీ ఇతర పరికరాలు, వ్యక్తులు ఈ పేరును చూస్తారు, కాబట్టి పరికరాలను గుర్తించవచ్చు.';
+
+  @override
+  String get linkedDevicesNameLabel => 'పరికరం పేరు';
+
+  @override
+  String get linkedDevicesDefaultNameIphone => 'నా iPhone';
+
+  @override
+  String get linkedDevicesDefaultNameIpad => 'నా iPad';
+
+  @override
+  String get linkedDevicesDefaultNameMac => 'నా Mac';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidPhone => 'నా Android ఫోన్';
+
+  @override
+  String get linkedDevicesDefaultNameAndroidTablet => 'నా Android టాబ్లెట్';
+
+  @override
+  String get linkedDevicesDefaultNameWindows => 'నా Windows PC';
+
+  @override
+  String get linkedDevicesDefaultNameLinux => 'నా Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ఖాతా పుస్తకాల పేరు మార్చండి';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ఈ పేరు ఈ పరికరంలో మాత్రమే ఉంటుంది. గుర్తుపట్టగల పేరు ఎంచుకోండి, ఉదా. “ఆఫీసు” లేదా “ఇల్లు”.';
 }
