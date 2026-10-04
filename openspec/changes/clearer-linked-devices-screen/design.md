@@ -44,5 +44,5 @@ is set only for devices added through Add a person. Peers already apply
 - A Claimant phone's metadata ops are filtered on the host, so a Claimant's
   later self-rename may stay local until the Owner's side accepts it. The
   name given at join is the main path.
-- 48 locales of new strings. Lower-resource languages are best-effort, as
+- 43 locales of new strings. Lower-resource languages are best-effort, as
   in earlier changes.

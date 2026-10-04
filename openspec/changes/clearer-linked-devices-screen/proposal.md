@@ -42,6 +42,6 @@ recognises.
 - `SettingsRepository.localDeviceDisplayName`, which is now actually set.
 - A `linked_device` `displayName` metadata op when a device is renamed. Peers
   already apply this field.
-- New ARB strings in all 48 locales.
+- New ARB strings in all 43 locales.
 - Widget tests, plus the acceptance and company-sync finders that tap these
   buttons.
