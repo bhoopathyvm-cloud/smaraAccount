@@ -50,26 +50,39 @@ void main() {
         },
       );
 
-      final conn = await transportA.connect(
-        local: SyncPeerIdentity(deviceId: 'a', certificate: certA),
-        remote: SyncPeerIdentity(
-          deviceId: 'b',
-          certificate: DeviceCertificate(
-            derBytes: const [],
-            fingerprint: certB.fingerprint,
+      // B refuses A's certificate. Depending on the OS and timing, that
+      // shows up when A reads the reply (StateError: connection closed) or
+      // already while A connects or writes (SocketException: broken pipe,
+      // as on Linux CI). Either way no message may get through.
+      Future<void> talk() async {
+        final conn = await transportA.connect(
+          local: SyncPeerIdentity(deviceId: 'a', certificate: certA),
+          remote: SyncPeerIdentity(
+            deviceId: 'b',
+            certificate: DeviceCertificate(
+              derBytes: const [],
+              fingerprint: certB.fingerprint,
+            ),
+            host: InternetAddress.loopbackIPv4.address,
+            port: port,
           ),
-          host: InternetAddress.loopbackIPv4.address,
-          port: port,
-        ),
-        pinnedFingerprints: pins,
-        pinnedCertificates: [certA],
-      );
-      await conn.send({'kind': 'tipState'});
+          pinnedFingerprints: pins,
+          pinnedCertificates: [certA],
+        );
+        try {
+          await conn.send({'kind': 'tipState'});
+          await conn.receive().timeout(const Duration(seconds: 2));
+        } finally {
+          await conn.close();
+        }
+      }
+
       await expectLater(
-        conn.receive().timeout(const Duration(seconds: 2)),
-        throwsA(isA<StateError>()),
+        talk(),
+        throwsA(
+          anyOf(isA<StateError>(), isA<SocketException>(), isA<TlsException>()),
+        ),
       );
-      await conn.close();
     },
   );
 
