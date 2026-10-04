@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "হিচাপ ৰ মাত্ৰ এজন মালিক আছে। আন এটা সংযুক্ত ডিভাইচকো মালিক কৰাৰ কথা চিন্তা কৰক।",
   "settingsLinkedDevicesSyncNow": "এতিয়া ছিঙ্ক কৰক",
   "settingsLinkedDevicesSyncNowBusy": "ছিংক হৈ আছে…",
-  "translateCategoryWithAi": "AI ৰ সৈতে অনুবাদ কৰক"
+  "translateCategoryWithAi": "AI ৰ সৈতে অনুবাদ কৰক",
+  "settingsLinkedDevicesCodesDontMatch": "মিলেনি",
+  "settingsLinkedDevicesConnectByAddress": "ঠিকানা দিয়ে সংযোগ",
+  "settingsLinkedDevicesConnectByAddressBody": "অনুসন্ধান লিঙ্ক করা ডিভাইস না পেলে LAN ঠিকানা ও পোর্ট লিখুন।",
+  "settingsLinkedDevicesConnectByAddressTitle": "ঠিকানা দিয়ে সংযোগ",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "পরিবর্তে কোড লিখুন",
+  "settingsLinkedDevicesEnterCodeSubmit": "ডিভাইস খুঁজুন",
+  "settingsLinkedDevicesEnterCodeTitle": "যোগদান কোড লিখুন",
+  "settingsLinkedDevicesJoinCodeExpired": "এই কোডের মেয়াদ শেষ — নতুন চান",
+  "settingsLinkedDevicesJoinCodeLabel": "যোগদান কোড",
+  "settingsLinkedDevicesJoinCodeNotFound": "এই Wi-Fi-তে এই কোডের কোনো ডিভাইস নেই",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} বাকি",
+  "settingsLinkedDevicesJoinCodeTryAgain": "আবার চেষ্টা করুন",
+  "settingsLinkedDevicesJoinCodeUsed": "এই কোড ইতিমধ্যে ব্যবহৃত। নতুন চান।",
+  "settingsLinkedDevicesJoinCheckCode": "যাচাই কোড — অন্য ডিভাইসে মিলছে কিনা নিশ্চিত করুন",
+  "settingsLinkedDevicesScanQr": "যোগদানের QR স্ক্যান করুন",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "যাচাই কোড নিশ্চিত করুন",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "এই কোডটি কি অন্য ডিভাইসের সাথে মিলছে?",
+  "settingsLinkedDevicesCodesMatch": "কোড মিলেছে",
+  "settingsLinkedDevicesJoinExpired": "এই যোগদানের QR মেয়াদোত্তীর্ণ। নতুন কোড চান।",
+  "settingsLinkedDevicesJoinReused": "এই যোগদানের QR ইতিমধ্যে ব্যবহৃত। নতুন কোড চান।",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "হোস্ট",
+  "settingsLinkedDevicesPort": "পোর্ট",
+  "settingsLinkedDevicesPeer": "ডিভাইস",
+  "settingsLinkedDevicesSaveAddress": "ঠিকানা সংরক্ষণ",
+  "claimsPersonalLimitsTitle": "দাবীৰ সীমা",
+  "claimsPersonalLimitsTitleFor": "{name}-এর দাবির সীমা",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "মোৰ দাবীৰ সীমা",
+  "claimsMyLimits": "মোৰ সীমা",
+  "claimsPersonalLimitsHeading": "আপোনাৰ ব্যক্তিগত সীমা",
+  "claimsCompanyLimitsHeading": "কোম্পানীৰ সীমা",
+  "claimsBalancesHeading": "নিষ্পত্তি কৰিবলগীয়া বেলেঞ্চ",
+  "claimsPayBalance": "{amount} পৰিশোধ কৰক",
+  "claimsRecordPayment": "পৰিশোধ লিপিবদ্ধ কৰক",
+  "claimsAboveLimit": "{limit} সীমার উপরে",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "কোনো ব্যক্তিগত সীমা সেট নেই।",
+  "claimsClearPersonalLimit": "সীমা মুছুন"
 }

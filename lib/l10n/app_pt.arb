@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Estes livros têm apenas um Proprietário. Considere tornar também Proprietário outro dispositivo ligado.",
   "settingsLinkedDevicesSyncNow": "Sincronizar agora",
   "settingsLinkedDevicesSyncNowBusy": "A atualizar…",
-  "translateCategoryWithAi": "Traduzir com IA"
+  "translateCategoryWithAi": "Traduzir com IA",
+  "settingsLinkedDevicesCodesDontMatch": "Não coincidem",
+  "settingsLinkedDevicesConnectByAddress": "Ligar por endereço",
+  "settingsLinkedDevicesConnectByAddressBody": "Quando a descoberta não encontrar um dispositivo ligado, introduza o endereço LAN e a porta.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Ligar por endereço",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Introduzir código em vez disso",
+  "settingsLinkedDevicesEnterCodeSubmit": "Encontrar dispositivo",
+  "settingsLinkedDevicesEnterCodeTitle": "Introduzir código de ligação",
+  "settingsLinkedDevicesJoinCodeExpired": "Este código expirou — peça um novo",
+  "settingsLinkedDevicesJoinCodeLabel": "Código de ligação",
+  "settingsLinkedDevicesJoinCodeNotFound": "Nenhum dispositivo com este código neste Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} restantes",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Tentar novamente",
+  "settingsLinkedDevicesJoinCodeUsed": "Este código já foi usado. Peça um novo.",
+  "settingsLinkedDevicesJoinCheckCode": "Código de verificação — confirme que coincide no outro dispositivo",
+  "settingsLinkedDevicesScanQr": "Digitalizar QR de ligação",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Confirmar código de verificação",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Este código coincide com o do outro dispositivo?",
+  "settingsLinkedDevicesCodesMatch": "Os códigos coincidem",
+  "settingsLinkedDevicesJoinExpired": "Este QR de ligação expirou. Peça um código novo.",
+  "settingsLinkedDevicesJoinReused": "Este QR de ligação já foi usado. Peça um código novo.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Anfitrião",
+  "settingsLinkedDevicesPort": "Porta",
+  "settingsLinkedDevicesPeer": "Dispositivo",
+  "settingsLinkedDevicesSaveAddress": "Guardar endereço",
+  "claimsPersonalLimitsTitle": "Limites de despesas",
+  "claimsPersonalLimitsTitleFor": "Limites de despesas de {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Os meus limites de despesas",
+  "claimsMyLimits": "Os meus limites",
+  "claimsPersonalLimitsHeading": "Os seus limites pessoais",
+  "claimsCompanyLimitsHeading": "Limites da empresa",
+  "claimsBalancesHeading": "Saldos a liquidar",
+  "claimsPayBalance": "Pagar {amount}",
+  "claimsRecordPayment": "Registar pagamento",
+  "claimsAboveLimit": "Acima do limite de {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Nenhum limite pessoal definido.",
+  "claimsClearPersonalLimit": "Limpar limite"
 }

@@ -60,6 +60,41 @@ void main() {
       );
     });
 
+    test(
+      'entry signed on joiner after join verifies on host (no missing_identity)',
+      () async {
+        await harness.link();
+        final joinerIdentity = await harness.b.identity.currentIdentity();
+        expect(joinerIdentity, isNotNull);
+        final onHost = (await harness.a.membership.listActiveDevices())
+            .firstWhere((d) => d.deviceId == harness.b.deviceId);
+        expect(onHost.signingIdentityId, joinerIdentity!.identityId);
+
+        final id = await harness.b.recordSpend(
+          amountMinor: 875,
+          description: 'joiner-signed',
+        );
+        final result = await harness.syncNow(from: harness.b, to: harness.a);
+        expect(result.sender.connected, isTrue);
+        expect(result.receiver.connected, isTrue);
+        expect(
+          (await harness.a.ledger.watchEntries().first).map((e) => e.id),
+          contains(id),
+        );
+        final notices = await harness.a.db
+            .select(harness.a.db.membershipNotices)
+            .get();
+        expect(
+          notices.map((n) => '${n.kind.name}:${n.detail ?? ''}').join('|'),
+          isNot(contains('missing_identity')),
+        );
+        expect(
+          notices.map((n) => n.kind),
+          isNot(contains(MembershipNoticeKind.entryNotAccepted)),
+        );
+      },
+    );
+
     test('reject bad signature', () async {
       await harness.link();
       final accountId = await harness.a.financialAccountId();

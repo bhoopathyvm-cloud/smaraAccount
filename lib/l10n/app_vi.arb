@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Sổ sách này chỉ có một Chủ sở hữu. Hãy cân nhắc đặt thêm một thiết bị liên kết khác làm Chủ sở hữu.",
   "settingsLinkedDevicesSyncNow": "Đồng bộ ngay",
   "settingsLinkedDevicesSyncNowBusy": "Đang bắt kịp…",
-  "translateCategoryWithAi": "Dịch bằng AI"
+  "translateCategoryWithAi": "Dịch bằng AI",
+  "settingsLinkedDevicesCodesDontMatch": "Không khớp",
+  "settingsLinkedDevicesConnectByAddress": "Kết nối bằng địa chỉ",
+  "settingsLinkedDevicesConnectByAddressBody": "Khi không tìm thấy thiết bị đã liên kết, hãy nhập địa chỉ LAN và cổng.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Kết nối bằng địa chỉ",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Nhập mã thay thế",
+  "settingsLinkedDevicesEnterCodeSubmit": "Tìm thiết bị",
+  "settingsLinkedDevicesEnterCodeTitle": "Nhập mã tham gia",
+  "settingsLinkedDevicesJoinCodeExpired": "Mã này đã hết hạn — hãy yêu cầu mã mới",
+  "settingsLinkedDevicesJoinCodeLabel": "Mã tham gia",
+  "settingsLinkedDevicesJoinCodeNotFound": "Không có thiết bị nào có mã này trên Wi-Fi này",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "Còn {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Thử lại",
+  "settingsLinkedDevicesJoinCodeUsed": "Mã này đã được dùng. Hãy yêu cầu mã mới.",
+  "settingsLinkedDevicesJoinCheckCode": "Mã kiểm tra — xác nhận khớp trên thiết bị kia",
+  "settingsLinkedDevicesScanQr": "Quét QR tham gia",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Xác nhận mã kiểm tra",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Mã này có khớp với mã trên thiết bị kia không?",
+  "settingsLinkedDevicesCodesMatch": "Mã khớp",
+  "settingsLinkedDevicesJoinExpired": "QR tham gia này đã hết hạn. Hãy yêu cầu mã mới.",
+  "settingsLinkedDevicesJoinReused": "QR tham gia này đã được dùng. Hãy yêu cầu mã mới.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Máy chủ",
+  "settingsLinkedDevicesPort": "Cổng",
+  "settingsLinkedDevicesPeer": "Thiết bị",
+  "settingsLinkedDevicesSaveAddress": "Lưu địa chỉ",
+  "claimsPersonalLimitsTitle": "Hạn mức hoàn ứng",
+  "claimsPersonalLimitsTitleFor": "Hạn mức hoàn ứng của {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Hạn mức hoàn ứng của tôi",
+  "claimsMyLimits": "Hạn mức của tôi",
+  "claimsPersonalLimitsHeading": "Hạn mức cá nhân của bạn",
+  "claimsCompanyLimitsHeading": "Hạn mức công ty",
+  "claimsBalancesHeading": "Số dư cần tất toán",
+  "claimsPayBalance": "Thanh toán {amount}",
+  "claimsRecordPayment": "Ghi nhận thanh toán",
+  "claimsAboveLimit": "Vượt hạn mức {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Chưa đặt hạn mức cá nhân.",
+  "claimsClearPersonalLimit": "Xóa hạn mức"
 }

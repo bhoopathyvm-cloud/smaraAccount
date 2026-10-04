@@ -1022,6 +1022,93 @@ class AppLocalizationsKn extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'ಹಿಡಿಯಲಾಗುತ್ತಿದೆ...';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'ಪರಿಶೀಲನೆ ಕೋಡ್ — ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆಯೇ ಎಂದು ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'ಸೇರುವ QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'ಪರಿಶೀಲನೆ ಕೋಡ್ ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'ಈ ಕೋಡ್ ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿರುವುದಕ್ಕೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆಯೇ?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'ಕೋಡ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತವೆ';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'ಈ ಸೇರುವ QR ಅವಧಿ ಮುಗಿದಿದೆ. ಹೊಸ ಕೋಡ್ ಕೇಳಿ.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'ಈ ಸೇರುವ QR ಈಗಾಗಲೇ ಬಳಸಲಾಗಿದೆ. ಹೊಸ ಕೋಡ್ ಕೇಳಿ.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'ಸೇರುವ ಕೋಡ್';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds ಉಳಿದಿದೆ';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'ಬದಲಿಗೆ ಕೋಡ್ ನಮೂದಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'ಸೇರುವ ಕೋಡ್ ನಮೂದಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'ಸಾಧನ ಹುಡುಕಿ';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'ಈ ಕೋಡ್ ಅವಧಿ ಮುಗಿದಿದೆ — ಹೊಸದನ್ನು ಕೇಳಿ';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'ಈ ಕೋಡ್ ಈಗಾಗಲೇ ಬಳಸಲಾಗಿದೆ. ಹೊಸದನ್ನು ಕೇಳಿ.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'ಈ Wi-Fi ನಲ್ಲಿ ಈ ಕೋಡ್‌ನ ಸಾಧನವಿಲ್ಲ';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸಿ';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'ಪತ್ತೆಹಚ್ಚುವಿಕೆ ಲಿಂಕ್ ಮಾಡಿದ ಸಾಧನವನ್ನು ಕಂಡುಹಿಡಿಯದಿದ್ದರೆ, ಅದರ LAN ವಿಳಾಸ ಮತ್ತು ಪೋರ್ಟ್ ನಮೂದಿಸಿ.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'ಹೋಸ್ಟ್';
+
+  @override
+  String get settingsLinkedDevicesPort => 'ಪೋರ್ಟ್';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'ಸಾಧನ';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'ವಿಳಾಸ ಉಳಿಸಿ';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'ಸಾಧನವನ್ನು ಸೇರಿಸಲಾಗಿದೆ: $name';
   }
@@ -2196,6 +2283,48 @@ class AppLocalizationsKn extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'ಸೂಚನೆ: ಗರಿಷ್ಠ $amount ಪ್ರತಿ $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'ಕ್ಲೇಮ್ ಮಿತಿಗಳು';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name ಅವರ ಕ್ಲೇಮ್ ಮಿತಿಗಳು';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'ನನ್ನ ಕ್ಲೇಮ್ ಮಿತಿಗಳು';
+
+  @override
+  String get claimsMyLimits => 'ನನ್ನ ಮಿತಿಗಳು';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಮಿತಿಗಳು';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'ಕಂಪನಿ ಮಿತಿಗಳು';
+
+  @override
+  String get claimsBalancesHeading => 'ಇತ್ಯರ್ಥಗೊಳಿಸಬೇಕಾದ ಬ್ಯಾಲೆನ್ಸ್ಗಳು';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount ಪಾವತಿ';
+  }
+
+  @override
+  String get claimsRecordPayment => 'ಪಾವತಿ ದಾಖಲಿಸಿ';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit ಮಿತಿಗಿಂತ ಮೇಲೆ';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'ವೈಯಕ್ತಿಕ ಮಿತಿಗಳನ್ನು ಹೊಂದಿಸಿಲ್ಲ.';
+
+  @override
+  String get claimsClearPersonalLimit => 'ಮಿತಿ ತೆರವುಗೊಳಿಸಿ';
 
   @override
   String get claimsNoClaimsYet => 'ಇನ್ನೂ ಯಾವುದೇ ಹಕ್ಕುಗಳಿಲ್ಲ.';

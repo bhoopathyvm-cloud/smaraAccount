@@ -1030,6 +1030,93 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Felzárkózás…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Ellenőrző kód — erősítse meg, hogy egyezik a másik eszközön';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Csatlakozási QR beolvasása';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Ellenőrző kód megerősítése';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Egyezik ez a kód a másik eszközön lévővel?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'A kódok egyeznek';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Nem egyeznek';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Ez a csatlakozási QR lejárt. Kérjen új kódot.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Ez a csatlakozási QR már használva volt. Kérjen új kódot.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Csatlakozási kód';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds van hátra';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Inkáb kód megadása';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Csatlakozási kód megadása';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Eszköz keresése';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Ez a kód lejárt — kérjen újat';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Ez a kód már használva volt. Kérjen újat.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Nincs ilyen kódú eszköz ezen a Wi-Fi-n';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Újra';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Kapcsolódás cím alapján';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Kapcsolódás cím alapján';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Ha a felfedezés nem találja a kapcsolt eszközt, adja meg a LAN-címet és a portot.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Kiszolgáló';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Port';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Eszköz';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Cím mentése';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Eszköz hozzáadva: $name';
   }
@@ -2213,6 +2300,48 @@ class AppLocalizationsHu extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Tipp: legfeljebb $amount / $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Igénylési limitek';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name igénylési limitjei';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'Saját igénylési limitek';
+
+  @override
+  String get claimsMyLimits => 'Saját limitek';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Az Ön személyes limitjei';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Céges limitek';
+
+  @override
+  String get claimsBalancesHeading => 'Rendezendő egyenlegek';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount kifizetése';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Kifizetés rögzítése';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'A $limit limit felett';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Nincs személyes limit beállítva.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Limit törlése';
 
   @override
   String get claimsNoClaimsYet => 'Még nincsenek elszámolások.';

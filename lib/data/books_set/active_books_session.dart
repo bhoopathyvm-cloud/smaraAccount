@@ -1,12 +1,17 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../domain/crypto/secure_key_storage.dart';
 import '../../domain/crypto/signing_key_service.dart';
+import '../../domain/linked_devices/reserved_join_identity.dart';
 import '../database/app_database.dart';
+import '../repositories/account_repository.dart';
 import '../repositories/books_set_repository.dart';
+import '../repositories/identity_repository.dart';
+import '../repositories/ledger_repository.dart';
 import 'books_set_paths.dart';
 
 /// Owns the active books set's [AppDatabase] connection and notifies
@@ -101,6 +106,83 @@ class ActiveBooksSession extends ChangeNotifier {
     _generation++;
     notifyListeners();
     return info;
+  }
+
+  /// Creates this device's Signing Identity for [booksSetId] under that set's
+  /// namespaced secure-storage key, without switching the active set.
+  ///
+  /// Call before the join hello so the host pins the identity that will sign
+  /// the joined set — never the household set's key (Decision 4).
+  Future<ReservedJoinIdentity> reserveJoinIdentity({
+    required String booksSetId,
+    String currency = 'USD',
+  }) async {
+    await BooksSetPaths.ensureBooksSetDirectory(
+      _booksSets.supportDirectory,
+      booksSetId,
+    );
+    final file = BooksSetPaths.databaseFile(
+      _booksSets.supportDirectory,
+      booksSetId,
+    );
+    final keys = _booksSets.signingKeyServiceFor(booksSetId);
+    final previousWarn = driftRuntimeOptions.dontWarnAboutMultipleDatabases;
+    driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+    final db = AppDatabase.openFile(file);
+    try {
+      await db.customSelect('SELECT 1').get();
+      final ledger = LedgerRepository(database: db, signingKeyService: keys);
+      final accounts = AccountRepository(
+        database: db,
+        ledgerRepository: ledger,
+      );
+      final identity = IdentityRepository(
+        database: db,
+        accountRepository: accounts,
+        signingKeyService: keys,
+      );
+      var current = await identity.currentIdentity();
+      if (current == null) {
+        final generated = await identity.generateFirstIdentity();
+        current = await identity.confirmFirstIdentity(
+          generated,
+          currency: currency,
+          seedStarterCategories: false,
+        );
+      }
+      return ReservedJoinIdentity(
+        booksSetId: booksSetId,
+        identityId: current.identityId,
+        publicKey: current.publicKey,
+      );
+    } finally {
+      await db.close();
+      driftRuntimeOptions.dontWarnAboutMultipleDatabases = previousWarn;
+    }
+  }
+
+  /// Opens [booksSetId] (creating an empty set when missing), runs [seed]
+  /// against that database, then notifies listeners.
+  ///
+  /// Join must seed membership/identity **before** notify so the router
+  /// rebuild does not treat the set as a fresh New-setup device.
+  Future<void> openJoinedSet({
+    required String booksSetId,
+    String displayName = '',
+    required Future<void> Function(AppDatabase db, SigningKeyService keys) seed,
+  }) async {
+    final ids = await BooksSetPaths.listBooksSetIds(
+      _booksSets.supportDirectory,
+    );
+    if (ids.contains(booksSetId)) {
+      _database = await _booksSets.switchActiveSet(booksSetId);
+    } else {
+      await _booksSets.createSet(displayName: displayName, id: booksSetId);
+      _database = _booksSets.activeDatabase;
+    }
+    await seed(database, _signingKeyService);
+    _generation++;
+    notifyListeners();
   }
 
   Future<void> renameSet(String booksSetId, String displayName) {

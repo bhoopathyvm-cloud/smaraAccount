@@ -1,0 +1,12 @@
+# Default gitleaks rules, plus one allowlist: the self-signed TLS keys under
+# test/fixtures/tls/ exist only so unit tests can stand up pinned peers
+# ("a", "b", "evil") on loopback. They secure nothing. The second path
+# covers identical copies that sat in test/fixtures/ in earlier commits.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Test-only TLS fixture keys"
+paths = [
+  '''^test/fixtures/(tls/)?(a|b|evil)-key\.pem$''',
+]

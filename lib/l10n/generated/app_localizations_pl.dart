@@ -1020,6 +1020,92 @@ class AppLocalizationsPl extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Doganianie…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Kod kontrolny — potwierdź, że jest taki sam na drugim urządzeniu';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Skanuj kod QR dołączenia';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Potwierdź kod kontrolny';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Czy ten kod jest taki sam jak na drugim urządzeniu?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Kody się zgadzają';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Nie zgadzają się';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Ten kod QR dołączenia wygasł. Poproś o nowy kod.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Ten kod QR dołączenia był już użyty. Poproś o nowy kod.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Kod dołączenia';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return 'Pozostało $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Wpisz kod zamiast tego';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Wpisz kod dołączenia';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Znajdź urządzenie';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Ten kod wygasł — poproś o nowy';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Ten kod był już użyty. Poproś o nowy.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Brak urządzenia z tym kodem w tej sieci Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Spróbuj ponownie';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Połącz przez adres';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'Połącz przez adres';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Gdy wykrywanie nie znajdzie powiązanego urządzenia, wpisz jego adres LAN i port.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Host';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Port';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Urządzenie';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Zapisz adres';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Dodano urządzenie: $name';
   }
@@ -2201,6 +2287,48 @@ class AppLocalizationsPl extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Wskazówka: co najwyżej $amount na $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Limity roszczeń';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Limity roszczeń dla $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'Moje limity roszczeń';
+
+  @override
+  String get claimsMyLimits => 'Moje limity';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Twoje osobiste limity';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Limity firmowe';
+
+  @override
+  String get claimsBalancesHeading => 'Salda do rozliczenia';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Zapłać $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Zapisz płatność';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Powyżej limitu $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Brak osobistych limitów.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Wyczyść limit';
 
   @override
   String get claimsNoClaimsYet => 'Brak wniosków.';

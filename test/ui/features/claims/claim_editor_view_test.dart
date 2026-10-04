@@ -270,4 +270,53 @@ void main() {
     await tester.pumpAndSettle();
     expect(picker.pickLog, contains(ClaimReceiptSource.camera));
   });
+
+  testWidgets(
+    'add-item sheet via FAB saves without disposing controllers early',
+    (tester) async {
+      final claim = await claims.createDraft(claimantDeviceId: 'ravi-device');
+      final vm = ClaimEditorViewModel(
+        claims: claims,
+        receipts: receipts,
+        picker: picker,
+        settings: settings,
+        claimId: claim.id,
+        actorDeviceId: 'ravi-device',
+        companyCurrency: 'USD',
+      );
+      await vm.load(
+        categories: [(id: travelCategoryId, name: travelCategoryName)],
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+          supportedLocales: supportedAppLocales,
+          home: ClaimEditorView(viewModel: vm),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+      expect(find.text('Add item'), findsOneWidget);
+
+      await tester.enterText(
+        find.widgetWithText(TextField, 'Amount paid'),
+        '12.00',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextField, 'Amount in USD'),
+        '12.00',
+      );
+      await tester.tap(find.text('Save'));
+      // Exit animation must not throw "TextEditingController was used after
+      // being disposed" — that broke company-sync Claimant submit.
+      await tester.pumpAndSettle();
+
+      expect(find.text('Add item'), findsNothing);
+      expect(vm.claim!.items, isNotEmpty);
+      expect(vm.claim!.items.single.paidAmountMinor, 1200);
+    },
+  );
 }

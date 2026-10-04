@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "这些账本只有一位所有者。建议将另一台已关联设备也设为所有者。",
   "settingsLinkedDevicesSyncNow": "立即同步",
   "settingsLinkedDevicesSyncNowBusy": "正在追赶…",
-  "translateCategoryWithAi": "用 AI 翻译"
+  "translateCategoryWithAi": "用 AI 翻译",
+  "settingsLinkedDevicesCodesDontMatch": "不匹配",
+  "settingsLinkedDevicesConnectByAddress": "通过地址连接",
+  "settingsLinkedDevicesConnectByAddressBody": "当发现功能找不到已关联设备时，请输入其局域网地址和端口。",
+  "settingsLinkedDevicesConnectByAddressTitle": "通过地址连接",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "改为输入代码",
+  "settingsLinkedDevicesEnterCodeSubmit": "查找设备",
+  "settingsLinkedDevicesEnterCodeTitle": "输入加入码",
+  "settingsLinkedDevicesJoinCodeExpired": "此代码已过期 — 请索取新代码",
+  "settingsLinkedDevicesJoinCodeLabel": "加入码",
+  "settingsLinkedDevicesJoinCodeNotFound": "此 Wi-Fi 上没有使用此代码的设备",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "剩余 {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "重试",
+  "settingsLinkedDevicesJoinCodeUsed": "此代码已使用过。请索取新代码。",
+  "settingsLinkedDevicesJoinCheckCode": "核对码 — 请确认另一台设备上显示相同",
+  "settingsLinkedDevicesScanQr": "扫描加入二维码",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "确认核对码",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "此代码是否与另一台设备上的一致？",
+  "settingsLinkedDevicesCodesMatch": "代码匹配",
+  "settingsLinkedDevicesJoinExpired": "此加入二维码已过期。请索取新代码。",
+  "settingsLinkedDevicesJoinReused": "此加入二维码已使用过。请索取新代码。",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "主机",
+  "settingsLinkedDevicesPort": "端口",
+  "settingsLinkedDevicesPeer": "设备",
+  "settingsLinkedDevicesSaveAddress": "保存地址",
+  "claimsPersonalLimitsTitle": "报销限额",
+  "claimsPersonalLimitsTitleFor": "{name} 的报销限额",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "我的报销限额",
+  "claimsMyLimits": "我的限额",
+  "claimsPersonalLimitsHeading": "你的个人限额",
+  "claimsCompanyLimitsHeading": "公司限额",
+  "claimsBalancesHeading": "待结清余额",
+  "claimsPayBalance": "支付 {amount}",
+  "claimsRecordPayment": "记录付款",
+  "claimsAboveLimit": "超过 {limit} 限额",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "未设置个人限额。",
+  "claimsClearPersonalLimit": "清除限额"
 }

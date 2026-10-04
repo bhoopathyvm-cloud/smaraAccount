@@ -239,6 +239,24 @@ relay. Runs when both apps are open on that Wi-Fi, and when someone taps
 Sync now.
 _Avoid_: cloud sync, internet sync, relay, push sync, background server.
 
+**Join Code**:
+A short, expiring code (`XXXX-XXXX`) shown beside the join QR so a device
+without a usable camera can type it instead of scanning. It proves the
+meeting on the same Wi-Fi; the Check Code is what people confirm by eye.
+_Avoid_: password, PIN, invite link, OTP.
+
+**Check Code**:
+A short shared number both devices show during join (QR or Join Code)
+before any books or certificates are exchanged. People confirm the codes
+match; if they do not, the join stops and nothing is stored.
+_Avoid_: password, pairing key, security token.
+
+**Personal Claim Limit**:
+An Owner-set allowance for one person and one claim category (amount in
+the company currency, optional unit). Shown as a hint to that Claimant and
+to Approvers; it never changes an entered amount by itself.
+_Avoid_: budget cap enforcement, hard block, auto-reject.
+
 **Owner**:
 A Linked Device role that may add and remove devices or people, decide who
 may add others, erase a removed device, and make other devices Owners.

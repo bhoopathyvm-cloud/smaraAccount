@@ -16,6 +16,7 @@ import '../database/tables/ofx_import_records_table.dart' show ImportSource;
 import 'account_repository.dart';
 import 'category_repository.dart';
 import 'ledger_repository.dart';
+import 'metadata_outbox.dart';
 
 /// Repository for the statement import flow (ofx-transaction-import,
 /// csv-transaction-import): parsing a file, matching it to a financial
@@ -32,15 +33,21 @@ class StatementImportRepository {
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
     required CategoryRepository categoryRepository,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
   }) : _db = database,
        _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
-       _categoryRepository = categoryRepository;
+       _categoryRepository = categoryRepository,
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   /// Throws [OfxParseException] (via [parseOfxDocument]) when the file
   /// isn't recognizable as OFX at all.
@@ -330,15 +337,23 @@ class StatementImportRepository {
     required String keyword,
     required String categoryId,
   }) async {
-    await _db
-        .into(_db.categoryRules)
-        .insert(
-          CategoryRulesCompanion.insert(
-            keyword: keyword,
-            categoryId: categoryId,
-            createdAt: DateTime.now(),
-          ),
-        );
+    await _db.transaction(() async {
+      final created = await _db
+          .into(_db.categoryRules)
+          .insertReturning(
+            CategoryRulesCompanion.insert(
+              keyword: keyword,
+              categoryId: categoryId,
+              createdAt: DateTime.now(),
+            ),
+          );
+      await _emitRule(entityId: created.id, field: 'keyword', value: keyword);
+      await _emitRule(
+        entityId: created.id,
+        field: 'categoryId',
+        value: categoryId,
+      );
+    });
   }
 
   Stream<List<CategoryRule>> watchCategoryRules() {
@@ -354,16 +369,44 @@ class StatementImportRepository {
     required String keyword,
     required String categoryId,
   }) async {
-    await (_db.update(_db.categoryRules)..where((r) => r.id.equals(id))).write(
-      CategoryRulesCompanion(
-        keyword: Value(keyword),
-        categoryId: Value(categoryId),
-      ),
-    );
+    await _db.transaction(() async {
+      await (_db.update(
+        _db.categoryRules,
+      )..where((r) => r.id.equals(id))).write(
+        CategoryRulesCompanion(
+          keyword: Value(keyword),
+          categoryId: Value(categoryId),
+        ),
+      );
+      await _emitRule(entityId: id, field: 'keyword', value: keyword);
+      await _emitRule(entityId: id, field: 'categoryId', value: categoryId);
+    });
   }
 
   Future<void> deleteCategoryRule(String id) async {
-    await (_db.delete(_db.categoryRules)..where((r) => r.id.equals(id))).go();
+    await _db.transaction(() async {
+      await (_db.delete(_db.categoryRules)..where((r) => r.id.equals(id))).go();
+      await _emitRule(entityId: id, field: 'deleted', value: true);
+    });
+  }
+
+  Future<void> _emitRule({
+    required String entityId,
+    required String field,
+    required Object? value,
+  }) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: 'category_rule',
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
+    );
   }
 
   CategoryRule _toDomainCategoryRule(CategoryRuleRow row) {

@@ -14,6 +14,7 @@ class ClaimsListView extends StatelessWidget {
     required this.viewModel,
     this.companyCurrency = 'USD',
     this.onOpenEditor,
+    this.onOpenMyLimits,
   });
 
   final ClaimsListViewModel viewModel;
@@ -21,6 +22,9 @@ class ClaimsListView extends StatelessWidget {
 
   /// When set, FAB / draft tap use this instead of go_router (widget tests).
   final void Function(String claimId)? onOpenEditor;
+
+  /// When set, "My limits" uses this instead of go_router (widget tests).
+  final VoidCallback? onOpenMyLimits;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,28 @@ class ClaimsListView extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: AppBar(title: Text(l10n.claimsTitle)),
+          appBar: AppBar(
+            title: Text(l10n.claimsTitle),
+            actions: [
+              TextButton(
+                key: const Key('my-claim-limits-button'),
+                onPressed: () {
+                  if (onOpenMyLimits != null) {
+                    onOpenMyLimits!();
+                    return;
+                  }
+                  context.push(AppNavPaths.myClaimLimits);
+                },
+                child: Text(l10n.claimsMyLimits),
+              ),
+              IconButton(
+                key: const Key('claims-open-settings'),
+                tooltip: l10n.settingsTitle,
+                onPressed: () => context.push(AppNavPaths.settings),
+                icon: const Icon(Icons.settings_outlined),
+              ),
+            ],
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               final draft = await viewModel.createDraft();

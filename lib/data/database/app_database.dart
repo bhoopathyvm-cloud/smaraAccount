@@ -33,8 +33,11 @@ import 'tables/ledger_chain_state_table.dart';
 import 'tables/ledger_identity_chain_tips_table.dart';
 import 'tables/linked_devices_table.dart';
 import 'tables/membership_notices_table.dart';
+import 'tables/metadata_lww_state_table.dart';
+import 'tables/metadata_operations_table.dart';
 import 'tables/ofx_import_records_table.dart';
 import 'tables/payees_table.dart';
+import 'tables/personal_claim_limits_table.dart';
 import 'tables/pending_join_requests_table.dart';
 import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
@@ -95,6 +98,10 @@ const starterExpenseCategories = [
     ClaimAdvances,
     ClaimCategoryAllowlist,
     ClaimSpendingHints,
+    MetadataOperations,
+    MetadataLwwState,
+    HlcState,
+    PersonalClaimLimits,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -136,7 +143,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 22;
+  int get schemaVersion => 25;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -592,6 +599,25 @@ CREATE TABLE journal_entries__new (
         await m.createTable(claimAdvances);
         await m.createTable(claimCategoryAllowlist);
         await m.createTable(claimSpendingHints);
+      }
+
+      if (from < 23) {
+        // real-sync: metadata operation outbox for LWW sync of master data.
+        await m.createTable(metadataOperations);
+      }
+
+      if (from < 24) {
+        // real-sync 5.2: HLC columns on outbox + persisted LWW winners.
+        if (from >= 23) {
+          await m.addColumn(metadataOperations, metadataOperations.hlcCounter);
+          await m.addColumn(metadataOperations, metadataOperations.hlcDeviceId);
+        }
+        await m.createTable(metadataLwwState);
+        await m.createTable(hlcState);
+      }
+
+      if (from < 25) {
+        await m.createTable(personalClaimLimits);
       }
     },
   );

@@ -1023,6 +1023,92 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Yakalanıyor…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Kontrol kodu — diğer cihazda eşleştiğini onaylayın';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Katılma QRını tara';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Kontrol kodunu onayla';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Bu kod diğer cihazdakiyle eşleşiyor mu?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Kodlar eşleşiyor';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Eşleşmiyorlar';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Bu katılma QRının süresi doldu. Yeni bir kod isteyin.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Bu katılma QRı zaten kullanıldı. Yeni bir kod isteyin.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Katılma kodu';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds kaldı';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Bunun yerine kod gir';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Katılma kodunu gir';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Cihazı bul';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Bu kodun süresi doldu — yeni bir tane isteyin';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Bu kod zaten kullanıldı. Yeni bir tane isteyin.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Bu Wi-Fide bu koda sahip cihaz yok';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Yeniden dene';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Adresle bağlan';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'Adresle bağlan';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Keşif bağlı bir cihazı bulamazsa LAN adresini ve bağlantı noktasını girin.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Ana bilgisayar';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Bağlantı noktası';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Cihaz';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Adresi kaydet';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Bir cihaz eklendi: $name';
   }
@@ -2193,6 +2279,48 @@ class AppLocalizationsTr extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'İpucu: en fazla $amount / $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Masraf limitleri';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name için masraf limitleri';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'Masraf limitlerim';
+
+  @override
+  String get claimsMyLimits => 'Limitlerim';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Kişisel limitleriniz';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Şirket limitleri';
+
+  @override
+  String get claimsBalancesHeading => 'Mahsuplaşılacak bakiyeler';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount öde';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Ödeme kaydet';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit limitinin üzerinde';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Kişisel limit ayarlanmadı.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Limiti temizle';
 
   @override
   String get claimsNoClaimsYet => 'Henüz talep yok.';

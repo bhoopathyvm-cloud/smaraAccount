@@ -79,11 +79,13 @@ site's own privacy policy applies once the browser is open.
 ## Linked devices on your Wi-Fi
 
 **Linked devices** lets several devices in the household keep the same
-books. Discovery uses Bonjour / local-network APIs on this Wi-Fi only.
-**Sync** (including Sync now) exchanges signed ledger entries and shared
-books metadata device-to-device over an encrypted local connection. Nothing
-in that flow leaves the LAN: there is no Smara server, no cloud account,
-and no internet relay for discovery or sync. Books Copy remains the way to
+books. Discovery uses Bonjour / local-network APIs on this Wi-Fi only
+(including join-by-code offers and Sync now peers). **Join by code** and
+**Connect by address** also stay on the same Wi-Fi — they do not open an
+internet path. **Sync** exchanges signed ledger entries and shared books
+metadata device-to-device over an encrypted local connection. Nothing in
+that flow leaves the LAN: there is no Smara server, no cloud account, and
+no internet relay for discovery or sync. Books Copy remains the way to
 carry books when devices are not on the same Wi-Fi.
 
 ## Face ID, Touch ID, and other biometrics

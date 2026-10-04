@@ -250,6 +250,55 @@ void main() {
         throwsA(isA<AppFailure>()),
       );
     });
+
+    test('rejects expired join QR and refuses nonce reuse', () async {
+      final payload = await membership.buildJoinQrPayload(
+        hostDeviceId: 'device-a',
+        hostDisplayName: 'Phone A',
+        booksSetId: 'books-1',
+      );
+      expect(payload.checkCode.length, 6);
+      expect(payload.expiresAt, now.add(JoinQrPayload.joinQrTtl));
+
+      now = payload.expiresAt;
+      await expectLater(
+        membership.acceptJoinFromQr(
+          actorDeviceId: 'device-a',
+          payload: payload,
+          joinerDeviceId: 'device-b',
+          joinerDisplayName: 'Phone B',
+          joinerSigningPublicKey: List<int>.filled(32, 7),
+          joinerDeviceCertFingerprint: 'fp-b',
+        ),
+        throwsA(isA<AppFailure>()),
+      );
+
+      now = DateTime.utc(2026, 3, 1, 12);
+      final fresh = await membership.buildJoinQrPayload(
+        hostDeviceId: 'device-a',
+        hostDisplayName: 'Phone A',
+        booksSetId: 'books-1',
+      );
+      await membership.acceptJoinFromQr(
+        actorDeviceId: 'device-a',
+        payload: fresh,
+        joinerDeviceId: 'device-b',
+        joinerDisplayName: 'Phone B',
+        joinerSigningPublicKey: List<int>.filled(32, 7),
+        joinerDeviceCertFingerprint: 'fp-b',
+      );
+      await expectLater(
+        membership.acceptJoinFromQr(
+          actorDeviceId: 'device-a',
+          payload: fresh,
+          joinerDeviceId: 'device-c',
+          joinerDisplayName: 'Phone C',
+          joinerSigningPublicKey: List<int>.filled(32, 8),
+          joinerDeviceCertFingerprint: 'fp-c',
+        ),
+        throwsA(isA<AppFailure>()),
+      );
+    });
   });
 
   group('Books-Copy join request', () {

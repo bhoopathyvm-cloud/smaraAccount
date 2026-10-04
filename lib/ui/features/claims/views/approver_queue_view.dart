@@ -53,6 +53,37 @@ class ApproverQueueView extends StatelessWidget {
                     ),
                   ),
                 ),
+              if (viewModel.balances.isNotEmpty) ...[
+                Text(
+                  l10n.claimsBalancesHeading,
+                  key: const Key('claim-balances-heading'),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                ...viewModel.balances.map((row) {
+                  final amount = formatAmountMinor(
+                    row.balanceMinor.abs(),
+                    companyCurrency,
+                  );
+                  return ListTile(
+                    key: Key('claim-balance-${row.displayName}'),
+                    title: Text(row.displayName),
+                    subtitle: Text('$amount $companyCurrency'),
+                    trailing: TextButton(
+                      key: Key('pay-balance-${row.displayName}'),
+                      onPressed: row.balanceMinor > 0
+                          ? () => viewModel.payBalance(
+                              deviceId: row.deviceId,
+                              amountMinor: row.balanceMinor,
+                            )
+                          : null,
+                      child: Text(
+                        l10n.claimsPayBalance('$amount $companyCurrency'),
+                      ),
+                    ),
+                  );
+                }),
+                const Divider(),
+              ],
               if (viewModel.queue.isEmpty)
                 Text(l10n.claimsNoClaimsToReview)
               else
@@ -97,12 +128,16 @@ class ApproverQueueView extends StatelessWidget {
                                   spacing: 4,
                                   children: [
                                     TextButton(
+                                      key: Key('approve-item-${item.id}'),
                                       onPressed: () => viewModel.approve(
                                         claimItemId: item.id,
                                       ),
                                       child: Text(l10n.claimsApprove),
                                     ),
                                     TextButton(
+                                      key: Key(
+                                        'approve-different-item-${item.id}',
+                                      ),
                                       onPressed: () async {
                                         final result =
                                             await _askDifferentAmount(context);
@@ -116,6 +151,7 @@ class ApproverQueueView extends StatelessWidget {
                                       child: Text(l10n.claimsApproveDifferent),
                                     ),
                                     TextButton(
+                                      key: Key('reject-item-${item.id}'),
                                       onPressed: () async {
                                         final reason = await _askReason(
                                           context,

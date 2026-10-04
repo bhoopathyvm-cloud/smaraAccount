@@ -1021,6 +1021,95 @@ class AppLocalizationsTe extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'సమకాలీనమవుతోంది…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'తనిఖీ కోడ్ — ఇతర పరికరంపై సరిపోతుందో నిర్ధారించండి';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'చేరిక QR స్కాన్ చేయండి';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'తనిఖీ కోడ్‌ను నిర్ధారించండి';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'ఈ కోడ్ ఇతర పరికరంపై ఉన్నదానితో సరిపోతుందా?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'కోడ్‌లు సరిపోతున్నాయి';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'సరిపోవు';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'ఈ చేరిక QR గడువు ముగిసింది. కొత్త కోడ్ అడగండి.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'ఈ చేరిక QR ఇప్పటికే ఉపయోగించబడింది. కొత్త కోడ్ అడగండి.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'చేరిక కోడ్';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds మిగిలి ఉంది';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'బదులుగా కోడ్ నమోదు చేయండి';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'చేరిక కోడ్ నమోదు చేయండి';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'పరికరాన్ని కనుగొనండి';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'ఈ కోడ్ గడువు ముగిసింది — కొత్తది అడగండి';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'ఈ కోడ్ ఇప్పటికే ఉపయోగించబడింది. కొత్తది అడగండి.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'ఈ Wi-Fiలో ఈ కోడ్ ఉన్న పరికరం లేదు';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'మళ్లీ ప్రయత్నించండి';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress =>
+      'చిరునామాతో కనెక్ట్ చేయండి';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'చిరునామాతో కనెక్ట్ చేయండి';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'కనుగొనడం లింక్ చేసిన పరికరాన్ని కనుగొనలేకపోతే, దాని LAN చిరునామా మరియు పోర్ట్ నమోదు చేయండి.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'హోస్ట్';
+
+  @override
+  String get settingsLinkedDevicesPort => 'పోర్ట్';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'పరికరం';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'చిరునామా సేవ్ చేయండి';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'పరికరం జోడించబడింది: $name';
   }
@@ -2192,6 +2281,48 @@ class AppLocalizationsTe extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'సూచన: $unitకి గరిష్టంగా $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'క్లెయిమ్ పరిమితులు';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name యొక్క క్లెయిమ్ పరిమితులు';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'నా క్లెయిమ్ పరిమితులు';
+
+  @override
+  String get claimsMyLimits => 'నా పరిమితులు';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'మీ వ్యక్తిగత పరిమితులు';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'కంపెనీ పరిమితులు';
+
+  @override
+  String get claimsBalancesHeading => 'సెటిల్ చేయాల్సిన నిల్వలు';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount చెల్లించు';
+  }
+
+  @override
+  String get claimsRecordPayment => 'చెల్లింపు నమోదు చేయి';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit పరిమితి కంటే ఎక్కువ';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'వ్యక్తిగత పరిమితులు సెట్ చేయలేదు.';
+
+  @override
+  String get claimsClearPersonalLimit => 'పరిమితిని తీసివేయండి';
 
   @override
   String get claimsNoClaimsYet => 'ఇంకా క్లెయిమ్‌లు లేవు.';

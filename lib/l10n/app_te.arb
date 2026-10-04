@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "ఖాతా పుస్తకాలుకి ఒక యజమాని మాత్రమే ఉన్నారు. మరొక లింక్ చేయబడిన పరికరాన్ని యజమానిగా మార్చడాన్ని కూడా పరిగణించండి.",
   "settingsLinkedDevicesSyncNow": "ఇప్పుడు సమకాలీకరించండి",
   "settingsLinkedDevicesSyncNowBusy": "సమకాలీనమవుతోంది…",
-  "translateCategoryWithAi": "AIతో అనువదించండి"
+  "translateCategoryWithAi": "AIతో అనువదించండి",
+  "settingsLinkedDevicesCodesDontMatch": "సరిపోవు",
+  "settingsLinkedDevicesConnectByAddress": "చిరునామాతో కనెక్ట్ చేయండి",
+  "settingsLinkedDevicesConnectByAddressBody": "కనుగొనడం లింక్ చేసిన పరికరాన్ని కనుగొనలేకపోతే, దాని LAN చిరునామా మరియు పోర్ట్ నమోదు చేయండి.",
+  "settingsLinkedDevicesConnectByAddressTitle": "చిరునామాతో కనెక్ట్ చేయండి",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "బదులుగా కోడ్ నమోదు చేయండి",
+  "settingsLinkedDevicesEnterCodeSubmit": "పరికరాన్ని కనుగొనండి",
+  "settingsLinkedDevicesEnterCodeTitle": "చేరిక కోడ్ నమోదు చేయండి",
+  "settingsLinkedDevicesJoinCodeExpired": "ఈ కోడ్ గడువు ముగిసింది — కొత్తది అడగండి",
+  "settingsLinkedDevicesJoinCodeLabel": "చేరిక కోడ్",
+  "settingsLinkedDevicesJoinCodeNotFound": "ఈ Wi-Fiలో ఈ కోడ్ ఉన్న పరికరం లేదు",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} మిగిలి ఉంది",
+  "settingsLinkedDevicesJoinCodeTryAgain": "మళ్లీ ప్రయత్నించండి",
+  "settingsLinkedDevicesJoinCodeUsed": "ఈ కోడ్ ఇప్పటికే ఉపయోగించబడింది. కొత్తది అడగండి.",
+  "settingsLinkedDevicesJoinCheckCode": "తనిఖీ కోడ్ — ఇతర పరికరంపై సరిపోతుందో నిర్ధారించండి",
+  "settingsLinkedDevicesScanQr": "చేరిక QR స్కాన్ చేయండి",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "తనిఖీ కోడ్‌ను నిర్ధారించండి",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "ఈ కోడ్ ఇతర పరికరంపై ఉన్నదానితో సరిపోతుందా?",
+  "settingsLinkedDevicesCodesMatch": "కోడ్‌లు సరిపోతున్నాయి",
+  "settingsLinkedDevicesJoinExpired": "ఈ చేరిక QR గడువు ముగిసింది. కొత్త కోడ్ అడగండి.",
+  "settingsLinkedDevicesJoinReused": "ఈ చేరిక QR ఇప్పటికే ఉపయోగించబడింది. కొత్త కోడ్ అడగండి.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "హోస్ట్",
+  "settingsLinkedDevicesPort": "పోర్ట్",
+  "settingsLinkedDevicesPeer": "పరికరం",
+  "settingsLinkedDevicesSaveAddress": "చిరునామా సేవ్ చేయండి",
+  "claimsPersonalLimitsTitle": "క్లెయిమ్ పరిమితులు",
+  "claimsPersonalLimitsTitleFor": "{name} యొక్క క్లెయిమ్ పరిమితులు",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "నా క్లెయిమ్ పరిమితులు",
+  "claimsMyLimits": "నా పరిమితులు",
+  "claimsPersonalLimitsHeading": "మీ వ్యక్తిగత పరిమితులు",
+  "claimsCompanyLimitsHeading": "కంపెనీ పరిమితులు",
+  "claimsBalancesHeading": "సెటిల్ చేయాల్సిన నిల్వలు",
+  "claimsPayBalance": "{amount} చెల్లించు",
+  "claimsRecordPayment": "చెల్లింపు నమోదు చేయి",
+  "claimsAboveLimit": "{limit} పరిమితి కంటే ఎక్కువ",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "వ్యక్తిగత పరిమితులు సెట్ చేయలేదు.",
+  "claimsClearPersonalLimit": "పరిమితిని తీసివేయండి"
 }

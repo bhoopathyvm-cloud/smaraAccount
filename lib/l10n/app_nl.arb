@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Deze boeken hebben maar één Eigenaar. Overweeg om ook een ander gekoppeld apparaat Eigenaar te maken.",
   "settingsLinkedDevicesSyncNow": "Nu synchroniseren",
   "settingsLinkedDevicesSyncNowBusy": "Bijwerken…",
-  "translateCategoryWithAi": "Vertalen met AI"
+  "translateCategoryWithAi": "Vertalen met AI",
+  "settingsLinkedDevicesCodesDontMatch": "Ze komen niet overeen",
+  "settingsLinkedDevicesConnectByAddress": "Verbinden via adres",
+  "settingsLinkedDevicesConnectByAddressBody": "Als ontdekking een gekoppeld apparaat niet vindt, voer dan het LAN-adres en de poort in.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Verbinden via adres",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "In plaats daarvan code invoeren",
+  "settingsLinkedDevicesEnterCodeSubmit": "Apparaat zoeken",
+  "settingsLinkedDevicesEnterCodeTitle": "Koppelcode invoeren",
+  "settingsLinkedDevicesJoinCodeExpired": "Deze code is verlopen — vraag om een nieuwe",
+  "settingsLinkedDevicesJoinCodeLabel": "Koppelcode",
+  "settingsLinkedDevicesJoinCodeNotFound": "Geen apparaat met deze code op dit wifi-netwerk",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} over",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Opnieuw proberen",
+  "settingsLinkedDevicesJoinCodeUsed": "Deze code is al gebruikt. Vraag om een nieuwe.",
+  "settingsLinkedDevicesJoinCheckCode": "Controlecode — bevestig dat deze overeenkomt op het andere apparaat",
+  "settingsLinkedDevicesScanQr": "Koppel-QR scannen",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Controlecode bevestigen",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Komt deze code overeen met die op het andere apparaat?",
+  "settingsLinkedDevicesCodesMatch": "Codes komen overeen",
+  "settingsLinkedDevicesJoinExpired": "Deze koppel-QR is verlopen. Vraag om een nieuwe code.",
+  "settingsLinkedDevicesJoinReused": "Deze koppel-QR is al gebruikt. Vraag om een nieuwe code.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Poort",
+  "settingsLinkedDevicesPeer": "Apparaat",
+  "settingsLinkedDevicesSaveAddress": "Adres opslaan",
+  "claimsPersonalLimitsTitle": "Declaratielimieten",
+  "claimsPersonalLimitsTitleFor": "Declaratielimieten voor {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Mijn declaratielimieten",
+  "claimsMyLimits": "Mijn limieten",
+  "claimsPersonalLimitsHeading": "Jouw persoonlijke limieten",
+  "claimsCompanyLimitsHeading": "Bedrijfslimieten",
+  "claimsBalancesHeading": "Te vereffenen saldi",
+  "claimsPayBalance": "Betaal {amount}",
+  "claimsRecordPayment": "Betaling registreren",
+  "claimsAboveLimit": "Boven de limiet van {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Geen persoonlijke limieten ingesteld.",
+  "claimsClearPersonalLimit": "Limiet wissen"
 }

@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Ezeknek a könyveknek csak egy Tulajdonosa van. Fontolja meg, hogy egy másik kapcsolt eszközt is Tulajdonossá tesz.",
   "settingsLinkedDevicesSyncNow": "Szinkronizálás most",
   "settingsLinkedDevicesSyncNowBusy": "Felzárkózás…",
-  "translateCategoryWithAi": "Fordítás AI-val"
+  "translateCategoryWithAi": "Fordítás AI-val",
+  "settingsLinkedDevicesCodesDontMatch": "Nem egyeznek",
+  "settingsLinkedDevicesConnectByAddress": "Kapcsolódás cím alapján",
+  "settingsLinkedDevicesConnectByAddressBody": "Ha a felfedezés nem találja a kapcsolt eszközt, adja meg a LAN-címet és a portot.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Kapcsolódás cím alapján",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Inkáb kód megadása",
+  "settingsLinkedDevicesEnterCodeSubmit": "Eszköz keresése",
+  "settingsLinkedDevicesEnterCodeTitle": "Csatlakozási kód megadása",
+  "settingsLinkedDevicesJoinCodeExpired": "Ez a kód lejárt — kérjen újat",
+  "settingsLinkedDevicesJoinCodeLabel": "Csatlakozási kód",
+  "settingsLinkedDevicesJoinCodeNotFound": "Nincs ilyen kódú eszköz ezen a Wi-Fi-n",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} van hátra",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Újra",
+  "settingsLinkedDevicesJoinCodeUsed": "Ez a kód már használva volt. Kérjen újat.",
+  "settingsLinkedDevicesJoinCheckCode": "Ellenőrző kód — erősítse meg, hogy egyezik a másik eszközön",
+  "settingsLinkedDevicesScanQr": "Csatlakozási QR beolvasása",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Ellenőrző kód megerősítése",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Egyezik ez a kód a másik eszközön lévővel?",
+  "settingsLinkedDevicesCodesMatch": "A kódok egyeznek",
+  "settingsLinkedDevicesJoinExpired": "Ez a csatlakozási QR lejárt. Kérjen új kódot.",
+  "settingsLinkedDevicesJoinReused": "Ez a csatlakozási QR már használva volt. Kérjen új kódot.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Kiszolgáló",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Eszköz",
+  "settingsLinkedDevicesSaveAddress": "Cím mentése",
+  "claimsPersonalLimitsTitle": "Igénylési limitek",
+  "claimsPersonalLimitsTitleFor": "{name} igénylési limitjei",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Saját igénylési limitek",
+  "claimsMyLimits": "Saját limitek",
+  "claimsPersonalLimitsHeading": "Az Ön személyes limitjei",
+  "claimsCompanyLimitsHeading": "Céges limitek",
+  "claimsBalancesHeading": "Rendezendő egyenlegek",
+  "claimsPayBalance": "{amount} kifizetése",
+  "claimsRecordPayment": "Kifizetés rögzítése",
+  "claimsAboveLimit": "A {limit} limit felett",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Nincs személyes limit beállítva.",
+  "claimsClearPersonalLimit": "Limit törlése"
 }

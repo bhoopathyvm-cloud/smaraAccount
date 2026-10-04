@@ -1022,6 +1022,93 @@ class AppLocalizationsNe extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'अपडेट समात्दै…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'जाँच कोड — पुष्टि करें कि दूसरे डिवाइस पर मेल खाता है';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'जॉइन QR स्कैन करें';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'जाँच कोड की पुष्टि करें';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'क्या यह कोड दूसरे डिवाइस वाले से मेल खाता है?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'कोड मेल खाते हैं';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'मेल नहीं खाते';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'यह जॉइन QR समाप्त हो गया है। नया कोड माँगें।';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'यह जॉइन QR पहले ही उपयोग हो चुका है। नया कोड माँगें।';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'जोडिने कोड';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds शेष';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'यसको सट्टा कोड प्रविष्ट गर्नुहोस्';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'जॉइन कोड दर्ज करें';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'डिवाइस खोजें';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'यह कोड समाप्त हो गया है — नया माँगें';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'यह कोड पहले ही उपयोग हो चुका है। नया माँगें।';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'इस Wi-Fi पर इस कोड वाला कोई डिवाइस नहीं';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'फिर से कोशिश करें';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'पते से कनेक्ट करें';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'पते से कनेक्ट करें';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'जब खोज लिंक किया डिवाइस न ढूँढ पाए, तो उसका LAN पता और पोर्ट दर्ज करें।';
+
+  @override
+  String get settingsLinkedDevicesHost => 'होस्ट';
+
+  @override
+  String get settingsLinkedDevicesPort => 'पोर्ट';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'डिवाइस';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'पता सहेजें';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'एउटा यन्त्र थपियो: $name';
   }
@@ -2194,6 +2281,48 @@ class AppLocalizationsNe extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'सङ्केत: बढीमा $amount प्रति $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'दाबी सीमाहरू';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name की दावा सीमाएँ';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'मेरा दाबी सीमाहरू';
+
+  @override
+  String get claimsMyLimits => 'मेरा सीमाहरू';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'तपाईंका व्यक्तिगत सीमाहरू';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'कम्पनी सीमाहरू';
+
+  @override
+  String get claimsBalancesHeading => 'फछ्र्यौट गर्नुपर्ने ब्यालेन्स';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount तिर्नुहोस';
+  }
+
+  @override
+  String get claimsRecordPayment => 'भुक्तानी रेकर्ड गर्नुहोस';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit सीमाभन्दा माथि';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'कोई व्यक्तिगत सीमा सेट नहीं है।';
+
+  @override
+  String get claimsClearPersonalLimit => 'सीमा साफ़ करें';
 
   @override
   String get claimsNoClaimsYet => 'अहिलेसम्म कुनै दाबी छैन।';

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
@@ -14,6 +12,8 @@ import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/sync_merge_repository.dart';
 import 'package:smara_accounting/domain/crypto/entry_canonical_hash.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
+import 'package:smara_accounting/domain/models/claim_status.dart';
+import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/domain/models/membership_notice.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/peer_sync/sync_payloads.dart';
@@ -388,4 +388,117 @@ void main() {
       isFalse,
     );
   });
+
+  test('refuses entries signed by removed device after removal time', () async {
+    final accountId = await financialId();
+    final categoryId = await expenseId();
+    final peer = await addPeer();
+
+    await db
+        .into(db.linkedDevices)
+        .insert(
+          LinkedDevicesCompanion.insert(
+            deviceId: 'peer-device',
+            displayName: 'Peer',
+            signingIdentityId: peer.identityId,
+            deviceCertFingerprint: 'fp-peer',
+            role: LinkedDeviceRole.member,
+            removedAt: Value(DateTime.utc(2026, 4, 1)),
+          ),
+        );
+
+    final before = await buildPeerEntry(
+      peerKeys: peer.keys,
+      peerIdentityId: peer.identityId,
+      previousHash: Uint8List.fromList(genesisPreviousEntryHash),
+      sequence: 0,
+      financialAccountId: accountId,
+      categoryId: categoryId,
+      amountMinor: 100,
+      recordedAt: DateTime.utc(2026, 3, 15),
+    );
+    final after = await buildPeerEntry(
+      peerKeys: peer.keys,
+      peerIdentityId: peer.identityId,
+      previousHash: Uint8List.fromList(before.entryHash),
+      sequence: 1,
+      financialAccountId: accountId,
+      categoryId: categoryId,
+      amountMinor: 200,
+      recordedAt: DateTime.utc(2026, 5, 1),
+    );
+
+    final ok = await merge.mergeEntryBatch(
+      EntryBatch(entries: [before]),
+      fromDeviceId: 'peer-device',
+      fromDeviceDisplayName: 'Peer',
+    );
+    expect(ok.insertedCount, 1);
+
+    final refused = await merge.mergeEntryBatch(
+      EntryBatch(entries: [after]),
+      fromDeviceId: 'peer-device',
+      fromDeviceDisplayName: 'Peer',
+    );
+    expect(refused.insertedCount, 0);
+    expect(refused.rejectedCount, 1);
+  });
+
+  test(
+    'ClaimBatch export/apply lands submitted claims for Approver queue',
+    () async {
+      final source = SyncMergeRepository(
+        database: db,
+        signingKeyService: localKeys,
+        chain: chain,
+        posting: posting,
+      );
+      await db
+          .into(db.claims)
+          .insert(
+            ClaimsCompanion.insert(
+              id: 'claim-1',
+              claimantDeviceId: 'ravi-device',
+              status: ClaimStatus.submitted,
+              createdAt: Value(DateTime.utc(2026, 5, 1)),
+              updatedAt: Value(DateTime.utc(2026, 5, 2)),
+              submittedAt: Value(DateTime.utc(2026, 5, 2)),
+            ),
+          );
+      final cats = await categories.watchCategories().first;
+      final expense = cats.firstWhere((c) => c.type.name == 'expense');
+      await db
+          .into(db.claimItems)
+          .insert(
+            ClaimItemsCompanion.insert(
+              id: const Value('item-1'),
+              claimId: 'claim-1',
+              categoryId: expense.id,
+              expenseDate: '2026-05-01',
+              paidCurrency: 'EUR',
+              paidAmountMinor: 19000,
+              companyCurrencyAmountMinor: 19000,
+              description: const Value('Hotel'),
+            ),
+          );
+
+      final batch = await source.pendingClaimBatch();
+      expect(batch.claims, hasLength(1));
+      expect(batch.claims.single.status, 'submitted');
+
+      final peerDb = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(peerDb.close);
+      final peerMerge = SyncMergeRepository(
+        database: peerDb,
+        signingKeyService: localKeys,
+      );
+      final applied = await peerMerge.applyPeerClaimBatch(batch);
+      expect(applied, 1);
+      final rows = await peerDb.select(peerDb.claims).get();
+      expect(rows, hasLength(1));
+      expect(rows.single.status.name, 'submitted');
+      final items = await peerDb.select(peerDb.claimItems).get();
+      expect(items.single.description, 'Hotel');
+    },
+  );
 }

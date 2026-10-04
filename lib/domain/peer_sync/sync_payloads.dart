@@ -97,16 +97,50 @@ class SyncPosting {
   );
 }
 
+/// Scope proof for one identity's first in-scope entry when out-of-scope
+/// priors were omitted (Claimant-scoped sync). The [previousEntryHash] is
+/// the hash of the omitted prior; it must match the first scoped entry's
+/// own signed `previousEntryHash`.
+class ScopeChainAnchor {
+  const ScopeChainAnchor({
+    required this.identityId,
+    required this.firstScopedSequence,
+    required this.previousEntryHash,
+  });
+
+  final String identityId;
+  final int firstScopedSequence;
+  final List<int> previousEntryHash;
+
+  Map<String, Object?> toJson() => {
+    'identityId': identityId,
+    'firstScopedSequence': firstScopedSequence,
+    'previousEntryHash': base64Encode(previousEntryHash),
+  };
+
+  static ScopeChainAnchor fromJson(Map<String, dynamic> json) =>
+      ScopeChainAnchor(
+        identityId: json['identityId'] as String,
+        firstScopedSequence: json['firstScopedSequence'] as int,
+        previousEntryHash: base64Decode(json['previousEntryHash'] as String),
+      );
+}
+
 /// Ordered journal entries the peer is missing, keyed by identity +
 /// `deviceChainSequence` (design Decision 2).
 class EntryBatch {
-  const EntryBatch({required this.entries});
+  const EntryBatch({required this.entries, this.scopeAnchors = const []});
 
   final List<SyncJournalEntry> entries;
+
+  /// Present when the sender omitted out-of-scope priors for a Claimant peer.
+  final List<ScopeChainAnchor> scopeAnchors;
 
   Map<String, Object?> toJson() => {
     'kind': SyncMessageKind.entryBatch.name,
     'entries': entries.map((e) => e.toJson()).toList(),
+    if (scopeAnchors.isNotEmpty)
+      'scopeAnchors': scopeAnchors.map((a) => a.toJson()).toList(),
   };
 
   static EntryBatch fromJson(Map<String, dynamic> json) {
@@ -115,6 +149,15 @@ class EntryBatch {
     if (entriesRaw is! List) {
       throw const FormatException('EntryBatch.entries must be a list.');
     }
+    final anchorsRaw = json['scopeAnchors'];
+    final anchors = <ScopeChainAnchor>[];
+    if (anchorsRaw is List) {
+      for (final a in anchorsRaw) {
+        anchors.add(
+          ScopeChainAnchor.fromJson(Map<String, dynamic>.from(a as Map)),
+        );
+      }
+    }
     return EntryBatch(
       entries: entriesRaw
           .map(
@@ -122,6 +165,7 @@ class EntryBatch {
                 SyncJournalEntry.fromJson(Map<String, dynamic>.from(e as Map)),
           )
           .toList(),
+      scopeAnchors: anchors,
     );
   }
 
@@ -183,14 +227,24 @@ class MetadataOperation {
     required this.value,
     required this.updatedAt,
     required this.updatedByIdentityId,
+    this.hlcCounter = 0,
+    this.hlcDeviceId = '',
   });
 
   final String entityType;
   final String entityId;
   final String field;
   final Object? value;
+
+  /// Wall component of the hybrid logical clock (UTC).
   final DateTime updatedAt;
   final String updatedByIdentityId;
+
+  /// Logical counter within [updatedAt] (task 5.2).
+  final int hlcCounter;
+
+  /// Device id that minted the stamp (tie-break / HLC node id).
+  final String hlcDeviceId;
 
   Map<String, Object?> toJson() => {
     'entityType': entityType,
@@ -199,6 +253,8 @@ class MetadataOperation {
     'value': value,
     'updatedAt': updatedAt.toUtc().toIso8601String(),
     'updatedByIdentityId': updatedByIdentityId,
+    'hlcCounter': hlcCounter,
+    'hlcDeviceId': hlcDeviceId.isEmpty ? updatedByIdentityId : hlcDeviceId,
   };
 
   static MetadataOperation fromJson(Map<String, dynamic> json) =>
@@ -209,6 +265,11 @@ class MetadataOperation {
         value: json['value'],
         updatedAt: DateTime.parse(json['updatedAt'] as String),
         updatedByIdentityId: json['updatedByIdentityId'] as String,
+        hlcCounter: (json['hlcCounter'] as num?)?.toInt() ?? 0,
+        hlcDeviceId:
+            json['hlcDeviceId'] as String? ??
+            json['updatedByIdentityId'] as String? ??
+            '',
       );
 }
 

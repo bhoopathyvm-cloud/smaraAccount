@@ -1029,6 +1029,95 @@ class AppLocalizationsTa extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'ஒத்திசைக்கிறது…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'சரிபார்ப்புக் குறியீடு — மற்ற சாதனத்தில் பொருந்துகிறதா என உறுதிப்படுத்தவும்';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'இணைப்பு QR ஐ ஸ்கேன் செய்யவும்';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'சரிபார்ப்புக் குறியீட்டை உறுதிப்படுத்தவும்';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'இந்தக் குறியீடு மற்ற சாதனத்திலுள்ளதற்கு பொருந்துகிறதா?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'குறியீடுகள் பொருந்துகின்றன';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'பொருந்தவில்லை';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'இந்த இணைப்பு QR காலாவதியானது. புதிய குறியீட்டைக் கேளுங்கள்.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'இந்த இணைப்பு QR ஏற்கனவே பயன்படுத்தப்பட்டது. புதிய குறியீட்டைக் கேளுங்கள்.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'இணைப்புக் குறியீடு';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds மீதம்';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'அதற்குப் பதிலாகக் குறியீட்டை உள்ளிடவும்';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle =>
+      'இணைப்புக் குறியீட்டை உள்ளிடவும்';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'சாதனத்தைக் கண்டறியவும்';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'இந்தக் குறியீடு காலாவதியானது — புதியதைக் கேளுங்கள்';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'இந்தக் குறியீடு ஏற்கனவே பயன்படுத்தப்பட்டது. புதியதைக் கேளுங்கள்.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'இந்த Wi-Fi இல் இந்தக் குறியீடுள்ள சாதனம் இல்லை';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'மீண்டும் முயலவும்';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'முகவரியால் இணைக்கவும்';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'முகவரியால் இணைக்கவும்';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'கண்டறிதல் இணைக்கப்பட்ட சாதனத்தைக் கண்டுபிடிக்க முடியாதபோது, அதன் LAN முகவரி மற்றும் போர்ட்டை உள்ளிடவும்.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'ஹோஸ்ட்';
+
+  @override
+  String get settingsLinkedDevicesPort => 'போர்ட்';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'சாதனம்';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'முகவரியைச் சேமிக்கவும்';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'சாதனம் சேர்க்கப்பட்டது: $name';
   }
@@ -2211,6 +2300,48 @@ class AppLocalizationsTa extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'குறிப்பு: $unit ஒன்றுக்கு அதிகபட்சம் $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'கோரிக்கை வரம்புகள்';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name இன் கோரிக்கை வரம்புகள்';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'என் கோரிக்கை வரம்புகள்';
+
+  @override
+  String get claimsMyLimits => 'என் வரம்புகள்';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'உங்கள் தனிப்பட்ட வரம்புகள்';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'நிறுவன வரம்புகள்';
+
+  @override
+  String get claimsBalancesHeading => 'தீர்க்க வேண்டிய இருப்புகள்';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount செலுத்து';
+  }
+
+  @override
+  String get claimsRecordPayment => 'பணம் செலுத்தலைப் பதிவு செய்';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit வரம்புக்கு மேல்';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'தனிப்பட்ட வரம்புகள் அமைக்கப்படவில்லை.';
+
+  @override
+  String get claimsClearPersonalLimit => 'வரம்பை அழிக்கவும்';
 
   @override
   String get claimsNoClaimsYet => 'இதுவரை கோரிக்கைகள் இல்லை.';

@@ -1384,6 +1384,7 @@ class MockIdentityRepository extends _i1.Mock
     _i5.GeneratedIdentity? generated, {
     required String? currency,
     bool? seedStarterCategories = true,
+    String? identityId,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
@@ -1392,6 +1393,7 @@ class MockIdentityRepository extends _i1.Mock
               {
                 #currency: currency,
                 #seedStarterCategories: seedStarterCategories,
+                #identityId: identityId,
               },
             ),
             returnValue: _i17.Future<_i6.SigningIdentity>.value(
@@ -1403,6 +1405,7 @@ class MockIdentityRepository extends _i1.Mock
                   {
                     #currency: currency,
                     #seedStarterCategories: seedStarterCategories,
+                    #identityId: identityId,
                   },
                 ),
               ),
@@ -1416,6 +1419,7 @@ class MockIdentityRepository extends _i1.Mock
                   {
                     #currency: currency,
                     #seedStarterCategories: seedStarterCategories,
+                    #identityId: identityId,
                   },
                 ),
               ),
@@ -1512,20 +1516,29 @@ class MockIdentityRepository extends _i1.Mock
 class MockLedgerChainVerifier extends _i1.Mock
     implements _i7.LedgerChainVerifier {
   @override
-  _i17.Future<_i7.ChainVerificationResult> verifyChain() =>
+  bool get scopedVerification =>
       (super.noSuchMethod(
-            Invocation.method(#verifyChain, []),
+            Invocation.getter(#scopedVerification),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i17.Future<_i7.ChainVerificationResult> verifyChain({bool? scoped}) =>
+      (super.noSuchMethod(
+            Invocation.method(#verifyChain, [], {#scoped: scoped}),
             returnValue: _i17.Future<_i7.ChainVerificationResult>.value(
               _FakeChainVerificationResult_5(
                 this,
-                Invocation.method(#verifyChain, []),
+                Invocation.method(#verifyChain, [], {#scoped: scoped}),
               ),
             ),
             returnValueForMissingStub:
                 _i17.Future<_i7.ChainVerificationResult>.value(
                   _FakeChainVerificationResult_5(
                     this,
-                    Invocation.method(#verifyChain, []),
+                    Invocation.method(#verifyChain, [], {#scoped: scoped}),
                   ),
                 ),
           )
@@ -2191,6 +2204,24 @@ class MockSettingsRepository extends _i1.Mock
   _i17.Future<void> setLinkedDevicesPermissionExplained(bool? value) =>
       (super.noSuchMethod(
             Invocation.method(#setLinkedDevicesPermissionExplained, [value]),
+            returnValue: _i17.Future<void>.value(),
+            returnValueForMissingStub: _i17.Future<void>.value(),
+          )
+          as _i17.Future<void>);
+
+  @override
+  _i17.Future<bool> hasClaimsReceiptPermissionExplained() =>
+      (super.noSuchMethod(
+            Invocation.method(#hasClaimsReceiptPermissionExplained, []),
+            returnValue: _i17.Future<bool>.value(false),
+            returnValueForMissingStub: _i17.Future<bool>.value(false),
+          )
+          as _i17.Future<bool>);
+
+  @override
+  _i17.Future<void> setClaimsReceiptPermissionExplained(bool? value) =>
+      (super.noSuchMethod(
+            Invocation.method(#setClaimsReceiptPermissionExplained, [value]),
             returnValue: _i17.Future<void>.value(),
             returnValueForMissingStub: _i17.Future<void>.value(),
           )

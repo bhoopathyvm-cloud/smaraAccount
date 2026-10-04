@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Diese Bücher haben nur einen Eigentümer. Erwägen Sie, ein weiteres verknüpftes Gerät ebenfalls zum Eigentümer zu machen.",
   "settingsLinkedDevicesSyncNow": "Jetzt synchronisieren",
   "settingsLinkedDevicesSyncNowBusy": "Wird abgeglichen…",
-  "translateCategoryWithAi": "Mit KI übersetzen"
+  "translateCategoryWithAi": "Mit KI übersetzen",
+  "settingsLinkedDevicesCodesDontMatch": "Sie stimmen nicht überein",
+  "settingsLinkedDevicesConnectByAddress": "Per Adresse verbinden",
+  "settingsLinkedDevicesConnectByAddressBody": "Wenn die Suche ein verknüpftes Gerät nicht findet, geben Sie dessen LAN-Adresse und Port ein.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Per Adresse verbinden",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Stattdessen Code eingeben",
+  "settingsLinkedDevicesEnterCodeSubmit": "Gerät finden",
+  "settingsLinkedDevicesEnterCodeTitle": "Beitrittscode eingeben",
+  "settingsLinkedDevicesJoinCodeExpired": "Dieser Code ist abgelaufen — bitten Sie um einen neuen",
+  "settingsLinkedDevicesJoinCodeLabel": "Beitrittscode",
+  "settingsLinkedDevicesJoinCodeNotFound": "Kein Gerät mit diesem Code in diesem WLAN",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} übrig",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Erneut versuchen",
+  "settingsLinkedDevicesJoinCodeUsed": "Dieser Code wurde bereits verwendet. Bitten Sie um einen neuen.",
+  "settingsLinkedDevicesJoinCheckCode": "Prüfcode — bestätigen Sie, dass er auf dem anderen Gerät übereinstimmt",
+  "settingsLinkedDevicesScanQr": "Beitritts-QR scannen",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Prüfcode bestätigen",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Stimmt dieser Code mit dem auf dem anderen Gerät überein?",
+  "settingsLinkedDevicesCodesMatch": "Codes stimmen überein",
+  "settingsLinkedDevicesJoinExpired": "Dieser Beitritts-QR ist abgelaufen. Bitten Sie um einen neuen Code.",
+  "settingsLinkedDevicesJoinReused": "Dieser Beitritts-QR wurde bereits verwendet. Bitten Sie um einen neuen Code.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Gerät",
+  "settingsLinkedDevicesSaveAddress": "Adresse speichern",
+  "claimsPersonalLimitsTitle": "Anspruchsgrenzen",
+  "claimsPersonalLimitsTitleFor": "Anspruchsgrenzen für {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Meine Anspruchsgrenzen",
+  "claimsMyLimits": "Meine Grenzen",
+  "claimsPersonalLimitsHeading": "Ihre persönlichen Grenzen",
+  "claimsCompanyLimitsHeading": "Unternehmensgrenzen",
+  "claimsBalancesHeading": "Auszugleichende Salden",
+  "claimsPayBalance": "{amount} bezahlen",
+  "claimsRecordPayment": "Zahlung erfassen",
+  "claimsAboveLimit": "Über der Grenze von {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Keine persönlichen Grenzen festgelegt.",
+  "claimsClearPersonalLimit": "Grenze löschen"
 }

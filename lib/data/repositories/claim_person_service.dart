@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 
 import '../../domain/app_error.dart';
@@ -9,6 +11,7 @@ import '../database/app_database.dart';
 import '../database/tables/account_groups_table.dart';
 import 'account_repository.dart';
 import 'membership_repository.dart';
+import 'metadata_outbox.dart';
 
 /// Coordinates "Add a person" with automatic "Owed to \<name\>" liability
 /// account creation (design Decision 5). Lives outside MembershipRepository
@@ -19,13 +22,19 @@ class ClaimPersonService {
     required MembershipRepository membership,
     required AccountRepository accounts,
     required AppDatabase database,
+    MetadataOutbox? outbox,
+    Future<String?> Function()? currentIdentityId,
   }) : _membership = membership,
        _accounts = accounts,
-       _db = database;
+       _db = database,
+       _outbox = outbox,
+       _currentIdentityId = currentIdentityId;
 
   final MembershipRepository _membership;
   final AccountRepository _accounts;
   final AppDatabase _db;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   static const peopleOwedGroupName = 'People owed';
 
@@ -48,6 +57,14 @@ class ClaimPersonService {
             currency: Value(currency),
           ),
         );
+    await _emit('account_group', groupPeopleOwedId, 'kind', 'liabilityGroup');
+    await _emit(
+      'account_group',
+      groupPeopleOwedId,
+      'name',
+      peopleOwedGroupName,
+    );
+    await _emit('account_group', groupPeopleOwedId, 'currency', currency);
     return groupPeopleOwedId;
   }
 
@@ -90,6 +107,7 @@ class ClaimPersonService {
     required String booksSetId,
     required String personDisplayName,
     Set<LinkedDeviceRole> roles = const {LinkedDeviceRole.claimant},
+    String? booksSetDisplayName,
   }) {
     return _membership.buildJoinQrPayload(
       hostDeviceId: hostDeviceId,
@@ -99,7 +117,18 @@ class ClaimPersonService {
       personRoles: roles,
       personDisplayName: personDisplayName,
       isPersonJoin: true,
+      booksSetDisplayName: booksSetDisplayName,
     );
+  }
+
+  /// Best-effort company currency from an existing account group.
+  Future<String> resolveCompanyCurrency({String fallback = 'EUR'}) async {
+    final groups = await _db.select(_db.accountGroups).get();
+    for (final g in groups) {
+      final c = g.currency;
+      if (c != null && c.isNotEmpty) return c;
+    }
+    return fallback;
   }
 
   /// Completes Add a person: creates owed-to account when Claimant is in
@@ -111,7 +140,8 @@ class ClaimPersonService {
     required String joinerDisplayName,
     required List<int> joinerSigningPublicKey,
     required String joinerDeviceCertFingerprint,
-    required String currency,
+    List<int> joinerDeviceCertDer = const [],
+    String? currency,
     String? joinerIdentityId,
     String? peerHint,
   }) async {
@@ -123,21 +153,93 @@ class ClaimPersonService {
     if (roles.contains(LinkedDeviceRole.claimant)) {
       final account = await ensureOwedToAccount(
         displayName: personName,
-        currency: currency,
+        currency: currency ?? await resolveCompanyCurrency(),
       );
       owedToId = account.id;
     }
-    return _membership.acceptJoinFromQr(
+    final linked = await _membership.acceptJoinFromQr(
       actorDeviceId: actorDeviceId,
       payload: payload,
       joinerDeviceId: joinerDeviceId,
       joinerDisplayName: joinerDisplayName,
       joinerSigningPublicKey: joinerSigningPublicKey,
       joinerDeviceCertFingerprint: joinerDeviceCertFingerprint,
+      joinerDeviceCertDer: joinerDeviceCertDer,
       joinerIdentityId: joinerIdentityId,
       peerHint: peerHint,
       owedToAccountId: owedToId,
     );
+    await emitLinkedDeviceMetadata(
+      linked,
+      signingPublicKey: joinerSigningPublicKey,
+      deviceCertDer: joinerDeviceCertDer,
+    );
+    return linked;
+  }
+
+  /// Emits membership fields so peers (Approver) receive Owed-to linkage.
+  Future<void> emitLinkedDeviceMetadata(
+    LinkedDevice device, {
+    List<int> signingPublicKey = const [],
+    List<int> deviceCertDer = const [],
+  }) async {
+    await _emit(
+      'linked_device',
+      device.deviceId,
+      'displayName',
+      device.displayName,
+    );
+    await _emit(
+      'linked_device',
+      device.deviceId,
+      'signingIdentityId',
+      device.signingIdentityId,
+    );
+    if (signingPublicKey.isNotEmpty) {
+      await _emit(
+        'linked_device',
+        device.deviceId,
+        'signingPublicKey',
+        base64Encode(signingPublicKey),
+      );
+    }
+    await _emit(
+      'linked_device',
+      device.deviceId,
+      'deviceCertFingerprint',
+      device.deviceCertFingerprint,
+    );
+    if (deviceCertDer.isNotEmpty) {
+      await _emit(
+        'linked_device',
+        device.deviceId,
+        'deviceCertDer',
+        base64Encode(deviceCertDer),
+      );
+    }
+    await _emit(
+      'linked_device',
+      device.deviceId,
+      'rolesCsv',
+      MembershipRoleGates.encodeRoles(device.roles),
+    );
+    await _emit('linked_device', device.deviceId, 'canAdd', device.canAdd);
+    if (device.owedToAccountId != null) {
+      await _emit(
+        'linked_device',
+        device.deviceId,
+        'owedToAccountId',
+        device.owedToAccountId,
+      );
+    }
+    if (device.personDisplayName != null) {
+      await _emit(
+        'linked_device',
+        device.deviceId,
+        'personDisplayName',
+        device.personDisplayName,
+      );
+    }
   }
 
   /// Removes a person (Owner only). History, receipts, and posted Journal
@@ -152,21 +254,42 @@ class ClaimPersonService {
     if (target == null || !target.isActive) {
       throw const AppFailure(
         AppErrorCode.generic,
-        debugMessage: 'Target person is not an active member.',
+        debugMessage: 'Person is not an active member.',
       );
     }
     final owedToId = target.owedToAccountId;
-    final removed = await _membership.removeDevice(
+    await _membership.removeDevice(
+      actorDeviceId: actorDeviceId,
+      targetDeviceId: targetDeviceId,
+    );
+    // Erase-on-next-contact: mark pending so peers learn on the next sync.
+    final erased = await _membership.markErasePending(
       actorDeviceId: actorDeviceId,
       targetDeviceId: targetDeviceId,
     );
     if (owedToId != null && balanceMinor == 0) {
-      try {
-        await _accounts.archiveFinancialAccount(owedToId);
-      } catch (_) {
-        // Leave account active if archive is blocked (e.g. last financial).
-      }
+      await _accounts.archiveFinancialAccount(owedToId);
     }
-    return removed;
+    return erased;
+  }
+
+  Future<void> _emit(
+    String entityType,
+    String entityId,
+    String field,
+    Object? value,
+  ) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: entityType,
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
+    );
   }
 }

@@ -20,6 +20,7 @@ class LedgerChainVerifier {
     required AppDatabase database,
     SigningKeyService? signingKeyService,
     LedgerChainStore? chain,
+    this.scopedVerification = false,
   }) : _db = database,
        _signingKeyService = signingKeyService ?? SigningKeyService(),
        _chain = chain ?? LedgerChainStore(database);
@@ -28,11 +29,18 @@ class LedgerChainVerifier {
   final SigningKeyService _signingKeyService;
   final LedgerChainStore _chain;
 
+  /// Default scoped mode for this verifier instance (Claimant-only books).
+  final bool scopedVerification;
+
   /// Walks every identity's chain, recomputing hashes and checking
   /// signatures and linkage, and rebuilds `entry_verification_cache` from
   /// scratch. Updates per-identity tip rows and mirrors the local signing
   /// identity's tip onto the singleton `ledger_chain_state` row.
-  Future<ChainVerificationResult> verifyChain() async {
+  ///
+  /// When [scoped] is true (Claimant partial copy), out-of-scope chain gaps
+  /// are accepted; hash and signature checks still apply.
+  Future<ChainVerificationResult> verifyChain({bool? scoped}) async {
+    final scopedMode = scoped ?? scopedVerification;
     return _db.transaction(() async {
       final entries = await (_db.select(
         _db.journalEntries,
@@ -117,7 +125,13 @@ class LedgerChainVerifier {
           final requiredPreviousHash = entry.migratedFromEntryId != null
               ? Uint8List.fromList(genesisPreviousEntryHash)
               : expectedPreviousHash;
-          if (!bytesEqual(entry.previousEntryHash, requiredPreviousHash)) {
+          final linkOk = bytesEqual(
+            entry.previousEntryHash,
+            requiredPreviousHash,
+          );
+          // Claimant partial copies omit out-of-scope priors; the entry's
+          // signature already binds previousEntryHash, so re-anchor here.
+          if (!linkOk && !scopedMode) {
             breakEntryId = entry.id;
             breakReason = VerificationBreakReason.chainLinkBroken;
             results[entry.id] = (isVerified: false, reason: breakReason);

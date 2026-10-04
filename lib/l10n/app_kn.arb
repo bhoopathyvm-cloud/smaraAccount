@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "ಈ ಪುಸ್ತಕಗಳು ಕೇವಲ ಒಬ್ಬ ಮಾಲೀಕರನ್ನು ಹೊಂದಿವೆ. ಮತ್ತೊಂದು ಲಿಂಕ್ ಮಾಡಲಾದ ಸಾಧನವನ್ನು ಮಾಲೀಕರಾಗಿ ಮಾಡಲು ಪರಿಗಣಿಸಿ.",
   "settingsLinkedDevicesSyncNow": "ಈಗ ಸಿಂಕ್ ಮಾಡಿ",
   "settingsLinkedDevicesSyncNowBusy": "ಹಿಡಿಯಲಾಗುತ್ತಿದೆ...",
-  "translateCategoryWithAi": "AI ನೊಂದಿಗೆ ಅನುವಾದಿಸಿ"
+  "translateCategoryWithAi": "AI ನೊಂದಿಗೆ ಅನುವಾದಿಸಿ",
+  "settingsLinkedDevicesCodesDontMatch": "ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ",
+  "settingsLinkedDevicesConnectByAddress": "ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸಿ",
+  "settingsLinkedDevicesConnectByAddressBody": "ಪತ್ತೆಹಚ್ಚುವಿಕೆ ಲಿಂಕ್ ಮಾಡಿದ ಸಾಧನವನ್ನು ಕಂಡುಹಿಡಿಯದಿದ್ದರೆ, ಅದರ LAN ವಿಳಾಸ ಮತ್ತು ಪೋರ್ಟ್ ನಮೂದಿಸಿ.",
+  "settingsLinkedDevicesConnectByAddressTitle": "ವಿಳಾಸದಿಂದ ಸಂಪರ್ಕಿಸಿ",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "ಬದಲಿಗೆ ಕೋಡ್ ನಮೂದಿಸಿ",
+  "settingsLinkedDevicesEnterCodeSubmit": "ಸಾಧನ ಹುಡುಕಿ",
+  "settingsLinkedDevicesEnterCodeTitle": "ಸೇರುವ ಕೋಡ್ ನಮೂದಿಸಿ",
+  "settingsLinkedDevicesJoinCodeExpired": "ಈ ಕೋಡ್ ಅವಧಿ ಮುಗಿದಿದೆ — ಹೊಸದನ್ನು ಕೇಳಿ",
+  "settingsLinkedDevicesJoinCodeLabel": "ಸೇರುವ ಕೋಡ್",
+  "settingsLinkedDevicesJoinCodeNotFound": "ಈ Wi-Fi ನಲ್ಲಿ ಈ ಕೋಡ್‌ನ ಸಾಧನವಿಲ್ಲ",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} ಉಳಿದಿದೆ",
+  "settingsLinkedDevicesJoinCodeTryAgain": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+  "settingsLinkedDevicesJoinCodeUsed": "ಈ ಕೋಡ್ ಈಗಾಗಲೇ ಬಳಸಲಾಗಿದೆ. ಹೊಸದನ್ನು ಕೇಳಿ.",
+  "settingsLinkedDevicesJoinCheckCode": "ಪರಿಶೀಲನೆ ಕೋಡ್ — ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆಯೇ ಎಂದು ದೃಢೀಕರಿಸಿ",
+  "settingsLinkedDevicesScanQr": "ಸೇರುವ QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "ಪರಿಶೀಲನೆ ಕೋಡ್ ದೃಢೀಕರಿಸಿ",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "ಈ ಕೋಡ್ ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿರುವುದಕ್ಕೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆಯೇ?",
+  "settingsLinkedDevicesCodesMatch": "ಕೋಡ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತವೆ",
+  "settingsLinkedDevicesJoinExpired": "ಈ ಸೇರುವ QR ಅವಧಿ ಮುಗಿದಿದೆ. ಹೊಸ ಕೋಡ್ ಕೇಳಿ.",
+  "settingsLinkedDevicesJoinReused": "ಈ ಸೇರುವ QR ಈಗಾಗಲೇ ಬಳಸಲಾಗಿದೆ. ಹೊಸ ಕೋಡ್ ಕೇಳಿ.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "ಹೋಸ್ಟ್",
+  "settingsLinkedDevicesPort": "ಪೋರ್ಟ್",
+  "settingsLinkedDevicesPeer": "ಸಾಧನ",
+  "settingsLinkedDevicesSaveAddress": "ವಿಳಾಸ ಉಳಿಸಿ",
+  "claimsPersonalLimitsTitle": "ಕ್ಲೇಮ್ ಮಿತಿಗಳು",
+  "claimsPersonalLimitsTitleFor": "{name} ಅವರ ಕ್ಲೇಮ್ ಮಿತಿಗಳು",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "ನನ್ನ ಕ್ಲೇಮ್ ಮಿತಿಗಳು",
+  "claimsMyLimits": "ನನ್ನ ಮಿತಿಗಳು",
+  "claimsPersonalLimitsHeading": "ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಮಿತಿಗಳು",
+  "claimsCompanyLimitsHeading": "ಕಂಪನಿ ಮಿತಿಗಳು",
+  "claimsBalancesHeading": "ಇತ್ಯರ್ಥಗೊಳಿಸಬೇಕಾದ ಬ್ಯಾಲೆನ್ಸ್ಗಳು",
+  "claimsPayBalance": "{amount} ಪಾವತಿ",
+  "claimsRecordPayment": "ಪಾವತಿ ದಾಖಲಿಸಿ",
+  "claimsAboveLimit": "{limit} ಮಿತಿಗಿಂತ ಮೇಲೆ",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "ವೈಯಕ್ತಿಕ ಮಿತಿಗಳನ್ನು ಹೊಂದಿಸಿಲ್ಲ.",
+  "claimsClearPersonalLimit": "ಮಿತಿ ತೆರವುಗೊಳಿಸಿ"
 }

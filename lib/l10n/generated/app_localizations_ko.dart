@@ -1004,6 +1004,90 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => '따라잡는 중…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode => '확인 코드 — 다른 기기와 일치하는지 확인하세요';
+
+  @override
+  String get settingsLinkedDevicesScanQr => '참여 QR 스캔';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => '확인 코드 확인';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      '이 코드가 다른 기기의 코드와 일치하나요?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => '코드가 일치합니다';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => '일치하지 않습니다';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      '이 참여 QR이 만료되었습니다. 새 코드를 요청하세요.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      '이 참여 QR은 이미 사용되었습니다. 새 코드를 요청하세요.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => '참여 코드';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds 남음';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => '대신 코드 입력';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => '참여 코드 입력';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => '기기 찾기';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      '이 코드가 만료되었습니다 — 새 코드를 요청하세요';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      '이 코드는 이미 사용되었습니다. 새 코드를 요청하세요.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      '이 Wi-Fi에 해당 코드의 기기가 없습니다';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => '다시 시도';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => '주소로 연결';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => '주소로 연결';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      '검색으로 연결된 기기를 찾을 수 없으면 LAN 주소와 포트를 입력하세요.';
+
+  @override
+  String get settingsLinkedDevicesHost => '호스트';
+
+  @override
+  String get settingsLinkedDevicesPort => '포트';
+
+  @override
+  String get settingsLinkedDevicesPeer => '기기';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => '주소 저장';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return '기기가 추가됨: $name';
   }
@@ -2112,6 +2196,48 @@ class AppLocalizationsKo extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return '힌트: $unit당 최대 $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => '청구 한도';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name의 청구 한도';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => '내 청구 한도';
+
+  @override
+  String get claimsMyLimits => '내 한도';
+
+  @override
+  String get claimsPersonalLimitsHeading => '개인 한도';
+
+  @override
+  String get claimsCompanyLimitsHeading => '회사 한도';
+
+  @override
+  String get claimsBalancesHeading => '정산할 잔액';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount 결제';
+  }
+
+  @override
+  String get claimsRecordPayment => '지급 기록';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit 한도 초과';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => '개인 한도가 설정되지 않았습니다.';
+
+  @override
+  String get claimsClearPersonalLimit => '한도 지우기';
 
   @override
   String get claimsNoClaimsYet => '아직 청구가 없습니다.';

@@ -24,6 +24,7 @@ void main() {
         expect(text, contains('NSLocalNetworkUsageDescription'));
         expect(text, contains(linkedDevicesPermissionSentence));
         expect(text, contains('_smara._tcp'));
+        expect(text, contains('_smara-join._tcp'));
         expect(text, contains('NSBonjourServices'));
       }
     },

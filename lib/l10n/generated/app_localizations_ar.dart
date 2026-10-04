@@ -1015,6 +1015,91 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'جارٍ التحديث…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'رمز التحقق — أكّد أنه يطابق على الجهاز الآخر';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'امسح رمز انضمام QR';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => 'تأكيد رمز التحقق';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'هل يطابق هذا الرمز الرمز على الجهاز الآخر؟';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'الرمزان متطابقان';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'غير متطابقين';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'انتهت صلاحية رمز انضمام QR هذا. اطلب رمزًا جديدًا.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'استُخدم رمز انضمام QR هذا من قبل. اطلب رمزًا جديدًا.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'رمز الانضمام';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds متبقية';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'أدخل الرمز بدلًا من ذلك';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'أدخل رمز الانضمام';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'البحث عن الجهاز';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'انتهت صلاحية هذا الرمز — اطلب رمزًا جديدًا';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'استُخدم هذا الرمز من قبل. اطلب رمزًا جديدًا.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'لا يوجد جهاز بهذا الرمز على شبكة Wi-Fi هذه';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'أعد المحاولة';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'الاتصال بالعنوان';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'الاتصال بالعنوان';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'عندما يتعذر الاكتشاف العثور على جهاز مرتبط، أدخل عنوان LAN والمنفذ.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'المضيف';
+
+  @override
+  String get settingsLinkedDevicesPort => 'المنفذ';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'الجهاز';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'حفظ العنوان';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'أُضيف جهاز: $name';
   }
@@ -2177,6 +2262,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'تلميح: بحد أقصى $amount لكل $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'حدود المطالبات';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'حدود المطالبات لـ $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'حدود مطالباتي';
+
+  @override
+  String get claimsMyLimits => 'حدودي';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'حدودك الشخصية';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'حدود الشركة';
+
+  @override
+  String get claimsBalancesHeading => 'أرصدة للتسوية';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'سداد $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'تسجيل دفعة';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'فوق حد $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'لم تُعيَّن حدود شخصية.';
+
+  @override
+  String get claimsClearPersonalLimit => 'مسح الحد';
 
   @override
   String get claimsNoClaimsYet => 'لا توجد مطالبات بعد.';
