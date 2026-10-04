@@ -16,10 +16,12 @@ void Function(String message)? tlsSyncDebugLog;
 /// Length-prefixed JSON over [SecureSocket] with certificate pinning
 /// (linked-devices task 12.1 / design Decision 2).
 class TlsSyncTransport implements SyncTransport {
-  TlsSyncTransport({InternetAddress? bindAddress})
-    : bindAddress = bindAddress ?? InternetAddress.anyIPv4;
+  TlsSyncTransport({this.bindAddress});
 
-  final InternetAddress bindAddress;
+  /// Where to listen. When null the listener is dual-stack (IPv6 and IPv4),
+  /// because mDNS often resolves a peer to its IPv6 link-local address first;
+  /// it falls back to IPv4 only where IPv6 is unavailable.
+  final InternetAddress? bindAddress;
 
   SecureServerSocket? _server;
   StreamSubscription<SecureSocket>? _acceptSub;
@@ -106,13 +108,24 @@ class TlsSyncTransport implements SyncTransport {
     );
     final pinning = CertificatePinning(pinnedFingerprints: pinnedFingerprints);
 
-    _server = await SecureServerSocket.bind(
-      bindAddress,
-      bindPort ?? 0,
-      context,
-      requestClientCertificate: true,
-      requireClientCertificate: false,
-    );
+    Future<SecureServerSocket> bind(InternetAddress address) =>
+        SecureServerSocket.bind(
+          address,
+          bindPort ?? 0,
+          context,
+          requestClientCertificate: true,
+          requireClientCertificate: false,
+        );
+    final fixed = bindAddress;
+    if (fixed != null) {
+      _server = await bind(fixed);
+    } else {
+      try {
+        _server = await bind(InternetAddress.anyIPv6);
+      } on SocketException {
+        _server = await bind(InternetAddress.anyIPv4);
+      }
+    }
     onBound?.call(_server!.port);
 
     _acceptSub = _server!.listen(

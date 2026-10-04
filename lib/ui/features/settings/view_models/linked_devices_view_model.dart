@@ -244,6 +244,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
         booksSetDisplayName: booksName,
       );
       final code = _joinCodes.issue();
+      // The QR carries the join code so scanning runs the join-code handshake.
+      _activeJoinQr = _activeJoinQr!.withJoinCode(code.display);
       await _startJoinHost(code: code, payload: _activeJoinQr!);
       clearFailure();
       return _activeJoinQr;
@@ -293,6 +295,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
         booksSetDisplayName: booksName,
       );
       final code = _joinCodes.issue();
+      // The QR carries the join code so scanning runs the join-code handshake.
+      _activeJoinQr = _activeJoinQr!.withJoinCode(code.display);
       await _startJoinHost(code: code, payload: _activeJoinQr!);
       clearFailure();
       return _activeJoinQr;

@@ -104,6 +104,48 @@ void main() {
       await conn.close();
     });
 
+    // Real phones: mDNS resolved the peer to its IPv6 link-local address and
+    // an IPv4-only listener refused the connection, so phones never synced.
+    test('default listener accepts both IPv6 and IPv4 peers', () async {
+      final pins = {certA.fingerprint, certB.fingerprint};
+      final pinnedCerts = [certA, certB];
+      final dualStack = TlsSyncTransport();
+      final sessions = StreamController<Map<String, dynamic>>();
+      late int boundPort;
+      await dualStack.listen(
+        local: SyncPeerIdentity(deviceId: 'b', certificate: certB),
+        pinnedFingerprints: pins,
+        pinnedCertificates: pinnedCerts,
+        onBound: (port) => boundPort = port,
+        onSession: (conn) async {
+          sessions.add(await conn.receive());
+          await conn.close();
+        },
+      );
+      addTearDown(dualStack.stopListening);
+      final received = sessions.stream.asBroadcastStream();
+
+      for (final host in [
+        InternetAddress.loopbackIPv6.address,
+        InternetAddress.loopbackIPv4.address,
+      ]) {
+        final conn = await transportA.connect(
+          local: SyncPeerIdentity(deviceId: 'a', certificate: certA),
+          remote: SyncPeerIdentity(
+            deviceId: 'b',
+            certificate: certB,
+            host: host,
+            port: boundPort,
+          ),
+          pinnedFingerprints: pins,
+          pinnedCertificates: pinnedCerts,
+        );
+        await conn.send(const EntryBatch(entries: []).toJson());
+        await received.first.timeout(const Duration(seconds: 5));
+        await conn.close();
+      }
+    });
+
     test('refuses unknown certificate on connect', () async {
       final pins = {certA.fingerprint, certB.fingerprint};
       late int boundPort;

@@ -529,6 +529,25 @@ class LinkedDevicesSection extends StatelessWidget {
       return;
     }
 
+    // QRs carry their join code: run the same lookup, check code and
+    // handshake as "Enter code instead", so the inviting device learns this
+    // device's certificate and the two can sync.
+    final embeddedCode = validated.joinCode;
+    if (embeddedCode != null) {
+      final result = await viewModel.lookupJoinCode(embeddedCode);
+      if (!context.mounted) return;
+      if (result.isSuccess || viewModel.pendingJoinCodeSuccess != null) {
+        await _confirmJoinCodeCheckCode(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(viewModel.joinCodeErrorMessage(l10n, result.error!)),
+          ),
+        );
+      }
+      return;
+    }
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {

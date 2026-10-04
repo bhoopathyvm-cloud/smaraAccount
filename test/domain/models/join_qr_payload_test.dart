@@ -92,4 +92,27 @@ void main() {
     expect(registry.hasBeenUsed('n1'), isTrue);
     expect(registry.hasBeenUsed('n2'), isFalse);
   });
+
+  test('the join code travels in the QR and survives encode/decode', () async {
+    final payload = JoinQrPayload(
+      booksSetId: 'set-1',
+      hostDeviceId: 'dev-1',
+      hostDisplayName: 'Mac',
+      hostIdentityId: 'id-host-1',
+      signingPublicKey: const [1, 2, 3],
+      deviceCertDer: const [9, 8],
+      deviceCertFingerprint: 'abc',
+      roleOffer: LinkedDeviceRole.member,
+      joinNonce: 'nonce-2',
+      expiresAt: DateTime.utc(2026, 10, 4, 12),
+      checkCode: await JoinQrPayload.deriveCheckCode('nonce-2'),
+    );
+    expect(JoinQrPayload.decode(payload.encode()).joinCode, isNull);
+
+    final withCode = payload.withJoinCode('K7QF-3M9P');
+    final again = JoinQrPayload.decode(withCode.encode());
+    expect(again.joinCode, 'K7QF-3M9P');
+    expect(again.booksSetId, 'set-1');
+    expect(again.checkCode, payload.checkCode);
+  });
 }

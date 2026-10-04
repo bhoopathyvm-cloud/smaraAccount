@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../domain/app_error.dart';
@@ -20,6 +21,11 @@ mixin LocalizedErrorMixin on ChangeNotifier {
 
   void setFailure(Object? error) {
     _failure = error;
+    // The UI shows a localized sentence ("Something went wrong"); keep the
+    // real cause visible in debug logs so it can be diagnosed.
+    if (kDebugMode && error != null) {
+      debugPrint('[$runtimeType] failure: $error');
+    }
     notifyListeners();
   }
 

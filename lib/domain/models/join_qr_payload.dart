@@ -28,6 +28,7 @@ class JoinQrPayload {
     this.personDisplayName,
     this.isPersonJoin = false,
     this.booksSetDisplayName,
+    this.joinCode,
   });
 
   /// How long a freshly built join QR remains acceptable.
@@ -73,6 +74,33 @@ class JoinQrPayload {
   /// "Books N".
   final String? booksSetDisplayName;
 
+  /// The join code issued with this offer ("Enter code instead"). Scanning
+  /// the QR then runs the same lookup, check code and handshake as typing
+  /// the code, so the inviting device learns the joiner's certificate; the
+  /// QR alone never contacted the host, and the devices could not sync.
+  final String? joinCode;
+
+  /// This payload with [code] embedded (see [joinCode]).
+  JoinQrPayload withJoinCode(String code) => JoinQrPayload(
+    protocolVersion: protocolVersion,
+    booksSetId: booksSetId,
+    hostDeviceId: hostDeviceId,
+    hostDisplayName: hostDisplayName,
+    hostIdentityId: hostIdentityId,
+    signingPublicKey: signingPublicKey,
+    deviceCertDer: deviceCertDer,
+    deviceCertFingerprint: deviceCertFingerprint,
+    roleOffer: roleOffer,
+    joinNonce: joinNonce,
+    expiresAt: expiresAt,
+    checkCode: checkCode,
+    personRoles: personRoles,
+    personDisplayName: personDisplayName,
+    isPersonJoin: isPersonJoin,
+    booksSetDisplayName: booksSetDisplayName,
+    joinCode: code,
+  );
+
   static const _privateKeyKeys = {
     'privateKey',
     'private_key',
@@ -115,6 +143,7 @@ class JoinQrPayload {
     if (isPersonJoin) 'isPersonJoin': true,
     if (booksSetDisplayName != null && booksSetDisplayName!.isNotEmpty)
       'booksSetDisplayName': booksSetDisplayName,
+    if (joinCode != null) 'joinCode': joinCode,
   };
 
   String encode() => jsonEncode(toJson());
@@ -208,6 +237,7 @@ class JoinQrPayload {
       personDisplayName: map['personDisplayName'] as String?,
       isPersonJoin: map['isPersonJoin'] == true,
       booksSetDisplayName: map['booksSetDisplayName'] as String?,
+      joinCode: map['joinCode'] as String?,
     );
   }
 

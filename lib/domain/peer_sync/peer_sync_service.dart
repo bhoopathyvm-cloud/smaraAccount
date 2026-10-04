@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -369,6 +370,12 @@ class PeerSyncService {
       }
     }
 
+    if (kDebugMode) {
+      debugPrint(
+        '[PeerSync] syncNow: linked=${peersById.keys.toList()} '
+        'found on Wi-Fi=${found.values.map((p) => '${p.deviceId}@${p.host}:${p.port}').toList()}',
+      );
+    }
     if (found.isEmpty) {
       return [
         const SyncSessionResult(
@@ -447,6 +454,15 @@ class PeerSyncService {
             entriesReceived: 0,
             refusedReason: 'Sync with ${peer.deviceDisplayName} failed: $e',
           ),
+        );
+      }
+    }
+    if (kDebugMode) {
+      for (final r in results) {
+        debugPrint(
+          '[PeerSync] result: connected=${r.connected} '
+          'sent=${r.entriesSent} received=${r.entriesReceived} '
+          'reason=${r.refusedReason}',
         );
       }
     }

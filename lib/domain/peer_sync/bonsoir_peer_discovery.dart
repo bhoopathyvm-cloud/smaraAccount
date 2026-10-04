@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bonsoir/bonsoir.dart';
 
@@ -71,9 +72,9 @@ class BonsoirPeerDiscovery implements PeerDiscovery {
               return;
             }
             if (_advertisement?.deviceId == deviceId) return;
-            final host = service.hostAddresses.isNotEmpty
-                ? service.hostAddresses.first
-                : (service.hostname ?? '');
+            final host =
+                preferredPeerHost(service.hostAddresses) ??
+                (service.hostname ?? '');
             if (host.isEmpty) return;
             final pv =
                 int.tryParse(attrs[_attrProtocol] ?? '') ??
@@ -106,4 +107,16 @@ class BonsoirPeerDiscovery implements PeerDiscovery {
     };
     return controller.stream;
   }
+}
+
+/// Picks the address to dial from an mDNS resolve: an IPv4 address when there
+/// is one (it needs no interface scope and every listener accepts it), else
+/// the first address given.
+String? preferredPeerHost(List<String> addresses) {
+  for (final a in addresses) {
+    if (InternetAddress.tryParse(a)?.type == InternetAddressType.IPv4) {
+      return a;
+    }
+  }
+  return addresses.isEmpty ? null : addresses.first;
 }
