@@ -1,16 +1,38 @@
+import 'dart:async' as async;
 import 'dart:convert';
 import 'dart:io';
 
 /// HTTP client for a company-sync role instance (task 7.2).
 class CompanySyncConductorClient {
   CompanySyncConductorClient({required this.baseUrl, HttpClient? httpClient})
-    : _client = httpClient ?? HttpClient();
+    : _client =
+          httpClient ??
+          (HttpClient()
+            ..connectionTimeout = const Duration(seconds: 10)
+            ..idleTimeout = const Duration(seconds: 30));
 
   final String baseUrl;
   final HttpClient _client;
 
-  Future<void> reportReady({required String role, String? device}) async {
-    await _post('/ready', {'role': role, 'device': device});
+  /// Retries for up to [patience]: on a physical iPhone the first
+  /// local-network connection is refused ("No route to host") while iOS
+  /// shows its Local Network prompt, and only works after the user taps
+  /// Allow.
+  Future<void> reportReady({
+    required String role,
+    String? device,
+    Duration patience = const Duration(minutes: 3),
+  }) async {
+    final deadline = DateTime.now().add(patience);
+    while (true) {
+      try {
+        await _post('/ready', {'role': role, 'device': device});
+        return;
+      } on SocketException {
+        if (DateTime.now().isAfter(deadline)) rethrow;
+        await Future<void>.delayed(const Duration(seconds: 3));
+      }
+    }
   }
 
   Future<void> awaitPermission(String stepId) async {
@@ -57,8 +79,10 @@ class CompanySyncConductorClient {
     try {
       final uri = Uri.parse('$baseUrl/value?key=${Uri.encodeComponent(key)}');
       final req = await _client.getUrl(uri);
-      final res = await req.close();
-      final body = await utf8.decodeStream(res);
+      final res = await req.close().timeout(const Duration(seconds: 10));
+      final body = await utf8
+          .decodeStream(res)
+          .timeout(const Duration(seconds: 10));
       if (res.statusCode != 200) return null;
       final decoded = jsonDecode(body) as Map;
       if (decoded['stopped'] == true) {
@@ -69,6 +93,8 @@ class CompanySyncConductorClient {
       return decoded['value'] as String?;
     } on SocketException catch (e) {
       throw StateError('conductor unreachable while reading $key: $e');
+    } on async.TimeoutException catch (e) {
+      throw StateError('conductor timed out while reading $key: $e');
     }
   }
 
@@ -80,8 +106,17 @@ class CompanySyncConductorClient {
   }) async {
     final deadline = DateTime.now().add(timeout);
     while (DateTime.now().isBefore(deadline)) {
-      final v = await getValue(key);
-      if (v != null && v.isNotEmpty) return v;
+      try {
+        final v = await getValue(key);
+        if (v != null && v.isNotEmpty) return v;
+      } on StateError catch (e) {
+        // Transient conductor/HTTP blips (incl. per-request timeout) — keep
+        // polling until the overall wait deadline.
+        final msg = '$e';
+        if (!msg.contains('timed out') && !msg.contains('unreachable')) {
+          rethrow;
+        }
+      }
       await Future<void>.delayed(interval);
     }
     throw TimeoutException('value $key not set within $timeout');

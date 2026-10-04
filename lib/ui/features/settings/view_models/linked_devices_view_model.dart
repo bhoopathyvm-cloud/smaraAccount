@@ -21,6 +21,7 @@ import '../../../../domain/linked_devices/join_code.dart';
 import '../../../../domain/linked_devices/join_code_lookup.dart';
 import '../../../../domain/linked_devices/join_code_session.dart';
 import '../../../../domain/linked_devices/join_offer_discovery.dart';
+import '../../../../domain/linked_devices/join_offer_hosts.dart';
 import '../../../../domain/linked_devices/local_network_permission.dart';
 import '../../../../domain/models/join_qr_payload.dart';
 import '../../../../domain/models/join_request.dart';
@@ -325,6 +326,13 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
       registry: _joinCodes,
       confirmCheckCode: (check) async {
         if (_disposed) return false;
+        // A second concurrent join (LAN scanner / retried offer) must not
+        // replace the first completer — that orphans the harness wait and
+        // hangs owner.confirm_* forever under --real-devices.
+        final existing = _hostCheckCompleter;
+        if (existing != null && !existing.isCompleted) {
+          return false;
+        }
         _pendingHostCheckCode = check;
         _hostCheckCompleter = Completer<bool>();
         notifyListeners();
@@ -390,23 +398,16 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     final port = _joinHost?.port;
     if (port == null) return;
     try {
-      // Prefer loopback first (iOS Simulator → macOS); then LAN IPv4 for
-      // Android emulators / physical devices on the same Wi-Fi.
-      final hosts = <String>['127.0.0.1'];
-      for (final iface in await NetworkInterface.list(
-        type: InternetAddressType.IPv4,
-        includeLinkLocal: false,
-      )) {
-        for (final addr in iface.addresses) {
-          if (!addr.isLoopback && !hosts.contains(addr.address)) {
-            hosts.add(addr.address);
-          }
-        }
-      }
+      final collected = await localLanIPv4Addresses();
+      final preferLoopback = conductorPrefersLoopbackJoin(conductorUrl);
+      final hosts = orderJoinOfferHosts(
+        collected,
+        preferLoopback: preferLoopback,
+      );
       final booksSetId = _activeJoinQr?.booksSetId ?? '';
       final payload = jsonEncode({
         'hosts': hosts,
-        'host': '127.0.0.1',
+        'host': hosts.isNotEmpty ? hosts.first : '127.0.0.1',
         'port': port,
         'offerId': code.offerId,
         'booksSetId': booksSetId,
@@ -469,11 +470,15 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   /// Host confirms the join-by-code check code matches the peer.
   void confirmHostCheckCodeMatch() {
-    if (_hostCheckCompleter != null && !_hostCheckCompleter!.isCompleted) {
-      _hostCheckCompleter!.complete(true);
-    }
+    final completer = _hostCheckCompleter;
     _pendingHostCheckCode = null;
     notifyListeners();
+    if (completer == null || completer.isCompleted) return;
+    // Defer so the harness / button handler is not stuck inside JoinCodeHost's
+    // post-confirm work (receive joiner confirm, acceptJoin, send payload).
+    scheduleMicrotask(() {
+      if (!completer.isCompleted) completer.complete(true);
+    });
   }
 
   /// Looks up a typed join code on the LAN (task 4.3). On success stores

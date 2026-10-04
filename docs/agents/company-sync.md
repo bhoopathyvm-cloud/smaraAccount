@@ -44,17 +44,21 @@ tool/run_company_sync_test.sh --employees 4 --real-devices
 
 Maps **Ravi** (`claimant_0`) to the USB iPhone SE
 (`00008030-00022D593C82402E`) and **Sara** (`claimant_3`) to the USB
-Samsung SM-X230 (`RZGL42CPNGP`). Owner/Approver and other Claimants stay
-on macOS / simulators. Physical devices cannot write the Mac
-`COMPANY_SYNC_ARTIFACTS` path; the role runner falls back to device temp
-for local logs while still reporting ready/done to the conductor over
-HTTP. The conductor listens on the Mac's LAN address;
-discovery and join use real Wi-Fi (no `-vmnet-shared`, no sudo).
+Samsung SM-X230 (`RZGL42CPNGP`). **Mia** (`claimant_1`) stays on the
+iPhone 17 simulator. Wireless-only iOS devices (the iPhone 15 Pro
+`00008130-000A28D93A51001C`) are ignored — wireless Xcode launches hang.
+Owner/Approver and other Claimants stay on macOS / simulators. Physical
+devices cannot write the Mac `COMPANY_SYNC_ARTIFACTS` path; the role
+runner falls back to device temp for local logs while still reporting
+ready/done to the conductor over HTTP. The conductor listens on the
+Mac's LAN address; discovery and join use real Wi-Fi (no
+`-vmnet-shared`, no sudo). Join offers prefer LAN hosts when the
+conductor is LAN-bound so a phone does not try its own `127.0.0.1` first.
 
-The physical iPhone is launched first and alone (Xcode cannot launch two
-physical iOS devices at once). **You must tap Allow** for Local Network
-on the iPhone the first time, and accept any Android Nearby-devices
-prompt on the Samsung.
+The physical iPhone SE is launched first and alone (Xcode cannot launch
+two physical iOS devices at once). **You must tap Allow** for Local
+Network on the iPhone SE the first time, and accept any Android
+Nearby-devices prompt on the Samsung.
 
 ## Artifacts
 

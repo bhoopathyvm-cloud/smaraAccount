@@ -35,6 +35,7 @@ class CompanySyncConductor {
   final _timeline = <Map<String, Object?>>[];
   final _waiters = <String, Completer<void>>{};
   final _values = <String, String>{};
+  final _readyRoles = <String>{};
   bool _stopped = false;
   Completer<void>? _runFailed;
 
@@ -103,7 +104,10 @@ class CompanySyncConductor {
       final path = request.uri.path;
       if (path == '/ready' && request.method == 'POST') {
         final body = jsonDecode(await utf8.decodeStream(request)) as Map;
-        _log('ready', {'role': body['role'], 'device': body['device']});
+        final role = body['role'] as String?;
+        if (role != null && role.isNotEmpty) _readyRoles.add(role);
+        _log('ready', {'role': role, 'device': body['device']});
+        await _writeReport();
         await _json(request.response, {'ok': true});
         return;
       }
@@ -112,6 +116,7 @@ class CompanySyncConductor {
           'stopped': _stopped,
           'failed': _failed,
           'done': _done.toList(),
+          'ready': _readyRoles.toList()..sort(),
         });
         return;
       }
@@ -264,6 +269,7 @@ class CompanySyncConductor {
     final report = {
       'done': _done.toList()..sort(),
       'failed': _failed,
+      'ready': _readyRoles.toList()..sort(),
       'timeline': _timeline,
       'stopped': _stopped,
     };

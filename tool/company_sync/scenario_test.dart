@@ -68,4 +68,41 @@ void main() {
     expect(claimantDisplayName(0), 'Ravi');
     expect(claimantDisplayName(4), 'Tom');
   });
+
+  test('householdScenario is a valid graph over three devices', () {
+    final steps = householdScenario();
+    final ids = steps.map((s) => s.id).toSet();
+    expect(ids.length, steps.length, reason: 'step ids must be unique');
+    for (final step in steps) {
+      expect(
+        ids.containsAll(step.dependsOn),
+        isTrue,
+        reason: '${step.id} depends on a missing step',
+      );
+      expect(['owner', 'claimant_0', 'claimant_1'], contains(step.role));
+    }
+    // No cycles: a topological pass must consume every step.
+    final done = <String>{};
+    var progressed = true;
+    while (progressed) {
+      progressed = false;
+      for (final step in steps) {
+        if (!done.contains(step.id) && done.containsAll(step.dependsOn)) {
+          done.add(step.id);
+          progressed = true;
+        }
+      }
+    }
+    expect(done, ids);
+  });
+
+  test('householdScenario: the phone renames after the Mac, then erase', () {
+    final steps = {for (final s in householdScenario()) s.id: s};
+    expect(steps['claimant_0.hh_rename']!.dependsOn, ['owner.hh_rename']);
+    expect(steps['owner.hh_verify_erase']!.dependsOn, ['owner.hh_remove_1']);
+    expect(steps['owner.hh_final']!.dependsOn, ['claimant_0.hh_after_removal']);
+    for (final role in ['owner', 'claimant_0', 'claimant_1']) {
+      expect(steps.containsKey('$role.hh_verify_entries'), isTrue);
+    }
+  });
 }

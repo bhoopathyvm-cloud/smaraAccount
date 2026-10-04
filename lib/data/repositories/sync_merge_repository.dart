@@ -193,7 +193,65 @@ class SyncMergeRepository implements SyncLedgerView {
         ? const <MetadataOperation>[]
         : await outbox.listAll();
     final lifecycle = await _membershipLifecycleOps();
-    return [...outboxOps, ...lifecycle];
+    final baseline = await _accountBaselineOps();
+    return [...baseline, ...outboxOps, ...lifecycle];
+  }
+
+  /// Account ids a Claimant-only peer may learn about: categories (expense
+  /// and income) and that person's own "Owed to" account, never the
+  /// company's bank or other financial accounts (shared-account-access).
+  Future<Set<String>> accountIdsVisibleToClaimant({
+    String? owedToAccountId,
+  }) async {
+    final rows = await _db.select(_db.accounts).get();
+    return {
+      for (final a in rows)
+        if (a.type == AccountType.expense || a.type == AccountType.income) a.id,
+      ?owedToAccountId,
+    };
+  }
+
+  /// Synthesizes `type` / `name` / `groupId` / `archivedAt` for every account
+  /// and category, stamped with its creation time, so a device that joins
+  /// later receives the whole catalog. Starter categories and the first cash
+  /// account are written at setup without outbox operations; without this a
+  /// joined phone never got Groceries or Cash & Bank. Any real later change
+  /// (a rename) has a newer stamp and still wins last-write-wins.
+  Future<List<MetadataOperation>> _accountBaselineOps() async {
+    final identity = await (_db.select(_db.signingIdentities)..limit(1)).get();
+    final identityId = identity.isEmpty ? 'local' : identity.first.identityId;
+    final ops = <MetadataOperation>[];
+    for (final a in await _db.select(_db.accounts).get()) {
+      final at = a.createdAt.toUtc();
+      // Categories use the same keys as category edits (`category:<id>:...`),
+      // so a real rename on any device wins over this baseline under
+      // last-write-wins; sending them as `account:<id>:name` made the Mac's
+      // baseline name overwrite a phone's newer rename.
+      final isCategory =
+          a.type == AccountType.expense || a.type == AccountType.income;
+      final entityType = isCategory ? 'category' : 'account';
+      void add(String field, Object? value) {
+        ops.add(
+          MetadataOperation(
+            entityType: entityType,
+            entityId: a.id,
+            field: field,
+            value: value,
+            updatedAt: at,
+            updatedByIdentityId: identityId,
+          ),
+        );
+      }
+
+      // `type` first: applying it creates the account when it is missing.
+      add('type', a.type.name);
+      add('name', a.name);
+      if (!isCategory && a.groupId != null) add('groupId', a.groupId);
+      if (a.archivedAt != null) {
+        add('archivedAt', a.archivedAt!.toUtc().toIso8601String());
+      }
+    }
+    return ops;
   }
 
   /// Synthesizes removedAt / erasePendingAt / erasedAt so erase-on-contact
@@ -453,9 +511,13 @@ class SyncMergeRepository implements SyncLedgerView {
   /// `metadata_lww_state` (task 5.2).
   Future<List<MetadataOperation>> applyMetadataOps(MetadataOps ops) async {
     final clockStore = MetadataClockStore(database: _db);
-    if (metadataState.isEmpty) {
-      metadataState.addAll(await clockStore.loadWinners());
-    }
+    // Reload winners every time: local edits save their winner straight to
+    // `metadata_lww_state`, so a copy cached from an earlier sync is stale.
+    // A real iPhone's own newer rename was overwritten by an older incoming
+    // one because only the cached copy was compared.
+    metadataState
+      ..clear()
+      ..addAll(await clockStore.loadWinners());
 
     final filtered = <MetadataOperation>[];
     for (final op in ops.operations) {

@@ -15,6 +15,7 @@ import '../acceptance/support/acceptance_harness.dart';
 import 'acme_actions.dart';
 import 'artifacts.dart';
 import 'conductor_client.dart';
+import 'household_actions.dart';
 import 'visible_text.dart';
 
 /// Role runner for the company sync acceptance suite (task 7.2 / 8.x).
@@ -67,7 +68,9 @@ void main() {
     await client.reportReady(role: role, device: Platform.localHostname);
 
     try {
+      await artifacts.writeLog('startup', 'resetToFreshDevice start');
       await resetToFreshDevice(tester);
+      await artifacts.writeLog('startup', 'resetToFreshDevice done');
       await _runRole(
         tester: tester,
         client: client,
@@ -105,6 +108,7 @@ Future<void> _runRole({
   installSyncDebugLogger(role);
   final steps = _stepsForRole(role, dryRun: dryRun, employees: employees);
   for (final stepId in steps) {
+    await artifacts.writeLog(stepId, 'awaiting permission');
     await client.awaitPermission(stepId);
     await artifacts.writeLog(stepId, 'start');
     try {
@@ -137,6 +141,44 @@ List<String> _stepsForRole(
   required bool dryRun,
   required int employees,
 }) {
+  if (const bool.fromEnvironment('COMPANY_SYNC_HOUSEHOLD')) {
+    return switch (role) {
+      'owner' => [
+        'owner.ready',
+        'owner.hh_create_books',
+        'owner.hh_offer_0',
+        'owner.hh_confirm_0',
+        'owner.hh_offer_1',
+        'owner.hh_confirm_1',
+        'owner.hh_record',
+        'owner.hh_verify_entries',
+        'owner.hh_compare_balances',
+        'owner.hh_rename',
+        'owner.hh_verify_rename',
+        'owner.hh_remove_1',
+        'owner.hh_verify_erase',
+        'owner.hh_final',
+      ],
+      'claimant_0' => [
+        'claimant_0.ready',
+        'claimant_0.join',
+        'claimant_0.hh_record',
+        'claimant_0.hh_verify_entries',
+        'claimant_0.hh_rename',
+        'claimant_0.hh_verify_rename',
+        'claimant_0.hh_after_removal',
+      ],
+      'claimant_1' => [
+        'claimant_1.ready',
+        'claimant_1.join',
+        'claimant_1.hh_record',
+        'claimant_1.hh_verify_entries',
+        'claimant_1.hh_verify_rename',
+        'claimant_1.hh_await_erase',
+      ],
+      _ => fail('household run supports owner, claimant_0, claimant_1: $role'),
+    };
+  }
   if (dryRun) {
     return switch (role) {
       'owner' => [
@@ -213,6 +255,60 @@ Future<void> _executeStep({
             ';CONDUCTOR=${const String.fromEnvironment('COMPANY_SYNC_CONDUCTOR')}'
             ';ARTIFACTS=${const String.fromEnvironment('COMPANY_SYNC_ARTIFACTS')}',
       );
+      return;
+
+    case 'owner.hh_create_books':
+      await householdCreateBooks(tester, client);
+      return;
+    case 'owner.hh_offer_0':
+    case 'owner.hh_offer_1':
+      await householdOfferDevice(
+        tester,
+        client,
+        peerRole: 'claimant_${stepId.substring(stepId.length - 1)}',
+      );
+      return;
+    case 'owner.hh_confirm_0':
+    case 'owner.hh_confirm_1':
+      await ownerConfirmCheckCode(
+        tester: tester,
+        client: client,
+        peerKey: 'check_code_claimant_${stepId.substring(stepId.length - 1)}',
+      );
+      await publishSyncEndpoint(tester, client, role: role);
+      return;
+    case final s when s.endsWith('.hh_record'):
+      await householdRecord(tester, role: role);
+      return;
+    case final s when s.endsWith('.hh_verify_entries'):
+      await householdVerifyEntries(tester, client, role: role);
+      return;
+    case 'owner.hh_compare_balances':
+      await householdCompareBalances(client);
+      return;
+    case 'owner.hh_rename':
+      await householdRename(tester, newName: householdRenameFirst);
+      return;
+    case 'claimant_0.hh_rename':
+      await householdRename(tester, newName: householdRenameLater);
+      return;
+    case final s when s.endsWith('.hh_verify_rename'):
+      await householdVerifyRename(tester);
+      return;
+    case 'owner.hh_remove_1':
+      await householdRemovePhoneB(tester, client);
+      return;
+    case 'claimant_1.hh_await_erase':
+      await householdAwaitErase(tester, client);
+      return;
+    case 'owner.hh_verify_erase':
+      await householdVerifyErase(tester, client);
+      return;
+    case 'claimant_0.hh_after_removal':
+      await householdAfterRemoval(tester);
+      return;
+    case 'owner.hh_final':
+      await householdFinal(tester);
       return;
 
     case 'owner.create_company':

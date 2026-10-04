@@ -63,6 +63,9 @@ class TlsSyncTransport implements SyncTransport {
       host,
       port,
       context: context,
+      // Bounded so one unreachable peer (asleep, off the Wi-Fi, or listed
+      // at a cellular address) can't freeze Sync now for over a minute.
+      timeout: const Duration(seconds: 8),
       onBadCertificate: (X509Certificate cert) {
         final fp = fingerprintOfDer(cert.der);
         return pinning.checkFingerprint(fp) == PinCheckResult.accepted;

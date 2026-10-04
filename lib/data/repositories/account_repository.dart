@@ -762,7 +762,8 @@ class AccountRepository {
   /// D1a) — starter books must not exist before that identity.
   ///
   /// Pass [seedStarterCategories]: false when joining existing books so the
-  /// device uses the received catalog instead of duplicating starters
+  /// device uses the received catalog and accounts (including Cash & Bank)
+  /// instead of duplicating starters
   /// (shared-categories / linked-devices-and-sync task 7.4).
   Future<void> seedOnboardingBooks({
     required String currency,
@@ -827,15 +828,20 @@ class AccountRepository {
             type: AccountType.clearing,
           ),
         );
-    await _db
-        .into(_db.accounts)
-        .insert(
-          AccountsCompanion.insert(
-            name: financialAccountName,
-            type: AccountType.asset,
-            groupId: const Value(groupCashEquivalentsId),
-          ),
-        );
+    // A device joining existing books receives the host's Cash & Bank (and
+    // every other account) by sync; seeding its own here gave each phone a
+    // second, differently identified cash account.
+    if (seedStarterCategories) {
+      await _db
+          .into(_db.accounts)
+          .insert(
+            AccountsCompanion.insert(
+              name: financialAccountName,
+              type: AccountType.asset,
+              groupId: const Value(groupCashEquivalentsId),
+            ),
+          );
+    }
     if (seedStarterCategories) {
       for (final name in starterIncomeCategories) {
         await _db

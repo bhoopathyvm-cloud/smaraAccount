@@ -70,6 +70,12 @@ class PeerSyncService {
 
   bool get isListening => _listening;
 
+  /// Upper bound for one peer's whole sync session (handshake plus exchange).
+  /// A peer that stops answering mid-exchange, or never completes the TLS
+  /// handshake (e.g. a just-removed device), must not block syncing with
+  /// every other peer; a real-device run froze here for 14 minutes.
+  static const peerSessionTimeout = Duration(seconds: 60);
+
   /// Port last bound by [startForeground] / [startListening], if any.
   /// Used by company-sync to publish a direct-address fallback when mDNS
   /// between simulators and the host is unreliable.
@@ -123,8 +129,15 @@ class PeerSyncService {
   ) async {
     final remote = await _membership.findByDeviceId(remoteDeviceId);
     if (remote == null || !remote.isClaimantOnly) return ops;
-    // Claimant: self membership + allowlist/hints + lifecycle for self.
+    // Claimant: self membership + allowlist/hints + lifecycle for self, and
+    // only categories plus its own Owed-to account (never the bank).
+    final visibleAccounts = await _merge.accountIdsVisibleToClaimant(
+      owedToAccountId: remote.owedToAccountId,
+    );
     return ops.where((op) {
+      if (op.entityType == 'account') {
+        return visibleAccounts.contains(op.entityId);
+      }
       if (op.entityType == 'linked_device') {
         return op.entityId == remoteDeviceId;
       }
@@ -134,7 +147,6 @@ class PeerSyncService {
                 (op.value as Map)['personDeviceId'] == remoteDeviceId);
       }
       if (op.entityType == 'claim_category_allowlist' ||
-          op.entityType == 'account' ||
           op.entityType == 'category' ||
           op.entityType == 'settings') {
         return true;
@@ -395,15 +407,17 @@ class PeerSyncService {
             fingerprint: membership.deviceCertFingerprint,
           );
       try {
-        final result = await session.syncNow(
-          remote: SyncPeerIdentity(
-            deviceId: peer.deviceId,
-            certificate: remoteCert,
-            host: peer.host,
-            port: peer.port,
-          ),
-          peerHint: peer.host,
-        );
+        final result = await session
+            .syncNow(
+              remote: SyncPeerIdentity(
+                deviceId: peer.deviceId,
+                certificate: remoteCert,
+                host: peer.host,
+                port: peer.port,
+              ),
+              peerHint: peer.host,
+            )
+            .timeout(peerSessionTimeout);
         results.add(result);
       } on SocketException catch (e) {
         results.add(

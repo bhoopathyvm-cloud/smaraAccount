@@ -14,6 +14,7 @@ import 'package:smara_accounting/data/repositories/membership_repository.dart';
 import 'package:smara_accounting/data/repositories/personal_claim_limit_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/claims/claim_receipt_picker.dart';
+import 'package:smara_accounting/domain/linked_devices/join_offer_hosts.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/claim.dart';
 import 'package:smara_accounting/domain/models/claim_status.dart';
@@ -340,6 +341,10 @@ void installSyncDebugLogger(String role) {
   const artifacts = String.fromEnvironment('COMPANY_SYNC_ARTIFACTS');
   if (artifacts.isEmpty) return;
   void sink(String message) {
+    // Printed too, so physical devices' sync exchanges reach the Mac's
+    // <role>/flutter.log (their artifact folder is on the phone).
+    // ignore: avoid_print — company-sync sync log for real devices
+    print('[sync:$role] $message');
     try {
       final dir = Directory('$artifacts/$role');
       dir.createSync(recursive: true);
@@ -371,17 +376,12 @@ Future<void> publishSyncEndpoint(
       final port = sync.boundPort;
       final deviceId = await settings.localDeviceId();
       if (port == null || deviceId == null || deviceId.isEmpty) return;
-      final hosts = <String>['127.0.0.1'];
-      for (final iface in await NetworkInterface.list(
-        type: InternetAddressType.IPv4,
-        includeLinkLocal: false,
-      )) {
-        for (final addr in iface.addresses) {
-          if (!addr.isLoopback && !hosts.contains(addr.address)) {
-            hosts.add(addr.address);
-          }
-        }
-      }
+      final collected = await localLanIPv4Addresses();
+      const conductorUrl = String.fromEnvironment('COMPANY_SYNC_CONDUCTOR');
+      final hosts = orderJoinOfferHosts(
+        collected,
+        preferLoopback: conductorPrefersLoopbackJoin(conductorUrl),
+      );
       await client.putValue(
         'sync_endpoint_$role',
         jsonEncode({'deviceId': deviceId, 'hosts': hosts, 'port': port}),
@@ -428,11 +428,16 @@ Future<void> wireDirectSyncPeers(
     if (deviceId == null || port == null || !known.contains(deviceId)) {
       continue;
     }
+    // Use the order the peer published (publishSyncEndpoint already puts
+    // LAN first on --real-devices runs). connectByAddress only records the
+    // address without testing it, so the first host wins: forcing
+    // 127.0.0.1 first pointed every peer at the Mac instead of a physical
+    // iPhone, and its claims never reached the Approver.
     final hosts = <String>[
-      '127.0.0.1',
       if (map['hosts'] is List)
         for (final h in map['hosts'] as List) h.toString(),
     ];
+    if (hosts.isEmpty) hosts.add('127.0.0.1');
     for (final host in hosts.toSet()) {
       try {
         await sync.connectByAddress(
@@ -568,20 +573,16 @@ Future<void> publishJoinOfferToConductor(
   expect(offerId, isNotNull, reason: 'join offer id missing');
   expect(booksSetId, isNotNull, reason: 'join offer booksSetId missing');
   expect(booksSetId, isNotEmpty, reason: 'join offer booksSetId empty');
-  final hosts = <String>['127.0.0.1'];
-  for (final iface in await NetworkInterface.list(
-    type: InternetAddressType.IPv4,
-    includeLinkLocal: false,
-  )) {
-    for (final addr in iface.addresses) {
-      if (!addr.isLoopback && !hosts.contains(addr.address)) {
-        hosts.add(addr.address);
-      }
-    }
-  }
+  final collected = await localLanIPv4Addresses();
+  // Match AppJoinCodeLookup: LAN-first when conductor is on Wi-Fi.
+  const conductorUrl = String.fromEnvironment('COMPANY_SYNC_CONDUCTOR');
+  final hosts = orderJoinOfferHosts(
+    collected,
+    preferLoopback: conductorPrefersLoopbackJoin(conductorUrl),
+  );
   final payload = jsonEncode({
     'hosts': hosts,
-    'host': '127.0.0.1',
+    'host': hosts.isNotEmpty ? hosts.first : '127.0.0.1',
     'port': port,
     'offerId': offerId,
     'booksSetId': booksSetId,
@@ -592,24 +593,130 @@ Future<void> publishJoinOfferToConductor(
   await client.putValue('join_offer', payload);
 }
 
+/// Waits for the joiner check code without [WidgetTester.pump].
+///
+/// Prefer [LinkedDevicesViewModel.pendingHostCheckCode] (set synchronously when
+/// JoinCodeHost reaches the check-code step) over the conductor relay. TLS
+/// accept on JoinCodeHost is plain async IO and does not need frames; pumping
+/// here previously hung the Owner after one diagnostic line (guarded frame
+/// never completed) while the Approver already showed the check code.
+///
+/// [CompanySyncConductorClient.getValue] times out per request so a stalled
+/// HTTP socket cannot freeze this loop. Pump only after the check code is
+/// known (see [ownerConfirmCheckCode]).
+Future<String> waitValueWhilePumping(
+  WidgetTester tester,
+  CompanySyncConductorClient client,
+  String key, {
+  Duration timeout = const Duration(minutes: 5),
+  String? diagnosticLabel,
+}) async {
+  final deadline = DateTime.now().add(timeout);
+  var lastLog = DateTime.now();
+  while (DateTime.now().isBefore(deadline)) {
+    final pending = _hostPendingCheckCode(tester);
+    if (pending != null && pending.isNotEmpty) return pending;
+
+    try {
+      final v = await client.getValue(key);
+      if (v != null && v.isNotEmpty) return v;
+    } on StateError catch (e) {
+      final msg = '$e';
+      if (!msg.contains('timed out') && !msg.contains('unreachable')) {
+        // ignore: avoid_print — company-sync hang diagnosis
+        print('[ownerConfirm] getValue($key) error: $e');
+      }
+    }
+
+    final now = DateTime.now();
+    if (now.difference(lastLog) >= const Duration(seconds: 15)) {
+      final label = diagnosticLabel ?? key;
+      final port = _hostActiveJoinPort(tester);
+      // ignore: avoid_print — company-sync hang diagnosis
+      print(
+        '[ownerConfirm] still waiting for $label '
+        '(pendingHostCheckCode=$pending activeJoinPort=$port)',
+      );
+      lastLog = now;
+    }
+
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+  }
+  throw TimeoutException('value $key not set within $timeout');
+}
+
+String? _hostPendingCheckCode(WidgetTester tester) {
+  final section = find.byType(LinkedDevicesSection);
+  if (section.evaluate().isEmpty) return null;
+  return tester
+      .widget<LinkedDevicesSection>(section)
+      .viewModel
+      .pendingHostCheckCode;
+}
+
+int? _hostActiveJoinPort(WidgetTester tester) {
+  final section = find.byType(LinkedDevicesSection);
+  if (section.evaluate().isEmpty) return null;
+  return tester
+      .widget<LinkedDevicesSection>(section)
+      .viewModel
+      .activeJoinOfferPort;
+}
+
 Future<void> ownerConfirmCheckCode({
   required WidgetTester tester,
   required CompanySyncConductorClient client,
   required String peerKey,
 }) async {
-  final check = await client.waitValue(peerKey);
+  // ignore: avoid_print — company-sync hang diagnosis
+  print('[ownerConfirm] waiting for joiner check code ($peerKey)');
+  final check = await waitValueWhilePumping(
+    tester,
+    client,
+    peerKey,
+    diagnosticLabel: peerKey,
+  );
   await client.putValue('check_code_owner_for_$peerKey', check);
+  // ignore: avoid_print — company-sync hang diagnosis
+  print(
+    '[ownerConfirm] got check=$check; waiting for pendingHostCheckCode / UI',
+  );
   final hostCheck = find.byKey(const Key('join-host-check-code'));
   // Confirm via the ViewModel as soon as pendingHostCheckCode is set — do not
   // rely solely on AlertDialog hit-testing (macOS integration tests often miss
   // it, and a stuck completer blocks JoinCodeHost forever).
   var confirmed = false;
-  for (var i = 0; i < 150; i++) {
+  var lastLog = DateTime.now();
+
+  // Fast path: waitValueWhilePumping often returns pendingHostCheckCode itself.
+  final sectionNow = find.byType(LinkedDevicesSection);
+  if (sectionNow.evaluate().isNotEmpty) {
+    final vm = tester.widget<LinkedDevicesSection>(sectionNow).viewModel;
+    if (vm.pendingHostCheckCode != null) {
+      // ignore: avoid_print — company-sync hang diagnosis
+      print(
+        '[ownerConfirm] confirming via ViewModel '
+        '(pending=${vm.pendingHostCheckCode})',
+      );
+      vm.confirmHostCheckCodeMatch();
+      confirmed = true;
+      await tester.pump(const Duration(milliseconds: 300));
+    }
+  }
+
+  // Real-device casts: joiner may still be crossing Wi-Fi after the conductor
+  // relay; keep pumping for up to 3 minutes (was 15s).
+  for (var i = 0; !confirmed && i < 1800; i++) {
     await tester.pump(const Duration(milliseconds: 100));
     final section = find.byType(LinkedDevicesSection);
     if (section.evaluate().isNotEmpty) {
       final vm = tester.widget<LinkedDevicesSection>(section).viewModel;
       if (vm.pendingHostCheckCode != null) {
+        // ignore: avoid_print — company-sync hang diagnosis
+        print(
+          '[ownerConfirm] confirming via ViewModel '
+          '(pending=${vm.pendingHostCheckCode})',
+        );
         vm.confirmHostCheckCodeMatch();
         confirmed = true;
         await tester.pump(const Duration(milliseconds: 300));
@@ -619,6 +726,8 @@ Future<void> ownerConfirmCheckCode({
     if (hostCheck.evaluate().isNotEmpty) {
       final matchBtn = find.byKey(const Key('join-host-codes-match'));
       if (matchBtn.evaluate().isNotEmpty) {
+        // ignore: avoid_print — company-sync hang diagnosis
+        print('[ownerConfirm] confirming via join-host-codes-match button');
         final button = tester.widget<ButtonStyleButton>(matchBtn);
         button.onPressed?.call();
         confirmed = true;
@@ -626,34 +735,67 @@ Future<void> ownerConfirmCheckCode({
         break;
       }
     }
-    // Joiner finished and host UI already cleared.
-    if (i > 30 &&
+    final now = DateTime.now();
+    if (now.difference(lastLog) >= const Duration(seconds: 15)) {
+      final pending = _hostPendingCheckCode(tester);
+      final port = _hostActiveJoinPort(tester);
+      final dialogOpen = find.byType(AlertDialog).evaluate().isNotEmpty;
+      // ignore: avoid_print — company-sync hang diagnosis
+      print(
+        '[ownerConfirm] still waiting to confirm $peerKey '
+        '(pendingHostCheckCode=$pending activeJoinPort=$port '
+        'hostCheckUi=${hostCheck.evaluate().isNotEmpty} dialogOpen=$dialogOpen)',
+      );
+      lastLog = now;
+    }
+    // Only bail early when the join host is gone and the offer UI is gone —
+    // never while activeJoinOfferPort is still set (that was a false "joiner
+    // finished" exit under --real-devices).
+    final port = _hostActiveJoinPort(tester);
+    if (i > 50 &&
+        port == null &&
         hostCheck.evaluate().isEmpty &&
         find.byType(AlertDialog).evaluate().isEmpty) {
+      // ignore: avoid_print — company-sync hang diagnosis
+      print(
+        '[ownerConfirm] early exit: join host and offer UI already cleared',
+      );
       break;
     }
   }
-  if (confirmed && hostCheck.evaluate().isNotEmpty) {
-    final section = find.byType(LinkedDevicesSection);
-    if (section.evaluate().isNotEmpty) {
-      tester
-          .widget<LinkedDevicesSection>(section)
-          .viewModel
-          .confirmHostCheckCodeMatch();
-      await tester.pump(const Duration(milliseconds: 300));
-    }
+  if (!confirmed) {
+    final pending = _hostPendingCheckCode(tester);
+    final port = _hostActiveJoinPort(tester);
+    fail(
+      'ownerConfirmCheckCode: never confirmed host check for $peerKey '
+      '(pendingHostCheckCode=$pending activeJoinPort=$port check=$check). '
+      'JoinCodeHost likely never called confirmCheckCode, or the harness '
+      'could not reach the ViewModel that owns the completer.\n'
+      '${dumpVisibleText(tester)}',
+    );
   }
   // Give the host time to finish onJoinAccepted + payload, then dismiss the
   // offer dialog without clearActiveJoinQr (that would kill JoinCodeHost mid
   // exchange). Popping frees the UI for the next Add-a-person flow.
+  // Each post-confirm stage is logged: a real-device run once hung here
+  // after the second joiner with no output (cause: macOS App Nap throttling
+  // the covered Owner window; the runner now disables App Nap). Test APIs
+  // such as pump must never be wrapped in timeouts (guarded-call conflict).
+  // ignore: avoid_print — company-sync hang diagnosis
+  print('[ownerConfirm] settle start ($peerKey)');
   await tester.pump(const Duration(seconds: 2));
   final dialog = find.byType(AlertDialog);
   if (dialog.evaluate().isNotEmpty) {
-    final nav = Navigator.of(tester.element(dialog.first));
-    nav.pop();
+    // ignore: avoid_print — company-sync hang diagnosis
+    print('[ownerConfirm] dismiss offer dialog ($peerKey)');
+    Navigator.of(tester.element(dialog.first)).pop();
     await tester.pump(const Duration(milliseconds: 500));
   }
+  // ignore: avoid_print — company-sync hang diagnosis
+  print('[ownerConfirm] final pump ($peerKey)');
   await tester.pump(const Duration(seconds: 1));
+  // ignore: avoid_print — company-sync hang diagnosis
+  print('[ownerConfirm] done for $peerKey');
 }
 
 Future<void> setPersonalLimitsAndAdvances(

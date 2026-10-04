@@ -238,4 +238,168 @@ void main() {
       await dbB.close();
     },
   );
+
+  test(
+    'an older incoming rename does not overwrite a newer local one',
+    () async {
+      // Household run on real iPhones: phone A renamed Groceries after the
+      // Mac did, then the Mac's older rename arrived and replaced phone A's
+      // own name on phone A, because local edits were left out of the merge.
+      final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+      final db = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(db.close);
+      final ledger = LedgerRepository(database: db, signingKeyService: keys);
+      final accounts = AccountRepository(
+        database: db,
+        ledgerRepository: ledger,
+      );
+      final identity = IdentityRepository(
+        database: db,
+        accountRepository: accounts,
+        signingKeyService: keys,
+      );
+      final outbox = MetadataOutbox(database: db);
+      final categories = CategoryRepository(
+        database: db,
+        metadataOutbox: outbox,
+        currentIdentityId: () async =>
+            (await identity.currentIdentity())?.identityId,
+      );
+      final merge = SyncMergeRepository(
+        database: db,
+        signingKeyService: keys,
+        metadataOutbox: outbox,
+      );
+      await identity.confirmFirstIdentity(
+        await identity.generateFirstIdentity(),
+        currency: 'USD',
+      );
+      final groceries = (await categories.watchCategories().first).firstWhere(
+        (c) => c.name == 'Groceries',
+      );
+
+      // An earlier sync fills the merge's in-memory winners...
+      await merge.applyMetadataOps(
+        MetadataOps(
+          operations: [
+            MetadataOperation(
+              entityType: 'settings',
+              entityId: 'books',
+              field: 'defaultCategoryLocale',
+              value: 'en',
+              updatedAt: DateTime.now().toUtc(),
+              updatedByIdentityId: 'mac-identity',
+              hlcDeviceId: 'mac',
+            ),
+          ],
+        ),
+      );
+      // ...then this device renames, saving its winner to the database...
+      await categories.renameCategory(
+        id: groceries.id,
+        newName: 'Supermarket (phone A)',
+      );
+      // ...and the Mac's older rename arrives.
+      await merge.applyMetadataOps(
+        MetadataOps(
+          operations: [
+            MetadataOperation(
+              entityType: 'category',
+              entityId: groceries.id,
+              field: 'name',
+              value: 'Food (Mac)',
+              updatedAt: DateTime.now().toUtc().subtract(
+                const Duration(minutes: 1),
+              ),
+              updatedByIdentityId: 'mac-identity',
+              hlcDeviceId: 'mac',
+            ),
+          ],
+        ),
+      );
+
+      final after = (await categories.watchCategories().first).firstWhere(
+        (c) => c.id == groceries.id,
+      );
+      expect(after.name, 'Supermarket (phone A)');
+    },
+  );
+
+  test('a joined device gets the starter categories, and its rename survives '
+      'the host baseline', () async {
+    Future<
+      ({
+        AppDatabase db,
+        CategoryRepository categories,
+        SyncMergeRepository merge,
+        IdentityRepository identity,
+      })
+    >
+    device({required bool starter}) async {
+      final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+      final db = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(db.close);
+      final ledger = LedgerRepository(database: db, signingKeyService: keys);
+      final accounts = AccountRepository(
+        database: db,
+        ledgerRepository: ledger,
+      );
+      final identity = IdentityRepository(
+        database: db,
+        accountRepository: accounts,
+        signingKeyService: keys,
+      );
+      final outbox = MetadataOutbox(database: db);
+      await identity.confirmFirstIdentity(
+        await identity.generateFirstIdentity(),
+        currency: 'USD',
+        seedStarterCategories: starter,
+      );
+      return (
+        db: db,
+        categories: CategoryRepository(
+          database: db,
+          metadataOutbox: outbox,
+          currentIdentityId: () async =>
+              (await identity.currentIdentity())?.identityId,
+        ),
+        merge: SyncMergeRepository(
+          database: db,
+          signingKeyService: keys,
+          metadataOutbox: outbox,
+        ),
+        identity: identity,
+      );
+    }
+
+    final mac = await device(starter: true);
+    final phone = await device(starter: false);
+    Future<void> phoneReceivesFromMac() async => phone.merge.applyMetadataOps(
+      MetadataOps(operations: await mac.merge.pendingMetadataOperations()),
+    );
+
+    // Starter categories are seeded without outbox ops; the baseline
+    // still delivers them.
+    expect(await phone.categories.watchCategories().first, isEmpty);
+    await phoneReceivesFromMac();
+    final groceries = (await phone.categories.watchCategories().first)
+        .firstWhere((c) => c.name == 'Groceries');
+
+    // The phone renames, then hears the Mac's baseline again.
+    await phone.categories.renameCategory(
+      id: groceries.id,
+      newName: 'Supermarket (phone A)',
+    );
+    await phoneReceivesFromMac();
+    final after = (await phone.categories.watchCategories().first).firstWhere(
+      (c) => c.id == groceries.id,
+    );
+    expect(after.name, 'Supermarket (phone A)');
+
+    // A joined phone has no Cash & Bank of its own (it gets the Mac's).
+    final phoneCash = await (phone.db.select(
+      phone.db.accounts,
+    )..where((a) => a.name.equals('Cash & Bank'))).get();
+    expect(phoneCash, hasLength(1));
+  });
 }

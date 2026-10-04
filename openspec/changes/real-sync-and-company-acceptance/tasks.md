@@ -92,8 +92,12 @@
   <!-- emp2: competing rename + restart green. emp3 ios-only: remove_kenji + post_removal reached; verify_erase still saw Erase pending (retry added; needs re-run). -->
 - [x] 8.6 Privacy and limit checks on every Claimant (no bank account, no other person's claims or limits; own limits shown); verify pass criteria 2, 3, 5
   <!-- 2026-10-03: emp2 claimant_*.privacy_check green ×3. -->
-- [~] 8.7 Full run: `tool/run_company_sync_test.sh` passes with 5 employees within 30 minutes and with `--employees 2` within 10 minutes, three runs in a row each; record the times and the report paths in this task
-  <!-- emp2 ×3 consecutive (ios-only): 20261003T063747Z ~599s, 20261003T064815Z ~520s, 20261003T065731Z ~519s. emp5 + sudo/vmnet left for reviewer. -->
+- [ ] 8.7 Full runs (iOS and macOS only; Android emulators optional, decision of 2026-10-04): `tool/run_company_sync_test.sh --employees 3 --ios-only` and `--employees 2 --ios-only` pass three runs in a row each, and `--employees 3 --real-devices --second-iphone` passes once with two physical iPhones; record the times and report paths here
+
+## 8b. Real iPhones and the household run
+
+- [ ] 8.8 `--real-devices` / `--second-iphone`: physical iPhones launch one at a time before the rest; reportReady retries for 3 minutes during the iOS Local Network prompt; devices publish only Wi-Fi/LAN addresses (cellular, VPN and peer-to-peer interfaces skipped, unit-tested in `join_offer_hosts_test.dart`); one peer's session is bounded to 60 s and connects to 8 s; verify `--employees 3 --real-devices` passes end to end with the iPhone SE
+- [ ] 8.9 Household run `tool/run_company_sync_test.sh --household` (the Mac and two phones, Add a device): all entries and the same balance on every device, the later rename wins, the removed phone is erased and the rest keep syncing; graph tested in `tool/company_sync/scenario_test.dart`; verify it passes on simulators and with `--real-devices --second-iphone`
 
 ## 9. Localization and docs
 

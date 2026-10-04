@@ -245,3 +245,125 @@ const acmePeople = [
 ];
 
 String claimantDisplayName(int index) => acmePeople[index].$1;
+
+/// Household scenario: one person, the macOS app (`owner`) and two phones
+/// (`claimant_0`, `claimant_1`) linked with "Add a device", no claims or
+/// roles. Proves that every device sees every entry with the same balance,
+/// that the later rename wins everywhere, and that removing a device erases
+/// its copy while the remaining two keep syncing.
+List<CompanySyncStep> householdScenario() {
+  const devices = ['claimant_0', 'claimant_1'];
+  const all = ['owner', ...devices];
+  return [
+    const CompanySyncStep(id: 'owner.ready', role: 'owner'),
+    const CompanySyncStep(
+      id: 'owner.hh_create_books',
+      role: 'owner',
+      dependsOn: ['owner.ready'],
+      timeout: Duration(minutes: 5),
+    ),
+    for (var i = 0; i < devices.length; i++) ...[
+      CompanySyncStep(
+        id: 'owner.hh_offer_$i',
+        role: 'owner',
+        dependsOn: [
+          i == 0 ? 'owner.hh_create_books' : 'owner.hh_confirm_${i - 1}',
+        ],
+        timeout: const Duration(minutes: 5),
+      ),
+      CompanySyncStep(
+        id: 'claimant_$i.ready',
+        role: 'claimant_$i',
+        dependsOn: ['owner.hh_offer_$i'],
+        timeout: const Duration(minutes: 10),
+      ),
+      CompanySyncStep(
+        id: 'claimant_$i.join',
+        role: 'claimant_$i',
+        dependsOn: ['claimant_$i.ready'],
+        timeout: const Duration(minutes: 8),
+      ),
+      CompanySyncStep(
+        id: 'owner.hh_confirm_$i',
+        role: 'owner',
+        dependsOn: ['owner.hh_offer_$i'],
+        timeout: const Duration(minutes: 8),
+      ),
+    ],
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_record',
+        role: role,
+        dependsOn: const [
+          'owner.hh_confirm_1',
+          'claimant_0.join',
+          'claimant_1.join',
+        ],
+        timeout: const Duration(minutes: 5),
+      ),
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_verify_entries',
+        role: role,
+        dependsOn: [for (final r in all) '$r.hh_record'],
+        timeout: const Duration(minutes: 8),
+      ),
+    CompanySyncStep(
+      id: 'owner.hh_compare_balances',
+      role: 'owner',
+      dependsOn: [for (final r in all) '$r.hh_verify_entries'],
+      timeout: const Duration(minutes: 3),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_rename',
+      role: 'owner',
+      dependsOn: ['owner.hh_compare_balances'],
+      timeout: Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.hh_rename',
+      role: 'claimant_0',
+      // Strictly after the Mac's rename, so the phone's rename is the later
+      // one and must win on every device.
+      dependsOn: ['owner.hh_rename'],
+      timeout: Duration(minutes: 5),
+    ),
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_verify_rename',
+        role: role,
+        dependsOn: const ['claimant_0.hh_rename'],
+        timeout: const Duration(minutes: 8),
+      ),
+    CompanySyncStep(
+      id: 'owner.hh_remove_1',
+      role: 'owner',
+      dependsOn: [for (final r in all) '$r.hh_verify_rename'],
+      timeout: const Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_1.hh_await_erase',
+      role: 'claimant_1',
+      dependsOn: ['owner.hh_remove_1'],
+      timeout: Duration(minutes: 10),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_verify_erase',
+      role: 'owner',
+      dependsOn: ['owner.hh_remove_1'],
+      timeout: Duration(minutes: 10),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.hh_after_removal',
+      role: 'claimant_0',
+      dependsOn: ['owner.hh_verify_erase'],
+      timeout: Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_final',
+      role: 'owner',
+      dependsOn: ['claimant_0.hh_after_removal'],
+      timeout: Duration(minutes: 8),
+    ),
+  ];
+}

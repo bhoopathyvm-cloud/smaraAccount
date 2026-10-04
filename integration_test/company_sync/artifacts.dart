@@ -60,11 +60,15 @@ class CompanySyncArtifacts {
 
   Future<void> writeLog(String stepId, String message) async {
     await ensureReady();
+    final line =
+        '${DateTime.now().toUtc().toIso8601String()} [$stepId] $message';
+    // Also print it: on a physical iPhone the artifact root is the phone's
+    // own temp folder, but `flutter test` streams the console to the Mac's
+    // <role>/flutter.log, so the step log stays visible there.
+    // ignore: avoid_print — company-sync step log for real devices
+    print('[step:$role] $line');
     final file = File('${roleDir.path}/instance.log');
-    await file.writeAsString(
-      '${DateTime.now().toUtc().toIso8601String()} [$stepId] $message\n',
-      mode: FileMode.append,
-    );
+    await file.writeAsString('$line\n', mode: FileMode.append);
   }
 
   Future<void> takeScreenshot(String stepId) async {

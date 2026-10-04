@@ -7,6 +7,7 @@ import 'device_certificate_store.dart';
 import 'join_code_lookup.dart';
 import 'join_code_session.dart';
 import 'join_offer_discovery.dart';
+import 'join_offer_hosts.dart';
 import 'reserved_join_identity.dart';
 
 /// Production [JoinCodeLookup] that reserves a Signing Identity for the
@@ -189,14 +190,13 @@ class AppJoinCodeLookup implements JoinCodeLookup {
     if (single != null && single.isNotEmpty && !hosts.contains(single)) {
       hosts.insert(0, single);
     }
-    // Prefer loopback first: iOS Simulator shares the Mac network stack, so
-    // 127.0.0.1 reaches the host JoinCodeHost reliably. LAN IPv4 is a fallback
-    // for Android emulators / physical devices.
-    final lan = hosts.where((h) => h != '127.0.0.1').toList();
-    final ordered = <String>[
-      if (hosts.contains('127.0.0.1')) '127.0.0.1',
-      ...lan,
-    ];
+    // Loopback-first when the conductor is on 127.0.0.1 (simulator casts).
+    // LAN-first when the conductor is on Wi-Fi (`--real-devices`): a physical
+    // phone's loopback is itself, not the Mac Owner.
+    final ordered = orderJoinOfferHosts(
+      hosts,
+      preferLoopback: conductorPrefersLoopbackJoin(_conductorUrl),
+    );
     hosts
       ..clear()
       ..addAll(ordered);

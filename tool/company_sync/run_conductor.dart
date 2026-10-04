@@ -12,22 +12,26 @@ Future<void> main(List<String> args) async {
   if (args.isEmpty) {
     stderr.writeln(
       'Usage: dart run tool/company_sync/run_conductor.dart <reportDir> '
-      '[--dry|--employees N] [--bind-lan]',
+      '[--dry|--household|--employees N] [--bind-lan]',
     );
     exit(64);
   }
   final reportDir = Directory(args.first);
   var dry = false;
+  var household = false;
   var employees = 2;
   var bindLan = false;
   for (var i = 1; i < args.length; i++) {
     if (args[i] == '--dry') dry = true;
+    if (args[i] == '--household') household = true;
     if (args[i] == '--bind-lan') bindLan = true;
     if (args[i] == '--employees' && i + 1 < args.length) {
       employees = int.parse(args[++i]);
     }
   }
-  final steps = dry
+  final steps = household
+      ? householdScenario()
+      : dry
       ? dryRunScenario()
       : acmeTravelScenario(employees: employees);
   final conductor = CompanySyncConductor(

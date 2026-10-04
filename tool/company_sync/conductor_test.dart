@@ -206,6 +206,32 @@ void main() {
     expect(jsonDecode(body)['value'], 'K7QF-3M9P');
   });
 
+  test('ready roles appear in status and report.json', () async {
+    final conductor = CompanySyncConductor(
+      steps: const [CompanySyncStep(id: 'owner.setup', role: 'owner')],
+      reportDirectory: dir,
+    );
+    await conductor.start();
+    addTearDown(conductor.stop);
+
+    final client = HttpClient();
+    final base = 'http://127.0.0.1:${conductor.port}';
+    final ready = await client.postUrl(Uri.parse('$base/ready'));
+    ready.write(jsonEncode({'role': 'claimant_0', 'device': 'iphone'}));
+    await (await ready.close()).drain<void>();
+
+    final status = await client.getUrl(Uri.parse('$base/status'));
+    final statusBody = await (await status.close())
+        .transform(utf8.decoder)
+        .join();
+    expect(jsonDecode(statusBody)['ready'], contains('claimant_0'));
+
+    final report = jsonDecode(
+      await File('${dir.path}/report.json').readAsString(),
+    );
+    expect(report['ready'], contains('claimant_0'));
+  });
+
   test('dryRunScenario graph: deps, roles, and verify_sync after submit', () {
     final steps = dryRunScenario();
     final byId = {for (final s in steps) s.id: s};
