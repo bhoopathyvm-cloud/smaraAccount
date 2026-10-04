@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Điện thoại Android của tôi",
   "linkedDevicesDefaultNameAndroidTablet": "Máy tính bảng Android của tôi",
   "linkedDevicesDefaultNameWindows": "Máy tính Windows của tôi",
-  "linkedDevicesDefaultNameLinux": "Máy tính Linux của tôi"
+  "linkedDevicesDefaultNameLinux": "Máy tính Linux của tôi",
+  "settingsBooksSwitcherRenameTitle": "Đổi tên sổ sách",
+  "settingsBooksSwitcherRenameHelp": "Tên này chỉ dùng trên thiết bị này. Hãy chọn tên dễ nhận ra, như “Văn phòng” hoặc “Nhà”."
 }

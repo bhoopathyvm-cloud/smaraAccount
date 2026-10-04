@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "मेरा Android फोन",
   "linkedDevicesDefaultNameAndroidTablet": "मेरा Android टैबलेट",
   "linkedDevicesDefaultNameWindows": "मेरा Windows PC",
-  "linkedDevicesDefaultNameLinux": "मेरा Linux PC"
+  "linkedDevicesDefaultNameLinux": "मेरा Linux PC",
+  "settingsBooksSwitcherRenameTitle": "खातें दा नां बदलो",
+  "settingsBooksSwitcherRenameHelp": "एह् नां सिर्फ इस डिवाइस पर रौंह्दा ऐ। पछानने आह्ला नां चुनो, जि''यां “दफ्तर” जां “घर”।"
 }

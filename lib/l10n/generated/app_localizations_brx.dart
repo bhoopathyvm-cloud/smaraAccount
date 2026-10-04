@@ -2510,4 +2510,11 @@ class AppLocalizationsBrx extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'आंनि Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'बुखिनि मुं सोलाय';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'बे मुंआ बे डिभाइसआवल\' थायो। सिनायनो हानाय मुं सायख, जेरै “अफिस” एबा “नओ”।';
 }

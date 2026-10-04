@@ -2525,4 +2525,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Linux bilgisayarım';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle =>
+      'Defterleri yeniden adlandırın';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Bu adı yalnızca bu cihaz kullanır. “Ofis” veya “Ev” gibi tanıyacağınız bir ad seçin.';
 }

@@ -2515,4 +2515,11 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'منهنجو Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'حسابن جو نالو بدلايو';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'هي نالو صرف هن ڊوائيس تي رهي ٿو. سڃاتو وڃي اهڙو نالو چونڊيو، جهڙوڪ «آفيس» يا «گهر».';
 }

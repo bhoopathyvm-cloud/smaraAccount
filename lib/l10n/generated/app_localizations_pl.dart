@@ -2534,4 +2534,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Mój komputer z Linuksem';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Zmień nazwę ksiąg';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Ta nazwa jest używana tylko na tym urządzeniu. Wybierz taką, którą rozpoznasz, np. „Biuro” lub „Dom”.';
 }

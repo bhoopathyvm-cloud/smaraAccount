@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "എന്റെ Android ഫോൺ",
   "linkedDevicesDefaultNameAndroidTablet": "എന്റെ Android ടാബ്‌ലെറ്റ്",
   "linkedDevicesDefaultNameWindows": "എന്റെ Windows PC",
-  "linkedDevicesDefaultNameLinux": "എന്റെ Linux PC"
+  "linkedDevicesDefaultNameLinux": "എന്റെ Linux PC",
+  "settingsBooksSwitcherRenameTitle": "കണക്കുകളുടെ പേര് മാറ്റുക",
+  "settingsBooksSwitcherRenameHelp": "ഈ പേര് ഈ ഉപകരണത്തിൽ മാത്രം. തിരിച്ചറിയാവുന്ന പേര് തിരഞ്ഞെടുക്കുക, ഉദാ. “ഓഫീസ്” അല്ലെങ്കിൽ “വീട്”."
 }

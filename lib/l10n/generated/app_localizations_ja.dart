@@ -2434,4 +2434,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => '自分の Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => '帳簿の名前を変更';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'この名前はこの端末だけで使われます。「事務所」や「自宅」など、わかりやすい名前にしてください。';
 }

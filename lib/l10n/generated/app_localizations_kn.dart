@@ -2530,4 +2530,11 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'ನನ್ನ Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ಪುಸ್ತಕಗಳ ಹೆಸರು ಬದಲಿಸಿ';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ಈ ಹೆಸರು ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ ಇರುತ್ತದೆ. ಗುರುತಿಸಲು ಸುಲಭವಾದ ಹೆಸರು ಆರಿಸಿ, ಉದಾ. “ಕಚೇರಿ” ಅಥವಾ “ಮನೆ”.';
 }

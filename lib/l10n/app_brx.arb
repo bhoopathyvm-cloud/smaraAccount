@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "आंनि Android फोन",
   "linkedDevicesDefaultNameAndroidTablet": "आंनि Android टेबलेट",
   "linkedDevicesDefaultNameWindows": "आंनि Windows PC",
-  "linkedDevicesDefaultNameLinux": "आंनि Linux PC"
+  "linkedDevicesDefaultNameLinux": "आंनि Linux PC",
+  "settingsBooksSwitcherRenameTitle": "बुखिनि मुं सोलाय",
+  "settingsBooksSwitcherRenameHelp": "बे मुंआ बे डिभाइसआवल'' थायो। सिनायनो हानाय मुं सायख, जेरै “अफिस” एबा “नओ”।"
 }

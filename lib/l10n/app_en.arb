@@ -1554,5 +1554,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "settingsBooksSwitcherRenameTitle": "Rename books",
+  "settingsBooksSwitcherRenameHelp": "Only this device uses this name. Pick one you will recognise, like “Office” or “Home”."
 }

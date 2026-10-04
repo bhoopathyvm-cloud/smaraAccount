@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "自分の Android スマートフォン",
   "linkedDevicesDefaultNameAndroidTablet": "自分の Android タブレット",
   "linkedDevicesDefaultNameWindows": "自分の Windows PC",
-  "linkedDevicesDefaultNameLinux": "自分の Linux PC"
+  "linkedDevicesDefaultNameLinux": "自分の Linux PC",
+  "settingsBooksSwitcherRenameTitle": "帳簿の名前を変更",
+  "settingsBooksSwitcherRenameHelp": "この名前はこの端末だけで使われます。「事務所」や「自宅」など、わかりやすい名前にしてください。"
 }

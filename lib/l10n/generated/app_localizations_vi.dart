@@ -2535,4 +2535,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Máy tính Linux của tôi';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Đổi tên sổ sách';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Tên này chỉ dùng trên thiết bị này. Hãy chọn tên dễ nhận ra, như “Văn phòng” hoặc “Nhà”.';
 }

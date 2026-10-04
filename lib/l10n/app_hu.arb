@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Saját Android telefon",
   "linkedDevicesDefaultNameAndroidTablet": "Saját Android táblagép",
   "linkedDevicesDefaultNameWindows": "Saját Windows PC",
-  "linkedDevicesDefaultNameLinux": "Saját Linux PC"
+  "linkedDevicesDefaultNameLinux": "Saját Linux PC",
+  "settingsBooksSwitcherRenameTitle": "Könyvek átnevezése",
+  "settingsBooksSwitcherRenameHelp": "Ezt a nevet csak ez az eszköz használja. Válasszon felismerhető nevet, például „Iroda” vagy „Otthon”."
 }

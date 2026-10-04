@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "నా Android ఫోన్",
   "linkedDevicesDefaultNameAndroidTablet": "నా Android టాబ్లెట్",
   "linkedDevicesDefaultNameWindows": "నా Windows PC",
-  "linkedDevicesDefaultNameLinux": "నా Linux PC"
+  "linkedDevicesDefaultNameLinux": "నా Linux PC",
+  "settingsBooksSwitcherRenameTitle": "ఖాతా పుస్తకాల పేరు మార్చండి",
+  "settingsBooksSwitcherRenameHelp": "ఈ పేరు ఈ పరికరంలో మాత్రమే ఉంటుంది. గుర్తుపట్టగల పేరు ఎంచుకోండి, ఉదా. “ఆఫీసు” లేదా “ఇల్లు”."
 }

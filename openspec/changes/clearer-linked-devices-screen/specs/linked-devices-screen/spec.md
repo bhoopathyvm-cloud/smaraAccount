@@ -66,3 +66,17 @@ metadata operation, so peers show the new name after their next sync.
 #### Scenario: Rename reaches peers
 - **WHEN** the Mac renames itself to "Office Mac" and the phone syncs
 - **THEN** the phone lists "Office Mac"
+
+### Requirement: Books can be renamed on this device
+Every entry in "Books on this device" SHALL offer **Rename**, including the
+active books and books that have no name yet. A rename SHALL:
+- be stored in that books set;
+- stay on this device and never sync;
+- reject a blank name.
+
+The new-books and rename dialogs SHALL keep their text field usable until
+the dialog has fully closed.
+
+#### Scenario: Unnamed books get a real name
+- **WHEN** the list shows "Books 1" and the user renames it to "Office"
+- **THEN** the list shows "Office", and "Books 1" is gone

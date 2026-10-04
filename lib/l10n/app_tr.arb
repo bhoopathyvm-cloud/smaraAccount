@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Android telefonum",
   "linkedDevicesDefaultNameAndroidTablet": "Android tabletim",
   "linkedDevicesDefaultNameWindows": "Windows bilgisayarım",
-  "linkedDevicesDefaultNameLinux": "Linux bilgisayarım"
+  "linkedDevicesDefaultNameLinux": "Linux bilgisayarım",
+  "settingsBooksSwitcherRenameTitle": "Defterleri yeniden adlandırın",
+  "settingsBooksSwitcherRenameHelp": "Bu adı yalnızca bu cihaz kullanır. “Ofis” veya “Ev” gibi tanıyacağınız bir ad seçin."
 }

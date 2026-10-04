@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "میون Android فون",
   "linkedDevicesDefaultNameAndroidTablet": "میون Android ٹیبلیٹ",
   "linkedDevicesDefaultNameWindows": "میون Windows PC",
-  "linkedDevicesDefaultNameLinux": "میون Linux PC"
+  "linkedDevicesDefaultNameLinux": "میون Linux PC",
+  "settingsBooksSwitcherRenameTitle": "حسابن ہُند ناو بدلاو",
+  "settingsBooksSwitcherRenameHelp": "یہ ناو چھُ صرف یَتھ ڈیوایسس پیٹھ۔ پرٛزنَن وول ناو ژٲرِو، مثلاً «دفتر» یا «گرٕ»۔"
 }

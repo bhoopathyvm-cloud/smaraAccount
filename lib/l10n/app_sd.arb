@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "منهنجو Android فون",
   "linkedDevicesDefaultNameAndroidTablet": "منهنجو Android ٽيبليٽ",
   "linkedDevicesDefaultNameWindows": "منهنجو Windows PC",
-  "linkedDevicesDefaultNameLinux": "منهنجو Linux PC"
+  "linkedDevicesDefaultNameLinux": "منهنجو Linux PC",
+  "settingsBooksSwitcherRenameTitle": "حسابن جو نالو بدلايو",
+  "settingsBooksSwitcherRenameHelp": "هي نالو صرف هن ڊوائيس تي رهي ٿو. سڃاتو وڃي اهڙو نالو چونڊيو، جهڙوڪ «آفيس» يا «گهر»."
 }

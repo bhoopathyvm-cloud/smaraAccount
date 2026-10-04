@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "โทรศัพท์ Android ของฉัน",
   "linkedDevicesDefaultNameAndroidTablet": "แท็บเล็ต Android ของฉัน",
   "linkedDevicesDefaultNameWindows": "พีซี Windows ของฉัน",
-  "linkedDevicesDefaultNameLinux": "พีซี Linux ของฉัน"
+  "linkedDevicesDefaultNameLinux": "พีซี Linux ของฉัน",
+  "settingsBooksSwitcherRenameTitle": "เปลี่ยนชื่อสมุดบัญชี",
+  "settingsBooksSwitcherRenameHelp": "ชื่อนี้ใช้บนอุปกรณ์นี้เท่านั้น เลือกชื่อที่จำได้ง่าย เช่น “สำนักงาน” หรือ “บ้าน”"
 }

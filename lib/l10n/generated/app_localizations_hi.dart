@@ -2525,4 +2525,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'मेरा Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'बहियों का नाम बदलें';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'यह नाम सिर्फ़ इसी डिवाइस पर रहता है। पहचानने लायक नाम चुनें, जैसे “दफ़्तर” या “घर”।';
 }

@@ -2548,4 +2548,11 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'என் Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'கணக்குகளின் பெயரை மாற்று';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'இந்தப் பெயர் இந்தச் சாதனத்தில் மட்டும். அடையாளம் காணக்கூடிய பெயரைத் தேர்ந்தெடுங்கள், உதா. “அலுவலகம்” அல்லது “வீடு”.';
 }

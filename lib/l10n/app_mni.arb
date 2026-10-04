@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "ꯑꯩꯒꯤ Android ꯐꯣꯟ",
   "linkedDevicesDefaultNameAndroidTablet": "ꯑꯩꯒꯤ Android ꯇꯦꯕꯂꯦꯠ",
   "linkedDevicesDefaultNameWindows": "ꯑꯩꯒꯤ Windows PC",
-  "linkedDevicesDefaultNameLinux": "ꯑꯩꯒꯤ Linux PC"
+  "linkedDevicesDefaultNameLinux": "ꯑꯩꯒꯤ Linux PC",
+  "settingsBooksSwitcherRenameTitle": "ꯂꯦꯈꯥꯒꯤ ꯃꯤꯡ ꯍꯣꯡꯗꯣꯛꯎ",
+  "settingsBooksSwitcherRenameHelp": "ꯃꯤꯡ ꯑꯁꯤ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗꯥ ꯈꯛꯇꯃꯛ ꯂꯩ꯫ ꯈꯪꯅꯕꯥ ꯌꯥꯕꯥ ꯃꯤꯡ ꯈꯟꯕꯤꯌꯨ, “ꯑꯣꯐꯤꯁ” ꯅꯠꯔꯒꯥ “ꯌꯨꯝ” ꯒꯨꯝꯅꯥ꯫"
 }

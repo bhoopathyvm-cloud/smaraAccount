@@ -2560,4 +2560,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Mein Linux-PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Bücher umbenennen';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Nur dieses Gerät verwendet diesen Namen. Wählen Sie einen, den Sie wiedererkennen, etwa „Büro“ oder „Zuhause“.';
 }

@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "মোৰ Android ফোন",
   "linkedDevicesDefaultNameAndroidTablet": "মোৰ Android টেবলেট",
   "linkedDevicesDefaultNameWindows": "মোৰ Windows PC",
-  "linkedDevicesDefaultNameLinux": "মোৰ Linux PC"
+  "linkedDevicesDefaultNameLinux": "মোৰ Linux PC",
+  "settingsBooksSwitcherRenameTitle": "হিচাপৰ নাম সলনি কৰক",
+  "settingsBooksSwitcherRenameHelp": "এই নাম কেৱল এই ডিভাইচতে থাকে। চিনি পোৱা নাম বাছক, যেনে “অফিচ” বা “ঘৰ”।"
 }

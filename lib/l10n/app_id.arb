@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Ponsel Android saya",
   "linkedDevicesDefaultNameAndroidTablet": "Tablet Android saya",
   "linkedDevicesDefaultNameWindows": "PC Windows saya",
-  "linkedDevicesDefaultNameLinux": "PC Linux saya"
+  "linkedDevicesDefaultNameLinux": "PC Linux saya",
+  "settingsBooksSwitcherRenameTitle": "Ganti nama pembukuan",
+  "settingsBooksSwitcherRenameHelp": "Nama ini hanya dipakai di perangkat ini. Pilih nama yang mudah dikenali, misalnya “Kantor” atau “Rumah”."
 }

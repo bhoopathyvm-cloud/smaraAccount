@@ -2436,4 +2436,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => '내 Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => '장부 이름 바꾸기';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      '이 이름은 이 기기에서만 쓰입니다. ‘사무실’이나 ‘집’처럼 알아보기 쉬운 이름을 고르세요.';
 }

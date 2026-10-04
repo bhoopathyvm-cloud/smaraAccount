@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "我的 Android 手机",
   "linkedDevicesDefaultNameAndroidTablet": "我的 Android 平板",
   "linkedDevicesDefaultNameWindows": "我的 Windows 电脑",
-  "linkedDevicesDefaultNameLinux": "我的 Linux 电脑"
+  "linkedDevicesDefaultNameLinux": "我的 Linux 电脑",
+  "settingsBooksSwitcherRenameTitle": "重命名账本",
+  "settingsBooksSwitcherRenameHelp": "此名称仅在本设备上使用。请选一个容易认出的名字，例如“办公室”或“家”。"
 }

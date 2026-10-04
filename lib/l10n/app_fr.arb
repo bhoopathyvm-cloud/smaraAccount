@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Mon téléphone Android",
   "linkedDevicesDefaultNameAndroidTablet": "Ma tablette Android",
   "linkedDevicesDefaultNameWindows": "Mon PC Windows",
-  "linkedDevicesDefaultNameLinux": "Mon PC Linux"
+  "linkedDevicesDefaultNameLinux": "Mon PC Linux",
+  "settingsBooksSwitcherRenameTitle": "Renommer les livres",
+  "settingsBooksSwitcherRenameHelp": "Seul cet appareil utilise ce nom. Choisissez-en un que vous reconnaîtrez, comme « Bureau » ou « Maison »."
 }

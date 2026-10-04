@@ -2548,4 +2548,11 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'PC-ul meu Linux';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Redenumiți registrele';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Doar acest dispozitiv folosește acest nume. Alegeți unul pe care îl recunoașteți, de exemplu „Birou” sau „Acasă”.';
 }

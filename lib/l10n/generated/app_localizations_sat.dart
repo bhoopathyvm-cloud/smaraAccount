@@ -2522,4 +2522,11 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'ᱤᱧᱟᱜ Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ᱱᱚᱶᱟ ᱧᱩᱛᱩᱢ ᱫᱚ ᱱᱚᱶᱟ ᱥᱟᱫᱷᱚᱱ ᱨᱮ ᱜᱮ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱪᱤᱱᱦᱟᱹᱣ ᱫᱟᱲᱮᱭᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱡᱮᱞᱮᱠᱟ “ᱚᱯᱷᱤᱥ” ᱟᱨᱵᱟᱝ “ᱚᱲᱟᱜ”᱾';
 }

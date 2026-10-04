@@ -2509,4 +2509,11 @@ class AppLocalizationsKs extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'میون Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'حسابن ہُند ناو بدلاو';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'یہ ناو چھُ صرف یَتھ ڈیوایسس پیٹھ۔ پرٛزنَن وول ناو ژٲرِو، مثلاً «دفتر» یا «گرٕ»۔';
 }

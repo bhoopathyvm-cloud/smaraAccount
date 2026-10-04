@@ -12,8 +12,13 @@
 - [x] 2.4 New ARB strings in en and all other locales; regenerate localizations
 - [x] 2.5 Widget tests for sections, marker, role labels and the name prompt
 
-## 3. Verification
+## 3. Books names
 
-- [x] 3.1 `dart format`, `flutter analyze`, `flutter test` green
-- [ ] 3.2 `tool/run_acceptance_tests.sh -d macos` green and company-sync `--employees 2 --ios-only` green (finders still work)
-- [ ] 3.3 Manual check on the Mac and both iPhones: the user can tell devices and people apart
+- [x] 3.1 Rename on every "Books on this device" entry (view model `renameSet`, dialog, strings in all locales); stateful name dialog for create and rename
+- [x] 3.2 Widget test (dialog → rename) and real-I/O test (name stored, blank rejected)
+
+## 4. Verification
+
+- [x] 4.1 `dart format`, `flutter analyze`, `flutter test` green
+- [ ] 4.2 `tool/run_acceptance_tests.sh -d macos` green and company-sync `--employees 2 --ios-only` green (finders still work)
+- [ ] 4.3 Manual check on the Mac and both iPhones: the user can tell devices and people apart

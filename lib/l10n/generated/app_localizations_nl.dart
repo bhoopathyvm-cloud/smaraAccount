@@ -2542,4 +2542,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Mijn Linux-pc';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Boeken hernoemen';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Alleen dit apparaat gebruikt deze naam. Kies er een die je herkent, zoals ‘Kantoor’ of ‘Thuis’.';
 }

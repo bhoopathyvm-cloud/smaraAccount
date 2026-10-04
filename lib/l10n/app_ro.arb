@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Telefonul meu Android",
   "linkedDevicesDefaultNameAndroidTablet": "Tableta mea Android",
   "linkedDevicesDefaultNameWindows": "PC-ul meu Windows",
-  "linkedDevicesDefaultNameLinux": "PC-ul meu Linux"
+  "linkedDevicesDefaultNameLinux": "PC-ul meu Linux",
+  "settingsBooksSwitcherRenameTitle": "Redenumiți registrele",
+  "settingsBooksSwitcherRenameHelp": "Doar acest dispozitiv folosește acest nume. Alegeți unul pe care îl recunoașteți, de exemplu „Birou” sau „Acasă”."
 }

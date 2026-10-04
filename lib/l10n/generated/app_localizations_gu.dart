@@ -2518,4 +2518,11 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'મારું Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ચોપડાનું નામ બદલો';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'આ નામ ફક્ત આ ઉપકરણ પર રહે છે. ઓળખાય તેવું નામ પસંદ કરો, જેમ કે “ઓફિસ” અથવા “ઘર”.';
 }

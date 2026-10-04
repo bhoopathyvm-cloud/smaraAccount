@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Mijn Android-telefoon",
   "linkedDevicesDefaultNameAndroidTablet": "Mijn Android-tablet",
   "linkedDevicesDefaultNameWindows": "Mijn Windows-pc",
-  "linkedDevicesDefaultNameLinux": "Mijn Linux-pc"
+  "linkedDevicesDefaultNameLinux": "Mijn Linux-pc",
+  "settingsBooksSwitcherRenameTitle": "Boeken hernoemen",
+  "settingsBooksSwitcherRenameHelp": "Alleen dit apparaat gebruikt deze naam. Kies er een die je herkent, zoals ‘Kantoor’ of ‘Thuis’."
 }

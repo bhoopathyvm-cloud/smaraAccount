@@ -2552,4 +2552,11 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'എന്റെ Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'കണക്കുകളുടെ പേര് മാറ്റുക';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ഈ പേര് ഈ ഉപകരണത്തിൽ മാത്രം. തിരിച്ചറിയാവുന്ന പേര് തിരഞ്ഞെടുക്കുക, ഉദാ. “ഓഫീസ്” അല്ലെങ്കിൽ “വീട്”.';
 }

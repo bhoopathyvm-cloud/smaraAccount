@@ -2399,4 +2399,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => '我的 Linux 电脑';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => '重命名账本';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      '此名称仅在本设备上使用。请选一个容易认出的名字，例如“办公室”或“家”。';
 }

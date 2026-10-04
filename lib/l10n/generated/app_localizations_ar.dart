@@ -2507,4 +2507,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'حاسوب Linux الخاص بي';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'إعادة تسمية الدفاتر';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'هذا الاسم على هذا الجهاز فقط. اختر اسماً تعرفه، مثل «المكتب» أو «البيت».';
 }

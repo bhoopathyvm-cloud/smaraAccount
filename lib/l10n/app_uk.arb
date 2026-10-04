@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "Мій Android-телефон",
   "linkedDevicesDefaultNameAndroidTablet": "Мій Android-планшет",
   "linkedDevicesDefaultNameWindows": "Мій ПК з Windows",
-  "linkedDevicesDefaultNameLinux": "Мій ПК з Linux"
+  "linkedDevicesDefaultNameLinux": "Мій ПК з Linux",
+  "settingsBooksSwitcherRenameTitle": "Перейменувати книги",
+  "settingsBooksSwitcherRenameHelp": "Цю назву видно лише на цьому пристрої. Виберіть зрозумілу, наприклад «Офіс» або «Дім»."
 }

@@ -27,6 +27,10 @@ recognises.
   device can be renamed later, and the new name reaches linked devices with
   the next sync.
 
+- "Books on this device": every books entry gets **Rename**. Joined or
+  unnamed books show as "Books 1" or as the inviter's name, which people can't
+  tell apart. The name stays on this device.
+
 ## Capabilities
 
 ### New Capabilities

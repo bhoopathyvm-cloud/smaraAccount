@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "내 Android 휴대폰",
   "linkedDevicesDefaultNameAndroidTablet": "내 Android 태블릿",
   "linkedDevicesDefaultNameWindows": "내 Windows PC",
-  "linkedDevicesDefaultNameLinux": "내 Linux PC"
+  "linkedDevicesDefaultNameLinux": "내 Linux PC",
+  "settingsBooksSwitcherRenameTitle": "장부 이름 바꾸기",
+  "settingsBooksSwitcherRenameHelp": "이 이름은 이 기기에서만 쓰입니다. ‘사무실’이나 ‘집’처럼 알아보기 쉬운 이름을 고르세요."
 }

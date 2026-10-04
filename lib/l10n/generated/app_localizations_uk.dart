@@ -2539,4 +2539,11 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Мій ПК з Linux';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Перейменувати книги';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Цю назву видно лише на цьому пристрої. Виберіть зрозумілу, наприклад «Офіс» або «Дім».';
 }

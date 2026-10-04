@@ -2512,4 +2512,11 @@ class AppLocalizationsMni extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'ꯑꯩꯒꯤ Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'ꯂꯦꯈꯥꯒꯤ ꯃꯤꯡ ꯍꯣꯡꯗꯣꯛꯎ';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ꯃꯤꯡ ꯑꯁꯤ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗꯥ ꯈꯛꯇꯃꯛ ꯂꯩ꯫ ꯈꯪꯅꯕꯥ ꯌꯥꯕꯥ ꯃꯤꯡ ꯈꯟꯕꯤꯌꯨ, “ꯑꯣꯐꯤꯁ” ꯅꯠꯔꯒꯥ “ꯌꯨꯝ” ꯒꯨꯝꯅꯥ꯫';
 }

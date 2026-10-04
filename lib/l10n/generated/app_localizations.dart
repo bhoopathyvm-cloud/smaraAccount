@@ -4467,6 +4467,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Linux PC'**
   String get linkedDevicesDefaultNameLinux;
+
+  /// No description provided for @settingsBooksSwitcherRenameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename books'**
+  String get settingsBooksSwitcherRenameTitle;
+
+  /// No description provided for @settingsBooksSwitcherRenameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this device uses this name. Pick one you will recognise, like “Office” or “Home”.'**
+  String get settingsBooksSwitcherRenameHelp;
 }
 
 class _AppLocalizationsDelegate

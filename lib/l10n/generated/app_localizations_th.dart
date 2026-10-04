@@ -2508,4 +2508,11 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'พีซี Linux ของฉัน';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'เปลี่ยนชื่อสมุดบัญชี';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'ชื่อนี้ใช้บนอุปกรณ์นี้เท่านั้น เลือกชื่อที่จำได้ง่าย เช่น “สำนักงาน” หรือ “บ้าน”';
 }

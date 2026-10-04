@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "मम Android दूरभाषः",
   "linkedDevicesDefaultNameAndroidTablet": "मम Android पटलकम्",
   "linkedDevicesDefaultNameWindows": "मम Windows PC",
-  "linkedDevicesDefaultNameLinux": "मम Linux PC"
+  "linkedDevicesDefaultNameLinux": "मम Linux PC",
+  "settingsBooksSwitcherRenameTitle": "लेखानां पुनर्नाम",
+  "settingsBooksSwitcherRenameHelp": "इदं नाम केवलम् अस्मिन् यन्त्रे भवति। परिचेयं नाम चिनोतु, यथा “कार्यालयः” “गृहम्” वा।"
 }

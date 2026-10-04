@@ -2548,4 +2548,11 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'Saját Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Könyvek átnevezése';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Ezt a nevet csak ez az eszköz használja. Válasszon felismerhető nevet, például „Iroda” vagy „Otthon”.';
 }

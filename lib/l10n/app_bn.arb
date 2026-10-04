@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "আমার Android ফোন",
   "linkedDevicesDefaultNameAndroidTablet": "আমার Android ট্যাবলেট",
   "linkedDevicesDefaultNameWindows": "আমার Windows PC",
-  "linkedDevicesDefaultNameLinux": "আমার Linux PC"
+  "linkedDevicesDefaultNameLinux": "আমার Linux PC",
+  "settingsBooksSwitcherRenameTitle": "হিসাবের নাম বদলান",
+  "settingsBooksSwitcherRenameHelp": "এই নাম শুধু এই ডিভাইসে থাকে। চেনা যায় এমন নাম দিন, যেমন “অফিস” বা “বাড়ি”।"
 }

@@ -2519,4 +2519,11 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'मम Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'लेखानां पुनर्नाम';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'इदं नाम केवलम् अस्मिन् यन्त्रे भवति। परिचेयं नाम चिनोतु, यथा “कार्यालयः” “गृहम्” वा।';
 }

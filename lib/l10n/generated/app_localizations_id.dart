@@ -2535,4 +2535,11 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'PC Linux saya';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Ganti nama pembukuan';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Nama ini hanya dipakai di perangkat ini. Pilih nama yang mudah dikenali, misalnya “Kantor” atau “Rumah”.';
 }

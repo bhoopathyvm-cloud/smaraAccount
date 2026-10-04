@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "என் Android தொலைபேசி",
   "linkedDevicesDefaultNameAndroidTablet": "என் Android டேப்லெட்",
   "linkedDevicesDefaultNameWindows": "என் Windows PC",
-  "linkedDevicesDefaultNameLinux": "என் Linux PC"
+  "linkedDevicesDefaultNameLinux": "என் Linux PC",
+  "settingsBooksSwitcherRenameTitle": "கணக்குகளின் பெயரை மாற்று",
+  "settingsBooksSwitcherRenameHelp": "இந்தப் பெயர் இந்தச் சாதனத்தில் மட்டும். அடையாளம் காணக்கூடிய பெயரைத் தேர்ந்தெடுங்கள், உதா. “அலுவலகம்” அல்லது “வீடு”."
 }

@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "माझा Android फोन",
   "linkedDevicesDefaultNameAndroidTablet": "माझा Android टॅबलेट",
   "linkedDevicesDefaultNameWindows": "माझा Windows PC",
-  "linkedDevicesDefaultNameLinux": "माझा Linux PC"
+  "linkedDevicesDefaultNameLinux": "माझा Linux PC",
+  "settingsBooksSwitcherRenameTitle": "हिशोबांचे नाव बदला",
+  "settingsBooksSwitcherRenameHelp": "हे नाव फक्त या डिव्हाइसवर राहते. ओळखता येईल असे नाव निवडा, उदा. “ऑफिस” किंवा “घर”."
 }

@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "म्हजो Android फोन",
   "linkedDevicesDefaultNameAndroidTablet": "म्हजो Android टॅबलेट",
   "linkedDevicesDefaultNameWindows": "म्हजो Windows PC",
-  "linkedDevicesDefaultNameLinux": "म्हजो Linux PC"
+  "linkedDevicesDefaultNameLinux": "म्हजो Linux PC",
+  "settingsBooksSwitcherRenameTitle": "हिशोबांचें नाव बदलात",
+  "settingsBooksSwitcherRenameHelp": "हें नाव फकत ह्या उपकरणाचेर आसता. वळखूंक येता अशें नाव वेंचात, देखीक “ऑफिस” वा “घर”."
 }

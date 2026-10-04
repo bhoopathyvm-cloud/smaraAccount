@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "میرا Android فون",
   "linkedDevicesDefaultNameAndroidTablet": "میرا Android ٹیبلٹ",
   "linkedDevicesDefaultNameWindows": "میرا Windows PC",
-  "linkedDevicesDefaultNameLinux": "میرا Linux PC"
+  "linkedDevicesDefaultNameLinux": "میرا Linux PC",
+  "settingsBooksSwitcherRenameTitle": "کھاتوں کا نام بدلیں",
+  "settingsBooksSwitcherRenameHelp": "یہ نام صرف اسی آلے پر رہتا ہے۔ پہچان میں آنے والا نام چنیں، جیسے «دفتر» یا «گھر»۔"
 }

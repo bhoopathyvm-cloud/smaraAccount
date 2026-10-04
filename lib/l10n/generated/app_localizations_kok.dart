@@ -2508,4 +2508,11 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'म्हजो Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'हिशोबांचें नाव बदलात';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'हें नाव फकत ह्या उपकरणाचेर आसता. वळखूंक येता अशें नाव वेंचात, देखीक “ऑफिस” वा “घर”.';
 }

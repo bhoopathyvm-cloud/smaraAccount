@@ -1344,5 +1344,7 @@
   "linkedDevicesDefaultNameAndroidPhone": "ମୋର Android ଫୋନ୍",
   "linkedDevicesDefaultNameAndroidTablet": "ମୋର Android ଟାବଲେଟ୍",
   "linkedDevicesDefaultNameWindows": "ମୋର Windows PC",
-  "linkedDevicesDefaultNameLinux": "ମୋର Linux PC"
+  "linkedDevicesDefaultNameLinux": "ମୋର Linux PC",
+  "settingsBooksSwitcherRenameTitle": "ଖାତାର ନାମ ବଦଳାନ୍ତୁ",
+  "settingsBooksSwitcherRenameHelp": "ଏହି ନାମ କେବଳ ଏହି ଉପକରଣରେ ରହେ। ଚିହ୍ନିହେବା ଭଳି ନାମ ବାଛନ୍ତୁ, ଯେପରି “ଅଫିସ୍” କିମ୍ବା “ଘର”।"
 }

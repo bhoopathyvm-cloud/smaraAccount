@@ -2522,4 +2522,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get linkedDevicesDefaultNameLinux => 'My Linux PC';
+
+  @override
+  String get settingsBooksSwitcherRenameTitle => 'Rename books';
+
+  @override
+  String get settingsBooksSwitcherRenameHelp =>
+      'Only this device uses this name. Pick one you will recognise, like “Office” or “Home”.';
 }
