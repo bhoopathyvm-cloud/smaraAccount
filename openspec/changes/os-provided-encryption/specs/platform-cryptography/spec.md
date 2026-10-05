@@ -1,6 +1,6 @@
 ## Purpose
 
-Decide which component performs cryptography in the App Store builds (iOS and macOS). The goal is that the app encrypts only through Apple's operating system and its "uses only exempt encryption" declaration is accurate, while staying fully interoperable with other platforms and with data saved earlier.
+Decide which component performs cryptography in the App Store builds (iOS and macOS). The goal is that the app encrypts only through Apple's operating system and its "uses only exempt encryption" declaration is accurate, while every platform keeps working with every other.
 
 ## ADDED Requirements
 
@@ -34,36 +34,46 @@ On iOS and macOS, linked-device sync and join-by-code connections SHALL be estab
 - **WHEN** an iPhone (operating-system TLS) and an Android tablet (its existing TLS) are linked and tap Sync now on the same Wi-Fi
 - **THEN** they connect, verify each other's pinned certificate, and exchange entries exactly as two devices on the same platform do
 
-#### Scenario: Unknown certificate is still refused
-- **WHEN** a device whose certificate fingerprint isn't pinned connects to an iPhone
-- **THEN** the iPhone refuses the connection and no data is exchanged
+#### Scenario: Unknown certificate is refused on every platform
+- **WHEN** a device whose certificate fingerprint isn't pinned connects to an iPhone, or an iPhone that isn't pinned connects to an Android device
+- **THEN** the receiving device refuses the connection and no data is exchanged
 
-### Requirement: Existing device identities and links survive the switch
-An iOS or macOS device updated to this version SHALL keep the TLS identity whose fingerprint its linked devices already pinned. Linked devices SHALL NOT need to pair again. A device without an identity SHALL get a new one created through the operating system, with its private key kept in the Keychain and marked as never leaving the device.
+### Requirement: Device identities on Apple platforms are created by the operating system
+On iOS and macOS, a device's TLS identity SHALL be created by the operating system: its key pair and its self-signed certificate. The private key SHALL be kept in the Keychain and marked as never leaving the device. The certificate SHALL be one that peers on every other platform can pin and verify.
 
-#### Scenario: Update keeps the link
-- **WHEN** a Mac linked to two iPhones updates to this version
-- **THEN** its certificate fingerprint is unchanged and Sync now with both iPhones works without re-pairing
+#### Scenario: New iPhone identity pins on Android
+- **WHEN** an iPhone creates its identity and is joined from an Android tablet
+- **THEN** the tablet pins the iPhone's certificate fingerprint, and later syncs verify it
 
-### Requirement: Saved data stays compatible across platforms and versions
-Data that crosses devices or versions SHALL be byte-compatible regardless of which platform produced it:
-- Books Copy files;
-- join codes;
-- certificate fingerprints;
-- entry and receipt hashes.
+### Requirement: Every platform interoperates with every other
+Cross-platform operation is the primary constraint. Apple builds (iOS, macOS) and the other builds (Android, Windows, Linux) SHALL interoperate in every combination, for:
+- joining by QR or code;
+- linked-device sync in both directions, including scoped Claimant sync;
+- refusing an unknown peer;
+- Books Copy save and restore;
+- ledger signature verification.
+
+These SHALL interoperate through:
+- one shared Books Copy file format;
+- one shared sync wire protocol and certificate-pinning model;
+- byte-identical hashes, join codes and certificate fingerprints, whatever platform produced them.
 
 A ledger signature made on any platform SHALL verify on every other platform. Signatures need not be byte-identical, because the operating system may add randomness to signing.
 
-#### Scenario: Copy from Android restores on iPhone
-- **WHEN** a Books Copy saved on Android is restored on an iPhone with the correct passphrase
-- **THEN** the iPhone restores every entry, and its signatures verify
+#### Scenario: iPhone and Android sync both ways
+- **WHEN** an iPhone and an Android phone are linked and each records an entry
+- **THEN** after Sync now each device has both entries, and every signature verifies on both
 
-#### Scenario: Copy saved by an earlier version still restores
-- **WHEN** a Books Copy saved by version 2026.10.0 is restored on an iPhone running this version
-- **THEN** it restores exactly as before
+#### Scenario: Mac Owner with Android and Windows peers
+- **WHEN** a Mac Owner joins an Android employee phone and a Windows bookkeeping PC
+- **THEN** all three join and sync with each other, and Claimant scoping holds on the Android phone
 
-#### Scenario: Wrong passphrase still fails safely
-- **WHEN** a Books Copy is restored with a wrong passphrase on an iPhone
+#### Scenario: Copy from Android restores on iPhone, and back
+- **WHEN** a Books Copy saved on Android is restored on an iPhone with the correct passphrase, and a copy saved on that iPhone is restored on Android
+- **THEN** both restores bring back every entry, and the signatures verify
+
+#### Scenario: Wrong passphrase fails the same on every platform
+- **WHEN** a Books Copy is restored with a wrong passphrase on any platform
 - **THEN** the restore is refused and the device's books are untouched
 
 ### Requirement: HTTPS lookups on Apple platforms use the operating system

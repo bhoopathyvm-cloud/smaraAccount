@@ -13,14 +13,14 @@ See proposal.md for the reasons. These are the facts that shape the approach.
 | Device sync and join TLS | `dart:io` `SecureSocket` / `SecureServerSocket` (BoringSSL), pinned by cert SHA-256 | `peer_sync/tls_sync_transport.dart`, `data/peer_sync/socket_sync_transport.dart`, `linked_devices/join_code_session.dart` |
 | HTTPS lookups | `package:http` (`dart:io` HttpClient, BoringSSL) | `data/exchange_rate_service.dart`, `data/instrument_quote_service.dart` |
 
-Peers on other platforms (Android, Windows, Linux) keep these implementations. So an Apple device must keep speaking the same TLS, framing, pinning and file formats.
+Peers on other platforms (Android, Windows, Linux) keep these implementations. So an Apple device must speak the same TLS, framing, pinning and file formats. Cross-platform operation is the primary constraint. The app hasn't been released to users, so there is no saved data, no stored device identity and no linked install to carry over.
 
 ## Goals / Non-Goals
 
 **Goals:**
 - On iOS and macOS, every call that encrypts, derives a key, signs, verifies, authenticates or hashes goes through Apple frameworks. So do all TLS, and all key and certificate generation.
 - Apple builds fail loudly rather than fall back to an app-provided implementation.
-- Interoperability with other platforms and with existing saved data and links stays unchanged.
+- Every platform keeps working with every other: join, sync, Claimant scoping, unknown-peer refusal and Books Copy restore.
 
 **Non-Goals:**
 - Changing Android, Windows or Linux.
@@ -62,15 +62,14 @@ Platform calls are asynchronous method-channel calls. Chain verification already
 - *Alternative considered:* URLSession WebSockets. Rejected, because it changes the wire protocol and breaks peers on other platforms.
 
 ### D4. Device TLS identity in the Keychain
-- **Existing devices:** at first launch on this version, import the stored RSA private key with `SecKeyCreateWithData` and the certificate DER as a Keychain identity (this-device-only, not synchronizable). Then delete the PEM key from secure storage. The fingerprint is unchanged, so pins and links survive.
-- **New devices:**
-  - generate an RSA-2048 key with `SecKeyCreateRandomKey` (in the Keychain);
-  - Dart builds the X.509 TBSCertificate DER (plain ASN.1 encoding, no cryptography);
-  - the OS signs it with `SecKeyCreateSignature` (`rsaSignatureMessagePKCS1v15SHA256`);
-  - Dart assembles the certificate.
+- **Key:** generate an RSA-2048 key with `SecKeyCreateRandomKey`, stored in the Keychain as this-device-only and not synchronizable.
+- **Certificate:** Dart builds the X.509 TBSCertificate DER (plain ASN.1 encoding, no cryptography); the OS signs it with `SecKeyCreateSignature` (`rsaSignatureMessagePKCS1v15SHA256`); Dart assembles the certificate.
 
-  `basic_utils` key and certificate generation is no longer used on Apple.
-- *Alternative considered:* switching to P-256 keys. Not needed for the goal, and it would change the certificate type that other platforms' peers pin.
+`basic_utils` key and certificate generation is no longer used on Apple.
+
+**No migration:** nothing has shipped to users, so an Apple device simply creates its identity through the OS the first time it needs one. A development device that still has a Dart-made identity is reset and re-joined.
+
+*Alternative considered:* P-256 keys, which would also allow Secure Enclave keys on iPhone. Kept RSA-2048 so all platforms use one certificate type and Android, Windows and Linux stay untouched. Revisit separately if Secure Enclave keys are wanted.
 
 ### D5. HTTPS on Apple through URLSession
 - Use `cupertino_http` as the `http.Client` for the exchange-rate and quote services on iOS and macOS, injected where those services are constructed.
@@ -86,5 +85,5 @@ Platform calls are asynchronous method-channel calls. Chain verification already
 - **BoringSSL is still inside the binary.** The Flutter engine and Dart runtime link BoringSSL for `dart:io` even when the app never calls it. Apple's question is about the encryption the app uses or implements. After this change the app calls none of it on Apple platforms, but whether shipping an unused copy matters is a judgement for the owner. → The owner confirms the classification (task 7.1) before submitting a build that declares `false`.
 - **Native code surface.** Swift TLS and Keychain code is new and security-relevant. → Keep the plugin small, unit-test it on macOS and iOS simulators, and repeat the real-device sync runs: household and company, plus a Mac↔Android pair.
 - **Channel overhead** on hashing-heavy paths. → Batched hashing; measure chain verification on 10,000 entries against today's time.
-- **Migration of existing keys** has to run once and atomically. → Import first, verify the identity can sign, then delete the PEM. On failure keep the PEM and retry on the next launch; never regenerate, which would break pins.
+- **Cross-platform drift.** Two implementations of the same formats can diverge silently. → Both backends run the same golden-vector suite, and the cross-platform matrix (tasks 6.x) is a release gate for this change.
 - **Signature determinism.** Any test or code that compares Ed25519 signature bytes breaks on Apple. → Audit and convert those to verification checks.

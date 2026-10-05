@@ -17,9 +17,9 @@ Since 2026.10.0 added encrypted Books Copy files and encrypted device sync, the 
 
   The app no longer uses a Dart implementation of these on Apple platforms.
 - On iOS and macOS, linked-device sync and join-by-code run over TLS from Apple's Network framework instead of Dart's `SecureSocket` / `SecureServerSocket`. Pinning by certificate fingerprint and the TLS wire format stay the same, so an iPhone or Mac still syncs with Android, Windows and Linux peers that keep Dart's TLS.
-- On iOS and macOS, each device's TLS identity (key pair and self-signed certificate) is created and used through the Security framework, with the private key kept in the Keychain. Existing devices keep their current certificate, so linked devices don't need to pair again.
+- On iOS and macOS, each device's TLS identity (key pair and self-signed certificate) is created and used through the Security framework, with the private key kept in the Keychain.
 - On iOS and macOS, HTTPS lookups (exchange rates, quotes, instrument search) use Apple's URL loading system instead of Dart's HTTP client.
-- Books Copy files, signatures and certificate fingerprints stay byte-for-byte compatible across platforms and with copies already saved by earlier versions. **No user-visible format break.**
+- **Cross-platform operation is the primary constraint.** Apple builds and the Android, Windows and Linux builds keep one Books Copy format, one sync wire protocol and one pinning model, so every combination of devices can join, sync and restore copies. The app hasn't reached users yet, so there is no saved data or linked install to migrate.
 - The privacy policy's export-compliance section and the store export-compliance notes describe the new basis for the exempt declaration. `ITSAppUsesNonExemptEncryption` stays `false` and is kept honest by a check.
 - Android, Windows and Linux keep their current Dart implementations. Apple's question applies only to the App Store builds.
 
@@ -54,5 +54,5 @@ Since 2026.10.0 added encrypted Books Copy files and encrypted device sync, the 
   - `docs/release/store-listing/app-privacy.md`
   - `docs/release/store-release-runbook.md`
   - a new ADR
-- **Tests:** unit tests for byte compatibility; acceptance and company-sync runs across platforms (an iPhone or Mac syncing with an Android peer, and Books Copy restore in both directions).
+- **Tests:** golden-vector tests shared by both backends, and a cross-platform matrix: iPhone and Mac paired with Android, both directions, for join, sync, Claimant scoping, unknown-peer refusal and Books Copy restore. Windows and Linux run the same Dart code as Android; a Linux desktop peer is included where available.
 - **Legal confirmation:** the owner confirms the exempt classification before the next App Store submission. This change makes the code match the declaration; it isn't legal advice.

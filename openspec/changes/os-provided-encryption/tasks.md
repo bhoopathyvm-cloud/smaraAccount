@@ -2,7 +2,7 @@
 
 - [ ] 1.1 Add the `CryptoBackend` interface (D1) and a Dart implementation that wraps today's `cryptography` calls. Verify: existing unit tests pass unchanged.
 - [ ] 1.2 Move every call site in the design's Context table to `CryptoBackend`; no `lib/` file except the Dart backend imports `package:cryptography`. Verify: a grep check in a unit test, plus `flutter test` green.
-- [ ] 1.3 Golden-vector tests against fixed inputs: AES-256-GCM, PBKDF2, HMAC and SHA-256 (RFC test vectors, plus a Books Copy fixture saved by 2026.10.0). Verify: tests pass on the Dart backend.
+- [ ] 1.3 Golden-vector suite shared by both backends: AES-256-GCM, PBKDF2, HMAC and SHA-256 (RFC test vectors), plus a Books Copy fixture saved by the Dart backend, and Ed25519 sign-on-one, verify-on-the-other. Verify: the suite passes on the Dart backend.
 - [ ] 1.4 Audit tests and code that compare Ed25519 signature bytes, and convert them to verification checks. Verify: `flutter test` green.
 
 ## 2. Apple primitives
@@ -20,20 +20,22 @@
 
 ## 4. Device identity in the Keychain
 
-- [ ] 4.1 Migrate an existing device's PEM key and certificate into a Keychain identity: import, test-sign, then delete the PEM; on failure keep the PEM and retry next launch. Verify: a test that the fingerprint is unchanged and the PEM is removed only after success.
-- [ ] 4.2 New-device identity: Keychain RSA-2048 key, certificate signed by the OS (D4); `basic_utils` not used on Apple. Verify: a test that a new certificate parses, and that its fingerprint pins on a Dart peer.
+- [ ] 4.1 Apple device identity: Keychain RSA-2048 key, certificate signed by the OS (D4); `basic_utils` not used on Apple; no migration path. Verify: a test that a new certificate parses, and that a Dart peer pins and accepts it.
 
 ## 5. Apple HTTPS
 
 - [ ] 5.1 `cupertino_http` client injected into the exchange-rate and quote services on iOS and macOS. Verify: unit test of the injection; manual lookup of a rate and a quote on a Mac.
 
-## 6. Cross-platform verification
+## 6. Cross-platform verification (release gate for this change)
 
 - [ ] 6.1 `tool/run_acceptance_tests.sh -d macos` green, and the iOS simulator acceptance run green.
 - [ ] 6.2 Company-sync `--employees 2 --ios-only` and the household run green (Apple TLS on every Apple role).
-- [ ] 6.3 Mixed-platform pair: Mac or iPhone (Apple TLS) linked with an Android emulator (Dart TLS). Join, sync both ways, and refuse an unknown peer.
-- [ ] 6.4 Books Copy round trips: Android → iPhone, iPhone → Android, and a copy saved by 2026.10.0 restored on iPhone and on Mac.
-- [ ] 6.5 Real devices: update a Mac and both iPhones from 2026.10.0 in place; links survive and Sync now works without re-pairing.
+- [ ] 6.3 Matrix, join and sync both ways: iPhone ↔ Android, Mac ↔ Android, iPhone ↔ Mac, with an Android emulator as the Dart-TLS peer. Verify: each pair joins by QR and by code, syncs entries both ways, and every signature verifies on both sides.
+- [ ] 6.4 Company run with mixed platforms: a Mac Owner, an Android Claimant and an iPhone Claimant. Verify: claims, decisions and Claimant scoping hold on each device.
+- [ ] 6.5 Unknown-peer refusal in both directions: an unpinned Android device to an iPhone, and an unpinned iPhone to Android. Verify: the connection is refused and nothing is exchanged.
+- [ ] 6.6 Books Copy round trips: Android → iPhone, iPhone → Android, Mac → Android; a wrong passphrase is refused on each.
+- [ ] 6.7 Real devices: the Mac and both iPhones, plus an Android emulator, rerun join and sync from fresh installs.
+- [ ] 6.8 Linux desktop peer, where a Linux machine or VM is available: joins and syncs with a Mac. Otherwise note it as covered by the shared Dart implementation (6.3).
 
 ## 7. Declaration and docs
 
