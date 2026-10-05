@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -12,18 +10,12 @@ import '../test/domain/crypto/crypto_backend_golden_suite.dart';
 /// `test/domain/crypto/crypto_backend_golden_test.dart`, run against the
 /// Apple backend (CryptoKit / CommonCrypto through `smara_apple_crypto`).
 ///
-/// Run on a simulator from the repo root, so the fixtures resolve:
+/// Run on a simulator or device (the Books Copy fixture is embedded, so no
+/// repository files are needed):
 ///   flutter test integration_test/crypto_backend_golden_test.dart -d macos
 ///   flutter test integration_test/crypto_backend_golden_test.dart -d `<ios sim>`
-/// On macOS the app sandbox cannot read the repo, so pass the fixture root:
-///   --dart-define=SMARA_REPO_ROOT=$PWD
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  const repoRootDefine = String.fromEnvironment('SMARA_REPO_ROOT');
-  final repoRoot = repoRootDefine.isNotEmpty
-      ? repoRootDefine
-      : Directory.current.path;
-
   test('the Apple backend is selected on this platform', () {
     expect(
       isApplePlatform(defaultTargetPlatform),
@@ -33,9 +25,5 @@ void main() {
     expect(selectCryptoBackend(), isA<AppleCryptoBackend>());
   });
 
-  runCryptoBackendGoldenSuite(
-    'apple',
-    () => const AppleCryptoBackend(),
-    repoRoot: repoRoot,
-  );
+  runCryptoBackendGoldenSuite('apple', () => const AppleCryptoBackend());
 }

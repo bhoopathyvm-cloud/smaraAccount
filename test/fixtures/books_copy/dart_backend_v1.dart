@@ -1,0 +1,6 @@
+/// `dart_backend_v1.json` embedded as a constant, so the golden suite can
+/// read it inside an app on an iOS simulator or device, where the repository's
+/// files aren't available. `crypto_backend_golden_test.dart` checks that it
+/// stays identical to the JSON file.
+const booksCopyDartBackendV1 =
+    r'''{"kind":"smara-books-copy","version":1,"kdf":"pbkdf2-hmac-sha256","iterations":210000,"salt":"MQvLV7F5Aopqa+PmJdPPmA==","nonce":"/ROcfSjILgfu7D9k","cipherText":"qJeChvBayY/by/giiBoP0JAq0Ng/3euFDXXepMdXSVLsBabfgCyOICWFgcACbRyY4vtovflm+jGJx9Tx/X2S87d3Zdj8ANSMOHGG6r7uM0fUq4J+cSPZoaTdb9008D9B1/XjHGWn+gkMi8N0f4/FhjDipqBc32G6flZ7UI6zhWrfyJfSDeLNNL4fg9VGFr+SHuKMyzhB1onczTeUfnRoge7HU5VElkYq/4hZ4xrx1ksSYkSLT/yOWqMkvNvyg03L+dReJnLkeFmfGd66iNJrshwfRVVvJBGg+6+VM+h5UT/eiwIJxcKHEFGTbadu3gu8DjL70uQIbbu2C281ILrtHTvU6VMT4f8y0Y3ojfyZuIV2XlDYKRcduAfWYOoz6d3iZ3hgix/D1831qFjOQu46xxhd0XDBIi8jU2ZdRRqLE5EY0LnHjwJSkrH7ZHW6SnTyMjdA/AD2QU5c9i6F+h2KEkMDjb4HTNOw6/smW0PJAhDsaE4+igu4Lb9EukRXCK1PwLbXL/SUcfJ27JSkopCfQZs2vUGx2UEy3cwoL0QUpEWDeAYl9FhQv6QN6dnwOKnE4Uiv8nvDuqKnmjWv9ejyGsG4ulP63Y4zITWMpdtPGeQClJrtJk2nbNDU7w==","mac":"cr9DKO+mvimLEoxRbXxBZA=="}''';

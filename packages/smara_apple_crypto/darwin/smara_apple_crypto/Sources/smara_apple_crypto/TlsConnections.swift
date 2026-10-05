@@ -61,7 +61,16 @@ final class TlsHandler: NSObject, FlutterStreamHandler {
                     try self.send(args, result: result)
                 case "close":
                     let id = try PluginArgs.int(args, "id")
-                    self.connections[id]?.cancel()
+                    if let connection = self.connections[id] {
+                        // Graceful close: mark the end of the stream and
+                        // cancel only once everything queued before it has
+                        // gone out. cancel() alone discards pending sends, so
+                        // a frame sent just before close (the join host's
+                        // last one) never reached the peer.
+                        connection.send(
+                            content: nil, contentContext: .finalMessage, isComplete: true,
+                            completion: .contentProcessed { _ in connection.cancel() })
+                    }
                     self.reply(result, nil)
                 case "stopListening":
                     let id = try PluginArgs.int(args, "id")

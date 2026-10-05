@@ -53,7 +53,10 @@ class AppleTlsConnection {
     try {
       await _owner._ch.invokeMethod<void>('close', {'id': id});
     } catch (_) {}
-    await _controller.close();
+    // Not awaited: the future completes only once the listener receives the
+    // done event, and a paused subscription (a StreamIterator between reads,
+    // as the join-code session uses) never does - close() then hung forever.
+    unawaited(_controller.close());
   }
 
   void _onData(Uint8List bytes) {
@@ -68,7 +71,7 @@ class AppleTlsConnection {
     if (_closed) return;
     _closed = true;
     _owner._connections.remove(id);
-    await _controller.close();
+    unawaited(_controller.close()); // See close().
   }
 }
 
@@ -123,6 +126,17 @@ class AppleTls {
   StreamSubscription<Object?>? _eventSub;
 
   final _connections = <int, AppleTlsConnection>{};
+
+  /// Events for a connection whose `connect` reply has not reached Dart yet.
+  /// The reply (method channel) and the first bytes (event channel) are not
+  /// ordered against each other, so a peer that speaks first (the join-code
+  /// host does) could have its first message dropped; they are replayed when
+  /// the connection is registered.
+  final _early = <int, List<Map<Object?, Object?>>>{};
+
+  /// Ids that have been registered; a late event for one that is already
+  /// closed is dropped rather than held in [_early].
+  final _registeredIds = <int>{};
   final _listeners = <int, AppleTlsListener>{};
   final _verifiers = <int, AppleTlsPeerVerifier>{};
   final _onConnection = <int, void Function(AppleTlsConnection)>{};
@@ -229,6 +243,17 @@ class AppleTls {
       owner: this,
     );
     _connections[id] = connection;
+    _registeredIds.add(id);
+    final early = _early.remove(id);
+    if (early != null) {
+      // Replay after the caller has the connection (same microtask order as
+      // live events, which also arrive asynchronously).
+      scheduleMicrotask(() {
+        for (final event in early) {
+          _deliver(event);
+        }
+      });
+    }
     return connection;
   }
 
@@ -266,16 +291,29 @@ class AppleTls {
           return;
         }
         callback(connection);
+      case 'data' || 'error' || 'closed':
+        final id = event['id'] as int;
+        if (!_connections.containsKey(id)) {
+          if (!_registeredIds.contains(id)) (_early[id] ??= []).add(event);
+          return;
+        }
+        _deliver(event);
+    }
+  }
+
+  void _deliver(Map<Object?, Object?> event) {
+    final connection = _connections[event['id'] as int];
+    if (connection == null) return;
+    switch (event['type']) {
       case 'data':
-        _connections[event['id'] as int]?._onData(event['bytes'] as Uint8List);
+        connection._onData(event['bytes'] as Uint8List);
       case 'error':
-        final connection = _connections[event['id'] as int];
-        connection?._onError(
+        connection._onError(
           AppleTlsException(event['message'] as String? ?? 'TLS error'),
         );
-        unawaited(connection?._onClosed());
+        unawaited(connection._onClosed());
       case 'closed':
-        unawaited(_connections[event['id'] as int]?._onClosed());
+        unawaited(connection._onClosed());
     }
   }
 }

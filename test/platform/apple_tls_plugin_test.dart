@@ -280,4 +280,59 @@ void main() {
     );
     await listener.close();
   });
+
+  // Regression: the connect reply (method channel) and the peer's first bytes
+  // (event channel) are not ordered against each other. The join-code host
+  // speaks first, so its greeting could reach Dart before the connection was
+  // registered and was dropped; join-by-code then timed out on iOS.
+  test('bytes that arrive before the connect reply are not lost', () async {
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'connect') {
+        eventSink.add({
+          'type': 'data',
+          'id': 21,
+          'bytes': Uint8List.fromList([1, 2, 3]),
+        });
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+        return {'id': 21, 'remoteAddress': '127.0.0.1', 'remotePort': 1};
+      }
+      return null;
+    });
+    final connection = await tls.connect(
+      host: '127.0.0.1',
+      port: 1,
+      verifyPeer: (_) => true,
+    );
+    final first = await connection.data.first.timeout(
+      const Duration(seconds: 2),
+    );
+    expect(first, [1, 2, 3]);
+  });
+
+  // Regression: close() awaited StreamController.close(), which completes
+  // only when the listener receives "done". A StreamIterator between reads
+  // (how the join-code session reads frames) keeps its subscription paused,
+  // so close() never returned and join-by-code hung on both sides.
+  test('close returns while a StreamIterator is between reads', () async {
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'connect') {
+        return {'id': 31, 'remoteAddress': '127.0.0.1', 'remotePort': 1};
+      }
+      return null;
+    });
+    final connection = await tls.connect(
+      host: '127.0.0.1',
+      port: 1,
+      verifyPeer: (_) => true,
+    );
+    eventSink.add({
+      'type': 'data',
+      'id': 31,
+      'bytes': Uint8List.fromList([9]),
+    });
+    final chunks = StreamIterator<Uint8List>(connection.data);
+    expect(await chunks.moveNext(), isTrue);
+    await connection.close().timeout(const Duration(seconds: 2));
+    await chunks.cancel();
+  });
 }

@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/domain/backup/books_copy_file.dart';
 import 'package:smara_accounting/domain/crypto/crypto_backend.dart';
+
+import '../../fixtures/books_copy/dart_backend_v1.dart';
 
 /// Golden vectors every [CryptoBackend] must reproduce byte for byte
 /// (os-provided-encryption task 1.3). The unit suite runs them on the Dart
@@ -17,9 +18,8 @@ import 'package:smara_accounting/domain/crypto/crypto_backend.dart';
 /// RFC 8032 §7.1. The Books Copy fixture was saved by the Dart backend.
 void runCryptoBackendGoldenSuite(
   String label,
-  CryptoBackend Function() makeBackend, {
-  required String repoRoot,
-}) {
+  CryptoBackend Function() makeBackend,
+) {
   group('CryptoBackend golden vectors ($label)', () {
     late CryptoBackend backend;
 
@@ -279,9 +279,8 @@ void runCryptoBackendGoldenSuite(
     });
 
     test('Books Copy saved by the Dart backend restores', () async {
-      final fixture = File(
-        '$repoRoot/test/fixtures/books_copy/dart_backend_v1.json',
-      ).readAsStringSync();
+      // Embedded copy: the repository's files aren't readable on iOS.
+      const fixture = booksCopyDartBackendV1;
       final contents = await BooksCopyFile.decrypt(
         fileContents: fixture,
         passphrase: booksCopyFixturePassphrase,
