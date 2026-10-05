@@ -3788,28 +3788,6 @@ void main() {
       );
     }
 
-    /// Settings is taller than the live 800x600 window; drag until [target]
-    /// is on-screen and hit-testable rather than assuming a fixed scroll.
-    /// Drags the ListView itself rather than a fixed screen coordinate:
-    /// on a real iPhone, whose screen dimensions differ from the
-    /// desktop/simulator window this was originally tuned against, a
-    /// coordinate-based drag was observed to land outside the
-    /// scrollable region entirely and do nothing.
-    ///
-    /// Settings grew with the Linked devices and Books sections, so rows
-    /// near the bottom (Manage payees, Manage recurring) can need more than
-    /// a dozen drags; too few left them unbuilt and ensureVisible threw
-    /// "No element" on some runs.
-    Future<void> scrollUntilVisible(WidgetTester tester, Finder target) async {
-      for (var i = 0; i < 40; i++) {
-        if (target.hitTestable().evaluate().isNotEmpty) return;
-        await tester.drag(find.byType(ListView).first, const Offset(0, -220));
-        await tester.pump(const Duration(milliseconds: 250));
-      }
-      await tester.ensureVisible(target);
-      await tester.pump(const Duration(milliseconds: 200));
-    }
-
     /// Prefer an explicit back control over [WidgetTester.pageBack]: the
     /// shell can leave more than one Back affordance in the tree, and
     /// pageBack asserts exactly one. Desktop AppBars sometimes expose
@@ -4062,7 +4040,10 @@ void main() {
       );
 
       await openSettings(tester, l10n);
-      await scrollUntilVisible(tester, find.text(l10n.settingsManagePayees));
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsManagePayees),
+      );
       await tapReliably(
         tester,
         () => find.widgetWithText(OutlinedButton, l10n.settingsManagePayees),
@@ -4140,7 +4121,10 @@ void main() {
       final today = DateTime.now().day;
 
       await openSettings(tester, l10n);
-      await scrollUntilVisible(tester, find.text(l10n.settingsManageRecurring));
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsManageRecurring),
+      );
       await tapReliably(
         tester,
         () => find.widgetWithText(OutlinedButton, l10n.settingsManageRecurring),

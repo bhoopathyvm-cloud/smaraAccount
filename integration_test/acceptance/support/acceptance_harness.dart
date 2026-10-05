@@ -19,6 +19,7 @@ import 'package:smara_accounting/ui/features/onboarding/views/first_account_name
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations.dart';
+import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -242,13 +243,17 @@ Future<void> scrollUntilVisible(
   await tester.pump(const Duration(milliseconds: 200));
 }
 
-/// Scrolls the Settings screen until [target] is hit-testable. Settings is
-/// pushed over Home, whose own ListView stays mounted underneath, so
-/// dragging `find.byType(ListView).first` (what [scrollUntilVisible] does)
-/// can drag the wrong list. Drags from the screen centre (over Settings'
-/// body, on a phone as on the 800x600 desktop window) in steps shorter
-/// than any screen instead, so the target can't be skipped however many
-/// sections (books switcher, linked devices, ...) sit above it.
+/// Scrolls the Settings screen (or, off Settings, the screen under the
+/// centre of the window) until [target] is hit-testable.
+///
+/// Moves Settings' own scroll position rather than simulating finger drags:
+/// Settings is pushed over Home, whose ListView stays mounted underneath,
+/// and on the 800x600 Linux CI window drags from the screen centre stopped
+/// scrolling partway down the longer Settings page (after the Linked
+/// devices and Books sections grew in #239), so its last rows (research
+/// tool, Manage payees, Manage recurring) were never reached. Steps are
+/// shorter than any screen, so the target can't be skipped, and a lazily
+/// built row is built as the list advances.
 Future<void> scrollSettingsUntilVisible(
   WidgetTester tester,
   Finder target,
@@ -257,12 +262,41 @@ Future<void> scrollSettingsUntilVisible(
   final center = (view.physicalSize / view.devicePixelRatio).center(
     Offset.zero,
   );
-  // Settings grew with the Linked devices and Books sections (#239); 20
-  // drags no longer reached its last rows (research tool) on the 800x600
-  // Linux CI window. It still stops as soon as the target is hit-testable.
-  for (var i = 0; i < 50; i++) {
+  // Re-checked every step: Settings may still be loading (a spinner, no
+  // list yet), and a page pushed over Settings (App lock, Manage payees,
+  // ...) leaves SettingsView mounted underneath.
+  final settingsScrollables = find.descendant(
+    of: find.byType(SettingsView),
+    matching: find.byType(Scrollable),
+  );
+  for (var i = 0; i < 80; i++) {
     if (target.hitTestable().evaluate().isNotEmpty) return;
-    await tester.dragFrom(center, const Offset(0, -200));
+    final onSettings =
+        settingsScrollables.evaluate().isNotEmpty &&
+        find.byType(SettingsView).hitTestable().evaluate().isNotEmpty;
+    if (!onSettings) {
+      // Not on Settings (the helper also serves e.g. the Categories list):
+      // drag from the screen centre.
+      await tester.dragFrom(center, const Offset(0, -200));
+      await tester.pump(const Duration(milliseconds: 250));
+      continue;
+    }
+    if (target.evaluate().isNotEmpty) {
+      // Built but covered or off-screen: bring it into view directly.
+      await tester.ensureVisible(target.first);
+      await tester.pump(const Duration(milliseconds: 250));
+      continue;
+    }
+    // `.first` is the outermost Scrollable: Settings' own list.
+    final position = tester
+        .state<ScrollableState>(settingsScrollables.first)
+        .position;
+    if (position.pixels < position.maxScrollExtent) {
+      position.jumpTo(
+        (position.pixels + 200).clamp(0.0, position.maxScrollExtent),
+      );
+    }
+    // At the bottom this just lets a lazily built tail extend the extent.
     await tester.pump(const Duration(milliseconds: 250));
   }
 }
