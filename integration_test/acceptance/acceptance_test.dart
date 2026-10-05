@@ -3795,8 +3795,13 @@ void main() {
     /// desktop/simulator window this was originally tuned against, a
     /// coordinate-based drag was observed to land outside the
     /// scrollable region entirely and do nothing.
+    ///
+    /// Settings grew with the Linked devices and Books sections, so rows
+    /// near the bottom (Manage payees, Manage recurring) can need more than
+    /// a dozen drags; too few left them unbuilt and ensureVisible threw
+    /// "No element" on some runs.
     Future<void> scrollUntilVisible(WidgetTester tester, Finder target) async {
-      for (var i = 0; i < 12; i++) {
+      for (var i = 0; i < 40; i++) {
         if (target.hitTestable().evaluate().isNotEmpty) return;
         await tester.drag(find.byType(ListView).first, const Offset(0, -220));
         await tester.pump(const Duration(milliseconds: 250));
