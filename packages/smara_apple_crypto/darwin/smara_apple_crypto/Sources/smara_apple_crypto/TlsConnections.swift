@@ -101,7 +101,6 @@ final class TlsHandler: NSObject, FlutterStreamHandler {
                 // without one reaches Dart as "no certificate" and is refused
                 // for sync there, exactly as the Dart transport does.
                 sec_protocol_options_set_peer_authentication_required(options, true)
-                sec_protocol_options_set_peer_authentication_optional(options, true)
             } else {
                 sec_protocol_options_set_peer_authentication_required(options, false)
             }
@@ -194,8 +193,11 @@ final class TlsHandler: NSObject, FlutterStreamHandler {
         let loopbackOnly = PluginArgs.bool(args, "loopbackOnly", default: false)
         let listenerId = nextId
         nextId += 1
+        // The verifier handle comes from Dart's single handle counter; the
+        // listener id is only this side's bookkeeping key.
+        let verifyHandle = try PluginArgs.int(args, "handle")
         let tls = try tlsOptions(
-            identityLabel: label, verifyHandle: listenerId, server: true,
+            identityLabel: label, verifyHandle: verifyHandle, server: true,
             requestClientCertificate: requestClientCertificate)
         let parameters = parameters(tls: tls, timeoutSeconds: nil)
         guard let nwPort = NWEndpoint.Port(rawValue: UInt16(clamping: port)) else {

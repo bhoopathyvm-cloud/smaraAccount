@@ -86,6 +86,9 @@ class AppleTlsListener {
 
   Future<void> close() async {
     _owner._listeners.remove(id);
+    _owner._onConnection.remove(id);
+    final handle = _owner._listenerHandles.remove(id);
+    if (handle != null) _owner._verifiers.remove(handle);
     try {
       await _owner._ch.invokeMethod<void>('stopListening', {'id': id});
     } catch (_) {}
@@ -123,6 +126,16 @@ class AppleTls {
   final _listeners = <int, AppleTlsListener>{};
   final _verifiers = <int, AppleTlsPeerVerifier>{};
   final _onConnection = <int, void Function(AppleTlsConnection)>{};
+
+  /// Listener id -> its verifier handle (see [_nextHandle]).
+  final _listenerHandles = <int, int>{};
+
+  /// One counter for every verifier handle, connect and listen alike. The
+  /// native side echoes the handle back in `verifyPeer`. Listener ids come
+  /// from a separate native counter, so keying a listener's verifier by its
+  /// id collided with connect handles (both start at 1): the server then
+  /// checked the client's certificate with the client's verifier and every
+  /// handshake was refused.
   int _nextHandle = 1;
 
   void _ensureEvents() {
@@ -172,18 +185,32 @@ class AppleTls {
     bool loopbackOnly = false,
   }) async {
     _ensureEvents();
-    final result = await _ch.invokeMapMethod<Object?, Object?>('listen', {
-      'port': port,
-      'identityLabel': identityLabel,
-      'requestClientCertificate': requestClientCertificate,
-      'loopbackOnly': loopbackOnly,
-    });
-    if (result == null) throw StateError('listen returned nothing');
+    // Registered before the native listener starts, so an early handshake
+    // already finds its verifier.
+    final handle = _nextHandle++;
+    _verifiers[handle] = verifyPeer;
+    final Map<Object?, Object?>? result;
+    try {
+      result = await _ch.invokeMapMethod<Object?, Object?>('listen', {
+        'handle': handle,
+        'port': port,
+        'identityLabel': identityLabel,
+        'requestClientCertificate': requestClientCertificate,
+        'loopbackOnly': loopbackOnly,
+      });
+    } catch (_) {
+      _verifiers.remove(handle);
+      rethrow;
+    }
+    if (result == null) {
+      _verifiers.remove(handle);
+      throw StateError('listen returned nothing');
+    }
     final id = result['id'] as int;
     final boundPort = result['port'] as int;
     final listener = AppleTlsListener._(id: id, port: boundPort, owner: this);
     _listeners[id] = listener;
-    _verifiers[id] = verifyPeer;
+    _listenerHandles[id] = handle;
     _onConnection[id] = onConnection;
     return listener;
   }
