@@ -12,6 +12,7 @@ import '../../domain/models/claim_status.dart';
 import '../../domain/models/linked_device_role.dart';
 import '../../domain/models/membership_notice.dart';
 import '../../domain/models/transaction_direction.dart';
+import '../../domain/peer_sync/certificate_pinning.dart';
 import '../../domain/peer_sync/claim_sync_payloads.dart';
 import '../../domain/peer_sync/competing_fix_resolver.dart';
 import '../../domain/peer_sync/metadata_lww.dart';
@@ -999,9 +1000,11 @@ class SyncMergeRepository implements SyncLedgerView {
       case 'deviceCertDer':
         if (op.value is String) {
           final der = base64Decode(op.value! as String);
+          // Through the platform backend: on iOS/macOS the SHA-256 must come
+          // from the operating system (os-provided-encryption).
           final fp = deviceCertFingerprint.isNotEmpty
               ? deviceCertFingerprint
-              : TlsSyncTransport.fingerprintOfDer(der);
+              : await CertificatePinning.fingerprintOf(der);
           deviceCertFingerprint = fp;
           final certs = _certificates;
           if (certs != null) {
