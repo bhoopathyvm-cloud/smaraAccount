@@ -21,6 +21,61 @@ accounting suites already covered in
 `expense-and-accounting-competitor-pricing.md`, nor the sync options in
 `remote-sync-and-claim-options.md`.
 
+## 0. Main table
+
+Legend: ✓ yes · ✗ no · ◐ partial · ns = not stated on any vendor page I
+could reach. Footnote numbers point to [Sources](#sources). Price = INR
+headline as read 2026-10-05, GST extra unless stated. "Operator access"
+answers: can the vendor's staff read the books? ✓ means the vendor holds
+plaintext books on its cloud (nothing on its pages says otherwise); ✗ means
+the books never leave the user's devices.
+
+| Product | Price (free tier -> paid) | Mobile-first | Offline | Multi-device sync (paid?) | Online payments into books | Expense claims | Double-entry | Tamper-proof / signing | Audit log | Operator can read data | E2EE |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Khatabook** [1] | Free ("100% free!"); no paid plan found | ✓ Android/iOS/web | ns (auto backup to cloud) | ✓ bundled free (same phone number login) | ✓ UPI/QR 0% fee, "automatic sync of all transactions" into khata | ✗ | ✗ single-entry khata | ✗ | ns | ✓ vendor cloud | ✗ |
+| **OkCredit** [2] | Free (ads); ₹30 / **₹75 (multi-device)** / ₹99 per month | ✓ Android/iOS/web | ✓ "Works offline" | ✓ **paid** (Ads Free++ ₹75/mo) | ✓ QR payment "posts to their khata automatically" | ✗ | ✗ single-entry | ✗ | ns | ✓ vendor cloud, may store outside India | ✗ |
+| **Vyapar** [3] | Mobile free; Gold Mobile ₹999-₹1,109/yr; desktop Silver ₹3,799, Gold ₹4,099, Retail Pro ₹8,999/yr | ✓ Android/iOS + Win/Mac | ✓ "completely offline on a single device"; sync resumes online; conflict rule ns | ✓ **paid** ("Paid/Premium feature", licence per device) | ◐ UPI/QR + payment links; blog: "automatically get matched"; gateway/fee ns | ✗ (expense categories only) | ◐ P&L, balance sheet; model ns | ✗ (editable; Audit Trail is history) | ✓ Audit Trail "View History" + user activity log | ✓ vendor cloud for sync; T&C licence to "use, reproduce, adapt" content | ✗ |
+| **myBillBook** [4] | 14-day trial; Silver ₹399/yr (Play); third-party: ₹2,599 / ₹2,999 / ₹4,999 per yr | ✓ Android/iOS/web/PC | ns | ✓ bundled ("Real-Time Sync Across Devices", unlimited devices) | ◐ UPI links in reminders; auto-record ns | ✗ (staff attendance/payroll only) | ◐ balance sheet reports; model ns | ✗ | ns | ✓ "end-to-end encryption on cloud servers" = vendor-held | ✗ (wording is storage encryption) |
+| **Swipe** [5] | Free plan; Pro ₹3,399, Jet ₹4,999, Rise ₹5,499, E-Invoicing ₹8,899 (App Store IAP) | ✓ Android/iOS/web | ns | ✓ bundled ("Works across mobile and desktop") | ◐ UPI/payment links; auto-record ns | ✗ | ◐ P&L reports; model ns | ◐ e-invoice IRN via GST IRP only | ns | ✓ vendor cloud; "Always encrypted" | ✗ |
+| **TallyPrime** (+Edit Log, TallyDrive, Cloud Access) [6] | Silver ₹22,500 one-time / ₹8,100 yr; Gold ₹67,500; Cloud Access from ₹600/user/mo | ✗ desktop; phone browser view-only | ✓ fully offline on PC | ◐ via TallyDrive backup / Cloud Access / Remote Access (paid TSS) | ns | ✗ | ✓ | ◐ Edit Log release: log cannot be disabled or deleted, but vouchers can still be altered/deleted; TallyVault encrypts file | ✓ Edit Log (Created/Altered/Deleted, user, time) | ✗ on-prem; ✓ for TallyDrive/Cloud Access copies | ✗ |
+| **Biz Analyst** (Tally companion) [7] | ₹3,300/device/yr | ✓ Android/iOS | ✓ "truly offline app" | ✓ **paid per device** | ns | ✗ | ✓ (Tally's) | ✗ (Tally rules apply) | via Tally Edit Log | ◐ "can only be accessed on your devices" (relay role ns) | ◐ claimed in transit only |
+| **Zoho Books** (India) [8] | Free ≤ ₹25 lakh revenue; Standard ₹749/mo (annual) … Ultimate ₹7,999/mo; Expense Claim add-on ₹149-₹199/user/mo | ◐ cloud with mobile apps | ✗ (offline ns; cloud product) | ✓ bundled (users per plan) | ✓ Razorpay/ICICI "invoice's status will be marked as paid" | ✓ add-on | ✓ | ◐ Transaction Locking: "cannot be added, modified, or deleted" before lock date (admin can unlock) | ✓ (Audit Trail / activity, not fetched) | ✓ vendor cloud; "controls … prohibit employees from arbitrarily accessing" | ✗ |
+| **BUSY** [9] | Express free; Magic ₹5,000 / ₹8,000 / ₹12,000 / ₹50,000 per 360 days | ✗ desktop + Lite app | ✓ desktop | ◐ BUSY On Cloud / mobile Lite (paid) | ns | ✗ | ✓ | ns | ns | ✗ on-prem | ✗ |
+| **MargBooks** [10] | "₹15/Day" | ◐ cloud + apps | ns | ✓ bundled | ns | ns | ✓ (claims accounting) | ns | ns | ✓ vendor cloud | ✗ |
+| **BharatBills** [11] | Free | ✓ Android | ✓ "even when you struggle with internet" | ns | ✓ gateway with UPI/QR | ✗ | ✗ | ✗ | ns | Play: "No data collected" (ns how sync works) | ✗ |
+| **HisabKhata** [12] | Free | ✓ Android + web | ✓ "Works offline" | ✓ bundled | ✓ payment links UPI | ✗ | ✗ | ✗ | ns | ✓ vendor cloud | ✗ |
+| **Paytm / PhonePe / BharatPe Business** [13] | Free app; UPI MDR 0%; PhonePe SmartSpeaker ₹125/mo | ✓ | ✗ | n/a (payments only) | ✓ settlements, no books | ✗ | ✗ no books | ✗ | ns | ✓ vendor cloud | ✗ |
+| **Open Money** [14] | ₹4,000/mo billed annually | ◐ | ✗ | ✓ bundled | ✓ links 1.85% | ✓ reimbursements | via Tally/Zoho | ns | ns | ✓ vendor cloud | ✗ |
+| **Wave** (US/CA) [15] | Starter free; Pro $19/mo | ◐ | ✗ | ✓ bundled (Pro users) | ✓ 2.9% + $0.60 | ✗ | ✓ | ✗ | ns | ✓ cloud; "limiting access to only the people who need it"; PCI L1 | ✗ |
+| **Bokio** (SE) [16] | 269-599 kr/mo | ◐ | ✗ | ✓ bundled; extra user +49 kr | ✓ Swish 49 kr/mo + 2 kr | ◐ expense handling | ✓ | ns | ns | ✓ vendor cloud | ✗ |
+| **bexio** (CH) [17] | CHF 35-119/mo | ◐ | ✗ | ✓ bundled | ✓ bexio Pay | ✓ expenses | ✓ | ns | ns | ✓ cloud, "exclusively in Switzerland", ISO 27001 | ✗ |
+| **Banana Accounting+** (CH) [18] | Free ≤ 70 transactions; CHF 89 / 179 per yr | ✗ desktop | ✓ local file | ✗ none | ✗ | ✗ | ✓ | ✓ **hash-chain lock** ("Lock transactions with the Blockchain technology"): alterations detectable, not prevented | ◐ via lock | ✗ local file | n/a (no cloud) |
+| **SumUp / Zettle** (UK) [19] | Free app; 1.69% / 1.75% | ✓ | ✗ | ✓ bundled | ✓ card/QR | ✗ | ✗ no books | ✗ | ns | ✓ vendor cloud | ✗ |
+
+**Reading the two hard columns.** *Genuinely tamper-proof entries* (an
+altered entry is at least detectable, or a posted entry cannot be changed
+at all) exist only in Banana (hash chain, detect-only) and, for a closed
+period, Zoho Books Transaction Locking (prevent, but an admin can unlock).
+Tally's Edit Log and Vyapar's Audit Trail are **audit logs**: they record
+who changed what, and in Tally's Edit Log release the log cannot be switched
+off or deleted, but the vouchers themselves stay editable and deletable.
+GST e-invoicing (IRP returns a "digitally signed e-invoice and QR code")
+signs the *invoice document* for the tax authority; it does not sign the
+ledger, and it applies only above ₹10 crore turnover. No product checked
+signs ledger entries or chains them, and none makes them immutable by
+construction.
+
+*Data out of the operator's reach*: only the on-device products - Banana,
+TallyPrime on-prem, Biz Analyst's phone copy ("can only be accessed on your
+devices") and BharatBills' "No data collected" label. Every cloud-synced
+Indian app (Khatabook, OkCredit, Vyapar sync, myBillBook, Swipe, Zoho,
+MargBooks, HisabKhata) holds readable books on its servers; the strongest
+statements are process controls (Zoho: least privilege; Wave: "only the
+people who need it"), not cryptography. None claims end-to-end or
+zero-knowledge encryption.
+
+---
+
 ## Short answer
 
 Yes, the Indian market already has a dense layer of **mobile-first, free-to-
@@ -66,7 +121,7 @@ Expense Claim add-on (₹149-₹199/user/month) and Open Money (₹4,000/month).
 
 ---
 
-## 1. Comparison table
+## 1. Feature comparison (payments, expenses, pricing detail)
 
 Prices as read 2026-10-05, INR unless stated, GST extra unless stated.
 "Sync" = multi-device/multi-user over the vendor's cloud unless noted.
@@ -285,6 +340,40 @@ year - the only one here that is local-first, and it has no sync).
 
 ---
 
+## 2b. Offline, accounts, tamper-proofing and operator access, per product
+
+Four questions per product: (i) what works offline and how conflicts are
+handled; (ii) how accounts/users are managed; (iii) signing, immutability or
+audit log; (iv) who holds the data and whether staff can read it. "ns" =
+not stated on any vendor page reachable on 2026-10-05. **No vendor in this
+list documents a conflict-resolution rule for two devices editing offline**;
+where a sync exists it is described only as "reflects on other devices in
+near real-time" (Vyapar) or "backed up online" (OkCredit).
+
+| Product | (i) Offline and conflicts | (ii) Accounts and roles | (iii) Signing / immutability / audit | (iv) Storage, encryption, operator access, export/delete |
+|---|---|---|---|---|
+| Khatabook | Offline ns; "automatic backup"; restore = "log in … with the same phone number" [1] | Single owner login by phone number + OTP; multiple businesses under one account ("One app for multiple businesses"); staff roles ns (PagarBook is a separate product) [1] | None stated; edits/deletes ns; no audit log stated; app lock PIN only [1] | Vendor cloud; location, encryption at rest, staff access, deletion: ns (privacy page 403, Play data-safety blocked) [1] |
+| OkCredit | "Works offline"; "backed up online and on your device"; conflict rule ns [2] | Phone-number + OTP login; "Login with same OkCredit number on multiple devices" on paid plan; roles/staff ns [2] | None; audit log ns [2] | Vendor cloud; privacy policy: data "may be transferred to and stored at countries other than India", protected by "encryption, firewalls, and socket layer technology"; shared with "storage providers, payments systems providers, marketing partners, data analytics providers" and lenders (SMS-based credit scoring); deletion right not explicit [2] |
+| Vyapar | Mobile "works completely offline on a single device"; synced devices "syncing automatically once the device is back online"; initial sync needs internet on both; conflict rule ns; backups to phone / email / Google Drive are the user's job ("performing necessary backups … solely the User's responsibility") [3] | Primary Admin, Secondary Admin, Salesperson (CA/Biller/Stock-keeper roles exist in product, not on reachable pages); "separate password for each user"; per-user restrictions on "delete/edit transactions, take data back-up, see purchase price"; up to 3/5/unlimited firms per plan [3] | **Audit Trail**: "automatically start recording every small change made to your transactions", "View History" per transaction, "Even after cancellation, the full transaction history remains available"; entries remain editable/deletable by permitted users; no signing [3] | Device-local DB; sync via Vyapar servers ("images … stored on our servers", "encrypts your data during sync"); encryption at rest "advanced encryption methods" (unspecified); T&C grants Vyapar a licence to "use, reproduce, adapt, modify, publish or distribute the content … for Vyapar internal purpose"; deletion on request; transactional logs kept 6 months [3] |
+| myBillBook | Offline ns (cloud-synced); conflict ns [4] | Admin, Partner, Salesman, Delivery boy, CA (vendor design article); plan seats "1 user + 1 CA" / "3 users + 1 CA"; "Add your staff like salesman, delivery boys, stock managers … give them access to certain features" [4] | ns (no audit-trail or lock feature found) [4] | "Data is securely stored with end-to-end encryption on cloud servers", "bank-grade security" (Play listing); privacy and user-management pages JS-only; staff access, location, export: ns [4] |
+| Swipe | Offline ns; conflict ns [5] | "add multiple users, businesses"; roles ns; "Unlimited users" on startup plan [5] | e-invoice IRN/QR through GST IRP for applicable firms; no ledger signing or lock stated; audit ns [5] | Vendor cloud; "Your data stays private. Always encrypted."; privacy policy: storage location, at-rest encryption, staff access **not disclosed**; GDPR-style erase/transfer rights listed [5] |
+| TallyPrime | Fully offline on PC; multi-user over LAN (Gold); Remote Access / Cloud Access need TSS + internet; browser reports view-only [6] | Owner + users with security levels (Data Entry etc.), Tally.NET IDs for remote; TallyVault password-encrypts company data (page not fetched; known feature - UNVERIFIED here) [6] | **Edit Log**: logs "Created, Altered, … Deleted" with "Username and Date & Time"; in the Edit Log release "not possible to disable" and "not possible to remove or delete the Edit Log data"; vouchers still editable/deletable → audit log, not immutability; MCA audit-trail rule is the driver [6] | On-premises file; TallyDrive copies to Tally cloud ("encrypted, password-protected"), Cloud Access on Oracle Cloud; 90-day retention after TSS lapse [6] |
+| Biz Analyst | "truly offline app. Your data is stored on your mobile phone"; sync with the Tally PC; conflict ns [7] | Admin grants limited access; "no restriction on the number of users", charged per device; any number of Tally companies [7] | Relies on Tally; entries created on phone post into Tally [7] | Phone + PC; "completely encrypted during the sync process and can only be accessed on your devices"; whether a relay server exists: ns [7] |
+| Zoho Books | Cloud; mobile offline ns (user-voice requests exist, no feature page) [8] | Super Admin, Admin, Staff, Timesheet Staff, Staff (assigned customers), custom roles; Accountant invite "to handle tax filing, auditing, and compliance"; users capped per plan [8] | **Transaction Locking**: "cannot be added, modified, or deleted if recorded before the specified lock date"; per module; admin can unlock or unlock a period → period immutability, not entry signing; audit trail exists (help page not reachable) [8] | Vendor cloud; "Sensitive customer data at rest is encrypted using 256-bit AES", TLS in transit; "technical access controls and internal policies to prohibit employees from arbitrarily accessing user data"; ISO 27001/27017/27018, SOC 1, SOC 2 Type 2; India data centres referenced for SOC 1 [8] |
+| BUSY | Desktop offline; cloud/mobile Lite paid [9] | Multi-user per plan ("10 users" on Power+) [9] | ns | On-prem; BUSY On Cloud ns [9] |
+| MargBooks | ns | "plans vary based on users, GSTINs" [10] | ns | Vendor cloud; ns [10] |
+| BharatBills | Offline-tolerant [11] | ns | ns | Play data-safety: "No data collected or shared with third parties" [11] |
+| HisabKhata | "Works offline" [12] | ns | ns | Vendor cloud (web app); ns [12] |
+| Paytm / PhonePe / BharatPe | Payment apps need network [13] | Merchant login; staff/sub-user ns | n/a | Vendor cloud; ns |
+| Open Money | Cloud | Budgets, policies, roles for reimbursement [14] | ns | Vendor cloud; ns |
+| Wave | Cloud | Pro: "admin, editor, or viewer roles" [15] | ns | "up to 256-bit TLS", encrypted at rest, "PCI Level 1 Service Provider", "limiting access to only the people who need it to do their jobs" [15] |
+| Bokio | Cloud | 1-3 users per plan, +49 kr/user [16] | ns | Vendor cloud [16] |
+| bexio | Cloud | 1/2/5/25 users per plan [17] | ns on reachable pages (Swiss GeBüV compliance not fetched) | "stored and processed exclusively in Switzerland", ISO 27001, SSL in transit, encrypted backups in several data centres; 30-day export after cancellation; staff access ns [17] |
+| Banana | Local file, fully offline; no sync (user copies file) [18] | Single file, OS-level; no roles [18] | "Lock transactions with the Blockchain technology": each row's hash (LockProg) chains contents, running balance and previous hash; "one cannot prevent that the data are being altered, but it will allow you to know if the data are the original ones"; unlock possible [18] | User's own disk; no operator [18] |
+| SumUp / Zettle | Online POS | Staff accounts (not fetched) | n/a | Vendor cloud [19] |
+
+---
+
 ## 3. The "small fee only for sync" pattern
 
 Products that already split "free on one device" from "pay to sync":
@@ -367,10 +456,24 @@ books".
 - Marg ERP 9+ desktop prices and MargBooks plan details.
 - Paytm Soundbox rental and BharatPe device prices.
 - Swipe free-plan limits (third-party says unlimited invoices).
+- Play Store "Data safety" sections for every app (robots.txt blocks the
+  fetch); the only data-safety statement quoted is BharatBills', seen in its
+  listing summary.
+- Conflict handling when two devices edit offline: no vendor documents it.
+- Zoho Books Audit Trail help page and Accountant-seat pricing (404s);
+  TallyVault details (page not fetched).
+- Vyapar's full role list (CA, Biller, Stock keeper) and whether Audit
+  Trail is a paid feature; myBillBook role permissions (JS-only pages,
+  design article used instead).
 
 ## Sources
 
-All read 2026-10-05.
+All read 2026-10-05. Footnote numbers in the main table: [1] Khatabook,
+[2] OkCredit, [3] Vyapar, [4] myBillBook, [5] Swipe, [6] Tally, [7] Biz
+Analyst, [8] Zoho Books, [9] BUSY, [10] MargBooks, [11] BharatBills,
+[12] HisabKhata, [13] Paytm/PhonePe/BharatPe, [14] Open Money, [15] Wave,
+[16] Bokio, [17] bexio, [18] Banana, [19] SumUp/Zettle; GST e-invoice:
+https://einvoice1.gst.gov.in/ .
 
 - Vyapar: https://play.google.com/store/apps/details?id=in.android.vyapar ;
   https://apps.apple.com/in/app/vyapar-billing-accounting/id6478382307 ;
@@ -381,7 +484,10 @@ All read 2026-10-05.
   https://vyaparapp.in/free/small-business-accounting-software/cloud-based ;
   https://vyaparapp.in/free/invoice-reminder-software ;
   https://vyaparapp.in/blog/integrate-payment-gateway-business-software/ ;
-  https://vyaparapp.in/faq ; https://vyaparapp.in/privacy ; third-party:
+  https://vyaparapp.in/faq ; https://vyaparapp.in/privacy ;
+  https://vyaparapp.in/terms ; https://vyaparapp.in/videos/how-to-use-audit-trail ;
+  https://vyaparapp.in/blog/how-to-assign-user-role-permission-in-vyapar/ ;
+  https://vyaparapp.in/blog/user-roles-permissions-vyapar/ ; third-party:
   https://www.itforsme.in/pricing/vyapar-india ,
   https://www.108techsolutionz.com/vyapar-app-1-year-mobile-plans.html
 - Khatabook: https://khatabook.com/en ;
@@ -390,24 +496,33 @@ All read 2026-10-05.
   https://khatabook.com/help/en-us/category/X1Uq1BAAACUAXK03/ ;
   https://apps.apple.com/us/app/id6633420817 ; https://pagarbook.com/pricing/
 - OkCredit: https://okcredit.in/ ; https://okcredit.in/en/ ;
-  https://okcredit.in/pricing ; https://okcredit.in/faq
+  https://okcredit.in/pricing ; https://okcredit.in/faq ; https://okcredit.in/privacy
 - myBillBook: https://mybillbook.in/ ;
   https://play.google.com/store/apps/details?id=com.valorem.flobooks ;
+  https://mybillbook.in/ca-icai ; vendor design write-up:
+  https://medium.com/design-bootcamp/multi-user-feature-in-mybillbook-app-795499370498 ;
   third-party: https://www.techjockey.com/detail/mybillbook-accounting-software
 - Swipe: https://getswipe.in/ ;
   https://play.google.com/store/apps/details?id=in.swipe.app ;
   https://apps.apple.com/in/app/swipe-billing-invoicing-app/id6451307318 ;
-  https://getswipe.in/blog/startups ; third-party:
+  https://getswipe.in/blog/startups ; https://getswipe.in/terms ;
+  https://getswipe.in/policy ; third-party:
   https://saasrat.com/products/swipe-billing
 - Tally: https://tallysolutions.com/tally/tallyprime-pricing/ ;
   https://tallysolutions.com/tally/tallydrive/ ;
   https://tallysolutions.com/tally/tallyprime-cloud-access/ ;
   https://help.tallysolutions.com/tally-prime/connected-services/browser-reports-faq-tally/ ;
-  https://help.tallysolutions.com/tally-prime/connected-services/work-from-home-or-anywhere/
+  https://help.tallysolutions.com/tally-prime/connected-services/work-from-home-or-anywhere/ ;
+  https://help.tallysolutions.com/edit-log-in-tallyprime-faq/ ;
+  https://help.tallysolutions.com/tracking-modifications/
 - Biz Analyst: https://bizanalyst.in/ ; https://bizanalyst.in/pricing
 - Zoho Books: https://www.zoho.com/in/books/pricing/ ;
   https://www.zoho.com/in/books/help/online-payments/razorpay.html ;
-  https://www.zoho.com/in/books/academy/banking-and-payments/upi-payments-with-zoho-books.html
+  https://www.zoho.com/in/books/academy/banking-and-payments/upi-payments-with-zoho-books.html ;
+  https://www.zoho.com/in/books/help/accountant/transaction-lock.html ;
+  https://www.zoho.com/in/books/help/settings/users.html ;
+  https://www.zoho.com/us/books/kb/users-and-roles/accountant-role.html ;
+  https://www.zoho.com/security.html ; https://www.zoho.com/compliance.html
 - BUSY: https://busy.in/pricing/
 - MargBooks: https://www.margbooks.com/
 - BharatBills: https://play.google.com/store/apps/details?id=in30days.bharatbills
@@ -418,8 +533,11 @@ All read 2026-10-05.
   https://cms.phonepe.com/en/mx/merchant-help/phonepe-smartspeaker/about-phonepe-smartspeaker/what-are-charges-applicable-phonepe-smartspeaker/
 - BharatPe: https://bharatpe.com/
 - Open Money: https://open.money/pricing ; Dukaan: https://mydukaan.io/pricing
-- Wave: https://www.waveapps.com/pricing ; https://www.waveapps.com/receipts
+- Wave: https://www.waveapps.com/pricing ; https://www.waveapps.com/receipts ;
+  https://www.waveapps.com/legal/security-and-privacy ;
+  https://support.waveapps.com/hc/en-us/articles/115004085146-How-Wave-keeps-your-data-secure
 - Bokio: https://www.bokio.se/priser/
-- bexio: https://www.bexio.com/en-CH/packages-and-prices
-- Banana: https://www.banana.ch/en/buy
+- bexio: https://www.bexio.com/en-CH/packages-and-prices ;
+  https://www.bexio.com/en-CH/cloud ; https://www.bexio.com/en-CH/policies/privacy-policy
+- Banana: https://www.banana.ch/en/buy ; https://www.banana.ch/doc/en/node/3353
 - SumUp: https://www.sumup.com/en-gb/pricing/ ; Zettle: https://www.zettle.com/gb/pricing
