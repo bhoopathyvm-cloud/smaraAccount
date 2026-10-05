@@ -257,7 +257,10 @@ Future<void> scrollSettingsUntilVisible(
   final center = (view.physicalSize / view.devicePixelRatio).center(
     Offset.zero,
   );
-  for (var i = 0; i < 20; i++) {
+  // Settings grew with the Linked devices and Books sections (#239); 20
+  // drags no longer reached its last rows (research tool) on the 800x600
+  // Linux CI window. It still stops as soon as the target is hit-testable.
+  for (var i = 0; i < 50; i++) {
     if (target.hitTestable().evaluate().isNotEmpty) return;
     await tester.dragFrom(center, const Offset(0, -200));
     await tester.pump(const Duration(milliseconds: 250));
