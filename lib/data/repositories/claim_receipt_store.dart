@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cryptography/cryptography.dart';
 import 'package:drift/drift.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/app_error.dart';
+import '../../domain/crypto/crypto_backend.dart';
 import '../../domain/models/claim_receipt.dart';
 import '../books_set/books_set_paths.dart';
 import '../database/app_database.dart';
@@ -66,8 +66,8 @@ class ClaimReceiptStore {
     }
 
     final id = _uuid.v4();
-    final hashBytes = await Sha256().hash(stored);
-    final hash = base64Encode(hashBytes.bytes);
+    final hashBytes = await CryptoBackend.instance.sha256(stored);
+    final hash = base64Encode(hashBytes);
     final support = await _support();
     await BooksSetPaths.ensureReceiptsDirectory(support, _booksSetId);
     final file = BooksSetPaths.receiptFile(support, _booksSetId, id);

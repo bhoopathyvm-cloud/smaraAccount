@@ -8,15 +8,15 @@ void main() {
   final inviterNonce = List<int>.filled(16, 3);
   final joinerNonce = List<int>.filled(16, 4);
 
-  test('both sides derive the same 6-digit check code', () {
-    final a = JoinCodeCrypto.checkCode(
+  test('both sides derive the same 6-digit check code', () async {
+    final a = await JoinCodeCrypto.checkCode(
       code: code,
       inviterPublicKey: inviterKey,
       joinerPublicKey: joinerKey,
       inviterNonce: inviterNonce,
       joinerNonce: joinerNonce,
     );
-    final b = JoinCodeCrypto.checkCode(
+    final b = await JoinCodeCrypto.checkCode(
       code: 'k7qf-3m9p',
       inviterPublicKey: inviterKey,
       joinerPublicKey: joinerKey,
@@ -28,15 +28,15 @@ void main() {
     expect(a, b);
   });
 
-  test('tampered public key changes the check code', () {
-    final good = JoinCodeCrypto.checkCode(
+  test('tampered public key changes the check code', () async {
+    final good = await JoinCodeCrypto.checkCode(
       code: code,
       inviterPublicKey: inviterKey,
       joinerPublicKey: joinerKey,
       inviterNonce: inviterNonce,
       joinerNonce: joinerNonce,
     );
-    final bad = JoinCodeCrypto.checkCode(
+    final bad = await JoinCodeCrypto.checkCode(
       code: code,
       inviterPublicKey: List<int>.filled(32, 9),
       joinerPublicKey: joinerKey,
@@ -46,19 +46,19 @@ void main() {
     expect(bad, isNot(good));
   });
 
-  test('code proof is stable and differs when code differs', () {
-    final proof = JoinCodeCrypto.codeProof(
+  test('code proof is stable and differs when code differs', () async {
+    final proof = await JoinCodeCrypto.codeProof(
       code: code,
       inviterNonce: inviterNonce,
       joinerNonce: joinerNonce,
     );
-    final again = JoinCodeCrypto.codeProof(
+    final again = await JoinCodeCrypto.codeProof(
       code: 'k7qf3m9p',
       inviterNonce: inviterNonce,
       joinerNonce: joinerNonce,
     );
     expect(proof, again);
-    final other = JoinCodeCrypto.codeProof(
+    final other = await JoinCodeCrypto.codeProof(
       code: 'AAAAAAAA',
       inviterNonce: inviterNonce,
       joinerNonce: joinerNonce,

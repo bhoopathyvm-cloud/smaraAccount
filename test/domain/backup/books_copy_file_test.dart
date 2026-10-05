@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:cryptography/cryptography.dart';
 import 'package:smara_accounting/domain/backup/books_copy_file.dart';
+import 'package:smara_accounting/domain/crypto/crypto_backend.dart';
 import 'package:test/test.dart';
 
 import 'legacy_backup_encrypt.dart';
@@ -40,7 +40,7 @@ void main() {
       );
       expect(
         () => BooksCopyFile.decrypt(fileContents: encoded, passphrase: 'wrong'),
-        throwsA(isA<SecretBoxAuthenticationError>()),
+        throwsA(isA<CryptoAuthenticationException>()),
       );
     });
 
@@ -57,7 +57,7 @@ void main() {
           fileContents: jsonEncode(json),
           passphrase: passphrase,
         ),
-        throwsA(isA<SecretBoxAuthenticationError>()),
+        throwsA(isA<CryptoAuthenticationException>()),
       );
     });
 

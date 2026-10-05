@@ -1,20 +1,23 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:cryptography/cryptography.dart';
 import 'package:uuid/uuid.dart';
+
+import '../crypto/crypto_backend.dart';
 
 /// Device TLS certificate material exchanged at join (design Decision 2).
 ///
-/// [derBytes] / [fingerprint] travel in the QR payload. [certificatePem] and
-/// [privateKeyPem] stay on the owning device for [TlsSyncTransport] and are
-/// never included in sync or QR payloads (ADR 0004).
+/// [derBytes] / [fingerprint] travel in the QR payload. [certificatePem],
+/// [privateKeyPem] and [keychainIdentityLabel] stay on the owning device for
+/// the TLS transport and are never included in sync or QR payloads
+/// (ADR 0004).
 class DeviceCertificate {
   const DeviceCertificate({
     required this.derBytes,
     required this.fingerprint,
     this.certificatePem,
     this.privateKeyPem,
+    this.keychainIdentityLabel,
   });
 
   final List<int> derBytes;
@@ -23,8 +26,20 @@ class DeviceCertificate {
   /// PEM-encoded certificate for [SecurityContext], when available.
   final String? certificatePem;
 
-  /// PEM-encoded private key for the local TLS identity, when available.
+  /// PEM-encoded private key for the local TLS identity on Android, Windows
+  /// and Linux, when available. Always null on iOS and macOS, where the
+  /// private key lives in the Keychain and never reaches Dart (ADR 0005).
   final String? privateKeyPem;
+
+  /// Keychain label of this device's TLS identity on iOS and macOS, so the
+  /// Network-framework transport can present it. Null elsewhere.
+  final String? keychainIdentityLabel;
+
+  /// True when this certificate can be presented as the local TLS identity
+  /// by at least one transport.
+  bool get hasLocalIdentity =>
+      keychainIdentityLabel != null ||
+      (certificatePem != null && privateKeyPem != null);
 }
 
 abstract class DeviceCertificateStore {
@@ -54,10 +69,11 @@ class FakeDeviceCertificateStore implements DeviceCertificateStore {
     final existing = _cache[deviceId];
     if (existing != null) return existing;
     final seed = utf8.encode('smara-device-cert:$deviceId:${_uuid.v4()}');
-    final hash = await Sha256().hash(seed);
-    final der = Uint8List.fromList([...hash.bytes, ...seed]);
-    final fp = await Sha256().hash(der);
-    final fingerprint = fp.bytes
+    final crypto = CryptoBackend.instance;
+    final hash = await crypto.sha256(seed);
+    final der = Uint8List.fromList([...hash, ...seed]);
+    final fp = await crypto.sha256(der);
+    final fingerprint = fp
         .map((b) => b.toRadixString(16).padLeft(2, '0'))
         .join();
     final cert = DeviceCertificate(derBytes: der, fingerprint: fingerprint);

@@ -19,6 +19,9 @@ class InMemorySecureKeyStorage implements SecureKeyStorage {
   bool throwOnDeleteOfMissingKey = false;
 
   int writeCount = 0;
+
+  /// Everything currently stored (tests assert what never gets written).
+  Map<String, String> get snapshot => Map.unmodifiable(_values);
   int _writesSinceCorruptFlag = 0;
 
   @override

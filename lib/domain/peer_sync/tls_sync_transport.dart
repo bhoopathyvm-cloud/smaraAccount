@@ -3,28 +3,37 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:crypto/crypto.dart';
-
+import '../crypto/dart_crypto_backend.dart';
 import '../linked_devices/device_certificate_store.dart';
 import 'certificate_pinning.dart';
+import 'dart_tls_socket_factory.dart';
 import 'sync_payloads.dart';
 import 'sync_transport.dart';
+import 'tls_socket.dart';
 
-/// Optional diagnostic sink for company-sync / integration debugging.
-void Function(String message)? tlsSyncDebugLog;
+export 'dart_tls_socket_factory.dart' show tlsSyncDebugLog;
 
-/// Length-prefixed JSON over [SecureSocket] with certificate pinning
-/// (linked-devices task 12.1 / design Decision 2).
+/// Length-prefixed JSON over a pinned TLS byte stream (linked-devices task
+/// 12.1 / design Decision 2).
+///
+/// The socket underneath comes from a [TlsSocketFactory]: BoringSSL through
+/// `dart:io` on Android, Windows and Linux, the Network framework on iOS and
+/// macOS. Framing, the fingerprint pin check and its refusal reasons are
+/// the same on every platform, so any device syncs with any other.
 class TlsSyncTransport implements SyncTransport {
-  TlsSyncTransport({this.bindAddress});
+  TlsSyncTransport({this.bindAddress, TlsSocketFactory? sockets})
+    : _sockets = sockets;
 
   /// Where to listen. When null the listener is dual-stack (IPv6 and IPv4),
   /// because mDNS often resolves a peer to its IPv6 link-local address first;
   /// it falls back to IPv4 only where IPv6 is unavailable.
   final InternetAddress? bindAddress;
 
-  SecureServerSocket? _server;
-  StreamSubscription<SecureSocket>? _acceptSub;
+  final TlsSocketFactory? _sockets;
+
+  TlsSocketFactory get sockets => _sockets ?? TlsSocketFactory.forPlatform();
+
+  TlsListenerHandle? _listener;
 
   @override
   Future<SyncConnection> connect({
@@ -48,44 +57,49 @@ class TlsSyncTransport implements SyncTransport {
       throw UnknownCertificateException(remote.certificate.fingerprint);
     }
 
-    // Prefer peer PEMs in the trust store when known (from join). Client-side
-    // [onBadCertificate] still enforces the fingerprint pin set so connect
-    // works when only the remote fingerprint is known.
-    final context = _securityContext(
-      local.certificate,
-      pinnedCertificates: [
-        ...pinnedCertificates,
-        if (remote.certificate.derBytes.isNotEmpty ||
-            remote.certificate.certificatePem != null)
-          remote.certificate,
-        local.certificate,
-      ],
-    );
-    final socket = await SecureSocket.connect(
-      host,
-      port,
-      context: context,
-      // Bounded so one unreachable peer (asleep, off the Wi-Fi, or listed
-      // at a cellular address) can't freeze Sync now for over a minute.
-      timeout: const Duration(seconds: 8),
-      onBadCertificate: (X509Certificate cert) {
-        final fp = fingerprintOfDer(cert.der);
-        return pinning.checkFingerprint(fp) == PinCheckResult.accepted;
-      },
-    );
+    // Prefer peer PEMs in the trust store when known (from join). The
+    // verifier still enforces the fingerprint pin set so connect works when
+    // only the remote fingerprint is known.
+    String? refused;
+    final stream = await sockets
+        .connect(
+          host: host,
+          port: port,
+          localIdentity: local.certificate,
+          trustedPeerCertificates: [
+            ...pinnedCertificates,
+            if (remote.certificate.derBytes.isNotEmpty ||
+                remote.certificate.certificatePem != null)
+              remote.certificate,
+            local.certificate,
+          ],
+          verifyPeer: (peer) {
+            final ok =
+                pinning.checkFingerprint(peer.fingerprint) ==
+                PinCheckResult.accepted;
+            if (!ok) refused = peer.fingerprint;
+            return ok;
+          },
+        )
+        .catchError((Object e) {
+          final fingerprint = refused;
+          if (fingerprint != null) {
+            throw UnknownCertificateException(fingerprint);
+          }
+          throw e;
+        });
 
-    final peerCert = socket.peerCertificate;
-    if (peerCert == null) {
-      await socket.close();
+    final peer = stream.peerCertificate;
+    if (peer == null) {
+      await stream.close();
       throw StateError('TLS peer presented no certificate.');
     }
-    final peerFp = fingerprintOfDer(peerCert.der);
-    if (pinning.checkFingerprint(peerFp) != PinCheckResult.accepted) {
-      await socket.close();
-      throw UnknownCertificateException(peerFp);
+    if (pinning.checkFingerprint(peer.fingerprint) != PinCheckResult.accepted) {
+      await stream.close();
+      throw UnknownCertificateException(peer.fingerprint);
     }
 
-    return _TlsSyncConnection(socket: socket, remote: remote);
+    return _TlsSyncConnection(stream: stream, remote: remote);
   }
 
   @override
@@ -98,138 +112,87 @@ class TlsSyncTransport implements SyncTransport {
     List<DeviceCertificate> pinnedCertificates = const [],
   }) async {
     await stopListening();
-    // Request a client cert and pin-check after handshake. Peer PEMs must be
-    // supplied in [pinnedCertificates] (remembered at join) — BoringSSL still
-    // verifies presented client certs against the trust store even when
-    // [requireClientCertificate] is false.
-    final context = _securityContext(
-      local.certificate,
-      pinnedCertificates: [...pinnedCertificates, local.certificate],
-    );
     final pinning = CertificatePinning(pinnedFingerprints: pinnedFingerprints);
-
-    Future<SecureServerSocket> bind(InternetAddress address) =>
-        SecureServerSocket.bind(
-          address,
-          bindPort ?? 0,
-          context,
-          requestClientCertificate: true,
-          requireClientCertificate: false,
-        );
-    final fixed = bindAddress;
-    if (fixed != null) {
-      _server = await bind(fixed);
-    } else {
-      try {
-        _server = await bind(InternetAddress.anyIPv6);
-      } on SocketException {
-        _server = await bind(InternetAddress.anyIPv4);
-      }
-    }
-    onBound?.call(_server!.port);
-
-    _acceptSub = _server!.listen(
-      (socket) async {
+    _listener = await sockets.listen(
+      localIdentity: local.certificate,
+      port: bindPort ?? 0,
+      bindAddress: bindAddress,
+      // Request a client cert and pin-check it; peer PEMs come from
+      // [pinnedCertificates] (remembered at join).
+      requestClientCertificate: true,
+      trustedPeerCertificates: pinnedCertificates,
+      verifyPeer: (peer) {
+        final ok =
+            pinning.checkFingerprint(peer.fingerprint) ==
+            PinCheckResult.accepted;
+        if (!ok) {
+          tlsSyncDebugLog?.call(
+            'inbound TLS rejected: unknown fingerprint ${peer.fingerprint} '
+            '(pins=${pinnedFingerprints.length})',
+          );
+        }
+        return ok;
+      },
+      onConnection: (stream) async {
         try {
-          final peerCert = socket.peerCertificate;
-          if (peerCert == null) {
+          final peer = stream.peerCertificate;
+          if (peer == null) {
             tlsSyncDebugLog?.call(
               'inbound TLS rejected: no client certificate',
             );
-            await socket.close();
+            await stream.close();
             return;
           }
-          final fp = fingerprintOfDer(peerCert.der);
-          if (pinning.checkFingerprint(fp) != PinCheckResult.accepted) {
+          if (pinning.checkFingerprint(peer.fingerprint) !=
+              PinCheckResult.accepted) {
             tlsSyncDebugLog?.call(
-              'inbound TLS rejected: unknown fingerprint $fp '
+              'inbound TLS rejected: unknown fingerprint ${peer.fingerprint} '
               '(pins=${pinnedFingerprints.length})',
             );
-            await socket.close();
+            await stream.close();
             return;
           }
           final remote = SyncPeerIdentity(
-            deviceId: 'peer-$fp',
+            deviceId: 'peer-${peer.fingerprint}',
             certificate: DeviceCertificate(
-              derBytes: peerCert.der,
-              fingerprint: fp,
+              derBytes: peer.der,
+              fingerprint: peer.fingerprint,
             ),
-            host: socket.remoteAddress.address,
-            port: socket.remotePort,
+            host: stream.remoteAddress,
+            port: stream.remotePort,
           );
-          await onSession(_TlsSyncConnection(socket: socket, remote: remote));
+          await onSession(_TlsSyncConnection(stream: stream, remote: remote));
         } catch (e, st) {
           tlsSyncDebugLog?.call('inbound TLS session error: $e\n$st');
-          try {
-            await socket.close();
-          } catch (_) {}
+          await stream.close();
         }
       },
-      // Failed TLS handshakes (stale pins, wrong peer) must not escape as
-      // unhandled async errors — they abort Flutter integration tests.
-      onError: (Object e, StackTrace st) {
-        tlsSyncDebugLog?.call('inbound TLS handshake error: $e\n$st');
-      },
-      cancelOnError: false,
     );
+    onBound?.call(_listener!.port);
   }
 
   @override
   Future<void> stopListening() async {
-    await _acceptSub?.cancel();
-    _acceptSub = null;
-    await _server?.close();
-    _server = null;
-  }
-
-  static SecurityContext _securityContext(
-    DeviceCertificate cert, {
-    required List<DeviceCertificate> pinnedCertificates,
-  }) {
-    final pem = cert.certificatePem;
-    final key = cert.privateKeyPem;
-    if (pem == null || key == null) {
-      throw StateError(
-        'TlsSyncTransport requires local certificatePem and privateKeyPem.',
-      );
-    }
-    final context = SecurityContext(withTrustedRoots: false);
-    context.useCertificateChainBytes(utf8.encode(pem));
-    context.usePrivateKeyBytes(utf8.encode(key));
-    final seen = <String>{};
-    for (final peer in pinnedCertificates) {
-      final peerPem = peer.certificatePem ?? derToPem(peer.derBytes);
-      if (!seen.add(peerPem)) continue;
-      try {
-        context.setTrustedCertificatesBytes(utf8.encode(peerPem));
-      } catch (_) {
-        // Duplicate / already-trusted certs can throw; safe to ignore.
-      }
-    }
-    return context;
+    final listener = _listener;
+    _listener = null;
+    await listener?.close();
   }
 
   /// PEM-encode DER certificate bytes for [SecurityContext] trust anchors.
-  static String derToPem(List<int> derBytes) {
-    final b64 = base64Encode(derBytes);
-    final buffer = StringBuffer('-----BEGIN CERTIFICATE-----\n');
-    for (var i = 0; i < b64.length; i += 64) {
-      final end = (i + 64 < b64.length) ? i + 64 : b64.length;
-      buffer.writeln(b64.substring(i, end));
-    }
-    buffer.write('-----END CERTIFICATE-----\n');
-    return buffer.toString();
-  }
+  static String derToPem(List<int> derBytes) =>
+      DartTlsSocketFactory.derToPem(derBytes);
 
-  /// SHA-256 hex of DER bytes — same format as [CertificatePinning.fingerprintOf].
-  static String fingerprintOfDer(List<int> derBytes) {
-    return sha256.convert(derBytes).toString();
-  }
+  /// Synchronous SHA-256 hex of DER bytes — same format as
+  /// [CertificatePinning.fingerprintOf]. Dart-backend only (tests and the
+  /// Dart identity store); on Apple platforms fingerprints come from the
+  /// Network-framework socket or [CertificatePinning.fingerprintOf].
+  static String fingerprintOfDer(List<int> derBytes) =>
+      DartCryptoBackend.sha256HexSync(derBytes);
 }
 
 class _TlsSyncConnection implements SyncConnection {
-  _TlsSyncConnection({required this.socket, required this.remote}) {
-    _subscription = socket.listen(
+  _TlsSyncConnection({required this.stream, required this.remote}) {
+    _subscription = stream.data.listen(
       _onData,
       onError: (Object error, StackTrace st) {
         if (!_closed) {
@@ -252,7 +215,7 @@ class _TlsSyncConnection implements SyncConnection {
     );
   }
 
-  final SecureSocket socket;
+  final TlsByteStream stream;
 
   @override
   final SyncPeerIdentity remote;
@@ -325,9 +288,7 @@ class _TlsSyncConnection implements SyncConnection {
     }
     final body = utf8.encode(encoded);
     final header = ByteData(4)..setUint32(0, body.length, Endian.big);
-    socket.add(header.buffer.asUint8List());
-    socket.add(body);
-    await socket.flush();
+    await stream.send([...header.buffer.asUint8List(), ...body]);
   }
 
   @override
@@ -341,8 +302,6 @@ class _TlsSyncConnection implements SyncConnection {
       }
     }
     _waiters.clear();
-    try {
-      await socket.close();
-    } catch (_) {}
+    await stream.close();
   }
 }

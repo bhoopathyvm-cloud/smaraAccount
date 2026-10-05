@@ -123,11 +123,26 @@ records.
 ## Cryptography (export compliance)
 
 The app uses standard cryptography to sign and verify ledger entries, to
-hash the app-lock PIN, to encrypt the backup, keystore, and device
-migration files you choose to save, and to protect device-to-device sync
-on the local network. It does not ship a proprietary algorithm and is not
-a cryptography product. That is the same story declared in the iOS
-export-compliance flag (`ITSAppUsesNonExemptEncryption` = false).
+hash the app-lock PIN, to encrypt the Books Copy files you choose to save,
+and to protect device-to-device sync on the local network. It does not
+ship a proprietary algorithm and is not a cryptography product.
+
+On iPhone, iPad and Mac the app encrypts only through Apple's operating
+system. Every cryptographic operation (AES-GCM encryption, PBKDF2 key
+derivation, Ed25519 signing, HMAC and SHA-256 hashing) is performed by
+Apple's CryptoKit and CommonCrypto frameworks; device-to-device TLS uses
+Apple's Network framework; the device's TLS key is created and kept by the
+Security framework in the Keychain; and internet lookups (reference rates,
+quotes, instrument search) go through Apple's URL loading system. The app
+does not include or use a cryptographic implementation of its own on these
+platforms. That is the basis for the iOS and macOS export-compliance
+declaration (`ITSAppUsesNonExemptEncryption` = false): the app uses only
+encryption provided by the operating system.
+
+On Android, Windows and Linux the same operations run in the app's own
+standard, open-source implementations. Every platform shares one Books
+Copy file format and one sync protocol, so copies and linked devices work
+across all of them.
 
 ## What we do not do
 

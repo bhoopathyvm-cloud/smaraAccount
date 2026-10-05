@@ -98,15 +98,11 @@ class LedgerChainVerifier {
         String? lastVerifiedId;
         Uint8List? lastVerifiedHash;
 
+        // Hash the whole chain in one backend call (the canonical bytes
+        // depend only on stored fields), so the Apple backend pays one
+        // platform-channel round trip per chain rather than per entry.
+        final canonicalByEntry = <Uint8List>[];
         for (final entry in chain) {
-          if (breakEntryId != null) {
-            results[entry.id] = (
-              isVerified: false,
-              reason: VerificationBreakReason.excludedAfterBreak,
-            );
-            continue;
-          }
-
           final postings = await (_db.select(
             _db.postings,
           )..where((p) => p.entryId.equals(entry.id))).get();
@@ -119,6 +115,31 @@ class LedgerChainVerifier {
                 ),
               )
               .toList();
+          canonicalByEntry.add(
+            canonicalEntryBytes(
+              previousEntryHash: entry.previousEntryHash,
+              id: entry.id,
+              deviceChainSequence: entry.deviceChainSequence,
+              transactionDate: entry.transactionDate,
+              recordedAt: entry.recordedAt,
+              description: entry.description,
+              reversesEntryId: entry.reversesEntryId,
+              signedByIdentityId: entry.signedByIdentityId,
+              postings: canonicalPostings,
+            ),
+          );
+        }
+        final recomputedHashes = await hashCanonicalEntries(canonicalByEntry);
+
+        for (var index = 0; index < chain.length; index++) {
+          final entry = chain[index];
+          if (breakEntryId != null) {
+            results[entry.id] = (
+              isVerified: false,
+              reason: VerificationBreakReason.excludedAfterBreak,
+            );
+            continue;
+          }
 
           // Migration-created entries start a fresh hash-chain root under
           // the new identity (see migrateToNewIdentityAfterKeyLoss).
@@ -140,18 +161,7 @@ class LedgerChainVerifier {
             continue;
           }
 
-          final bytes = canonicalEntryBytes(
-            previousEntryHash: entry.previousEntryHash,
-            id: entry.id,
-            deviceChainSequence: entry.deviceChainSequence,
-            transactionDate: entry.transactionDate,
-            recordedAt: entry.recordedAt,
-            description: entry.description,
-            reversesEntryId: entry.reversesEntryId,
-            signedByIdentityId: entry.signedByIdentityId,
-            postings: canonicalPostings,
-          );
-          final recomputedHash = await hashCanonicalEntry(bytes);
+          final recomputedHash = recomputedHashes[index];
           if (!bytesEqual(recomputedHash, entry.entryHash)) {
             breakEntryId = entry.id;
             breakReason = VerificationBreakReason.hashMismatch;

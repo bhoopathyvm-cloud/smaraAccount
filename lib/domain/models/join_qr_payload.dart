@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cryptography/cryptography.dart';
+import '../crypto/crypto_backend.dart';
 
 import 'linked_device_role.dart';
 
@@ -112,10 +112,10 @@ class JoinQrPayload {
 
   /// Six-character uppercase check code derived from [joinNonce].
   static Future<String> deriveCheckCode(String joinNonce) async {
-    final digest = await Sha256().hash(
+    final digest = await CryptoBackend.instance.sha256(
       utf8.encode('smara-join-check:$joinNonce'),
     );
-    final hex = digest.bytes
+    final hex = digest
         .map((b) => b.toRadixString(16).padLeft(2, '0'))
         .join()
         .toUpperCase();
