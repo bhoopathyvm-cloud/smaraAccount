@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cryptography/cryptography.dart';
-
+import '../crypto/crypto_backend.dart';
 import '../linked_devices/local_network_permission.dart';
 
 /// Bonjour / mDNS service type for Smara peer discovery (design Decision 1).
@@ -13,10 +12,10 @@ const smaraPeerSyncProtocolVersion = 1;
 
 /// Non-secret hash of a books-set id for TXT filtering (design Decision 1).
 Future<String> booksSetIdHash(String booksSetId) async {
-  final digest = await Sha256().hash(
+  final digest = await CryptoBackend.instance.sha256(
     utf8.encode('smara-books-set:$booksSetId'),
   );
-  return digest.bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+  return digest.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
 }
 
 /// What this device advertises on `_smara._tcp`.

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../domain/models/exchange_rate_provider.dart';
+import 'http/platform_http_client.dart';
 
 /// Best-effort, offline-safe lookup of an indicative reference exchange
 /// rate for a currency pair (design.md Decision 4). The request sends only
@@ -13,7 +14,7 @@ import '../domain/models/exchange_rate_provider.dart';
 /// without a try/catch of its own.
 class ExchangeRateService {
   ExchangeRateService({http.Client? client})
-    : _client = client ?? http.Client();
+    : _client = client ?? createPlatformHttpClient();
 
   final http.Client _client;
 

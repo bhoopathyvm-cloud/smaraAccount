@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import '../models/join_qr_payload.dart';
 import '../peer_sync/sync_payloads.dart';
+import '../peer_sync/tls_socket.dart';
 import 'device_certificate_store.dart';
 import 'join_code.dart';
 import 'join_code_crypto.dart';
@@ -15,9 +16,11 @@ import 'join_offer_discovery.dart';
 import 'reserved_join_identity.dart';
 
 /// Length-prefixed JSON frames for join-by-code over unpinned TLS (task 4.4).
+/// The byte stream comes from a [TlsSocketFactory], so the join session is
+/// the same on every platform whichever TLS implementation is underneath.
 class _JoinFrame {
   static Future<void> send(
-    SecureSocket socket,
+    TlsByteStream socket,
     Map<String, Object?> map,
   ) async {
     final encoded = jsonEncode(map);
@@ -28,9 +31,7 @@ class _JoinFrame {
     }
     final body = utf8.encode(encoded);
     final header = ByteData(4)..setUint32(0, body.length, Endian.big);
-    socket.add(header.buffer.asUint8List());
-    socket.add(body);
-    await socket.flush();
+    await socket.send([...header.buffer.asUint8List(), ...body]);
   }
 
   static Future<Map<String, dynamic>> receive(
@@ -68,20 +69,6 @@ class _JoinFrame {
   }
 }
 
-SecurityContext _joinServerContext(DeviceCertificate cert) {
-  final pem = cert.certificatePem;
-  final key = cert.privateKeyPem;
-  if (pem == null || key == null) {
-    throw StateError(
-      'Join-by-code TLS requires local certificatePem and privateKeyPem.',
-    );
-  }
-  final context = SecurityContext(withTrustedRoots: false);
-  context.useCertificateChainBytes(utf8.encode(pem));
-  context.usePrivateKeyBytes(utf8.encode(key));
-  return context;
-}
-
 List<int> _randomNonce([Random? random]) {
   final rng = random ?? Random.secure();
   return List<int>.generate(16, (_) => rng.nextInt(256));
@@ -117,15 +104,20 @@ class JoinCodeHost {
     required this.discovery,
     required this.registry,
     InternetAddress? bindAddress,
+    TlsSocketFactory? sockets,
     this.confirmCheckCode,
     this.onJoinAccepted,
     this.loadBootstrapMetadata,
-  }) : bindAddress = bindAddress ?? InternetAddress.anyIPv4;
+  }) : bindAddress = bindAddress ?? InternetAddress.anyIPv4,
+       _sockets = sockets;
 
   final DeviceCertificate localCertificate;
   final JoinOfferDiscovery discovery;
   final JoinCodeRegistry registry;
   final InternetAddress bindAddress;
+  final TlsSocketFactory? _sockets;
+
+  TlsSocketFactory get sockets => _sockets ?? TlsSocketFactory.forPlatform();
 
   /// When set, host UI must confirm [checkCode] before the payload is sent.
   /// Null auto-confirms (harness / unit tests).
@@ -141,8 +133,7 @@ class JoinCodeHost {
 
   JoinQrPayload? _payload;
   List<int>? _inviterPublicKey;
-  SecureServerSocket? _server;
-  StreamSubscription<SecureSocket>? _acceptSub;
+  TlsListenerHandle? _server;
   int? _port;
 
   int? get port => _port;
@@ -157,14 +148,25 @@ class JoinCodeHost {
     await stop();
     _payload = payload;
     _inviterPublicKey = inviterPublicKey;
-    final context = _joinServerContext(localCertificate);
-    _server = await SecureServerSocket.bind(
-      bindAddress,
-      0,
-      context,
+    if (!localCertificate.hasLocalIdentity) {
+      throw StateError(
+        'Join-by-code TLS requires a local TLS identity (certificate and '
+        'private key, or a Keychain identity).',
+      );
+    }
+    // Bonjour / port scanners can open TCP without completing TLS; the
+    // socket factory drops failed handshakes before they reach here, so
+    // they cannot escape into the Flutter test zone or kill the inviting
+    // app (and company-sync Owner) mid-join.
+    _server = await sockets.listen(
+      localIdentity: localCertificate,
+      bindAddress: bindAddress,
       // Join-only: trust is the typed code + check-code confirm, not pins.
       requestClientCertificate: false,
-      requireClientCertificate: false,
+      verifyPeer: (_) => true,
+      onConnection: (socket) {
+        unawaited(_handleClient(socket));
+      },
     );
     _port = _server!.port;
     await discovery.startAdvertising(
@@ -174,36 +176,18 @@ class JoinCodeHost {
         booksSetId: payload.booksSetId,
       ),
     );
-    // Bonjour / port scanners can open TCP without completing TLS. Those
-    // HandshakeExceptions must not escape into the Flutter test zone or the
-    // inviting app (and company-sync Owner) dies mid-join.
-    _acceptSub = _server!.listen(
-      (socket) {
-        unawaited(_handleClient(socket));
-      },
-      onError: (Object error, StackTrace stack) {
-        if (error is HandshakeException || error is TlsException) {
-          return;
-        }
-        // ignore: avoid_print — join host has no logger seam
-        print('JoinCodeHost accept error: $error');
-      },
-      cancelOnError: false,
-    );
   }
 
   Future<void> stop() async {
-    await _acceptSub?.cancel();
-    _acceptSub = null;
     await _server?.close();
     _server = null;
     _port = null;
     await discovery.stopAdvertising();
   }
 
-  Future<void> _handleClient(SecureSocket socket) async {
+  Future<void> _handleClient(TlsByteStream socket) async {
     final buffer = BytesBuilder(copy: false);
-    final chunks = StreamIterator(socket);
+    final chunks = StreamIterator<List<int>>(socket.data);
     try {
       final hello = await _JoinFrame.receive(chunks, buffer);
       if (hello['type'] != 'hello') {
@@ -259,7 +243,7 @@ class JoinCodeHost {
         await socket.close();
         return;
       }
-      final expected = JoinCodeCrypto.codeProof(
+      final expected = await JoinCodeCrypto.codeProof(
         code: active.raw,
         inviterNonce: inviterNonce,
         joinerNonce: joinerNonce,
@@ -275,7 +259,7 @@ class JoinCodeHost {
         return;
       }
 
-      final check = JoinCodeCrypto.checkCode(
+      final check = await JoinCodeCrypto.checkCode(
         code: active.raw,
         inviterPublicKey: inviterPublicKey,
         joinerPublicKey: joinerPublicKey,
@@ -373,7 +357,8 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
     required this.joinerCertFingerprint,
     this.browseTimeout = const Duration(seconds: 3),
     this.bindAddress,
-  });
+    TlsSocketFactory? sockets,
+  }) : _sockets = sockets;
 
   /// Last per-offer errors from the most recent [lookup] (company-sync debug).
   static String lastOfferErrors = '';
@@ -390,6 +375,9 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
   final String joinerCertFingerprint;
   final Duration browseTimeout;
   final InternetAddress? bindAddress;
+  final TlsSocketFactory? _sockets;
+
+  TlsSocketFactory get sockets => _sockets ?? TlsSocketFactory.forPlatform();
 
   @override
   Future<JoinCodeLookupResult> lookup(String typedCode) async {
@@ -438,18 +426,16 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
     String typedCode,
     String normalized,
   ) async {
-    // Use the platform default SecurityContext for the joiner. An empty
-    // custom context broke TLS from the iOS Simulator to the macOS host
-    // (handshake never completed); onBadCertificate still accepts the
-    // host's self-signed device certificate.
-    final socket = await SecureSocket.connect(
-      offer.host,
-      offer.port,
-      onBadCertificate: (_) => true,
+    // The joiner presents no certificate and accepts the host's self-signed
+    // one: trust comes from the typed code and the check-code confirm.
+    final socket = await sockets.connect(
+      host: offer.host,
+      port: offer.port,
+      verifyPeer: (_) => true,
       timeout: const Duration(seconds: 5),
     );
     final buffer = BytesBuilder(copy: false);
-    final chunks = StreamIterator(socket);
+    final chunks = StreamIterator<List<int>>(socket.data);
     Future<Map<String, dynamic>> receiveFrame() =>
         _JoinFrame.receive(chunks, buffer).timeout(
           const Duration(seconds: 8),
@@ -490,7 +476,7 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
       final inviterPublicKey = base64Decode(
         challenge['inviterPublicKey'] as String,
       );
-      final proof = JoinCodeCrypto.codeProof(
+      final proof = await JoinCodeCrypto.codeProof(
         code: normalized,
         inviterNonce: inviterNonce,
         joinerNonce: joinerNonce,
@@ -508,7 +494,7 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
         throw const _JoinLookupException(JoinCodeLookupError.notFound);
       }
       final checkCode = checkMsg['checkCode'] as String;
-      final expected = JoinCodeCrypto.checkCode(
+      final expected = await JoinCodeCrypto.checkCode(
         code: normalized,
         inviterPublicKey: inviterPublicKey,
         joinerPublicKey: joinerPublicKey,

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:cryptography/cryptography.dart';
+import '../crypto/crypto_backend.dart';
 
 /// Passphrase-protected Books Copy: the encrypted raw SQLite database plus
 /// the books' settings. Never carries a private key (ADR 0004 /
@@ -11,6 +11,10 @@ import 'package:cryptography/cryptography.dart';
 /// Same cipher family as the retired ledger backup and device migration
 /// bundle (AES-256-GCM, PBKDF2-HMAC-SHA256 @ 210,000 iterations). The
 /// reader also accepts those legacy kinds and discards any key they carry.
+///
+/// All cryptography goes through [CryptoBackend], so a copy saved on any
+/// platform restores on every other: the file layout (`salt`, `nonce`,
+/// `cipherText`, `mac`) is identical whichever backend produced it.
 class BooksCopyFile {
   const BooksCopyFile._();
 
@@ -30,10 +34,16 @@ class BooksCopyFile {
     required Map<String, Object?> settings,
     required String passphrase,
     Map<String, List<int>> receiptsById = const {},
+    CryptoBackend? backend,
   }) async {
+    final crypto = backend ?? CryptoBackend.instance;
     final random = Random.secure();
     final salt = List<int>.generate(_saltLength, (_) => random.nextInt(256));
-    final secretKey = await _deriveKey(passphrase: passphrase, salt: salt);
+    final secretKey = await _deriveKey(
+      crypto,
+      passphrase: passphrase,
+      salt: salt,
+    );
 
     final payload = utf8.encode(
       jsonEncode({
@@ -45,10 +55,7 @@ class BooksCopyFile {
           },
       }),
     );
-    final box = await AesGcm.with256bits().encrypt(
-      payload,
-      secretKey: secretKey,
-    );
+    final box = await crypto.aesGcmEncrypt(key: secretKey, plainText: payload);
 
     return jsonEncode({
       'kind': kind,
@@ -58,23 +65,31 @@ class BooksCopyFile {
       'salt': base64Encode(salt),
       'nonce': base64Encode(box.nonce),
       'cipherText': base64Encode(box.cipherText),
-      'mac': base64Encode(box.mac.bytes),
+      'mac': base64Encode(box.mac),
     });
   }
 
   /// Decrypts a Books Copy or a legacy backup/bundle. Legacy files return
   /// empty settings; a bundle's private key is discarded and never returned.
+  /// Throws [CryptoAuthenticationException] for a wrong passphrase or a
+  /// tampered file.
   static Future<BooksCopyContents> decrypt({
     required String fileContents,
     required String passphrase,
+    CryptoBackend? backend,
   }) async {
+    final crypto = backend ?? CryptoBackend.instance;
     final json = jsonDecode(fileContents) as Map<String, dynamic>;
     final fileKind = json['kind'];
     if (fileKind == kind) {
-      return _decryptBooksCopy(json: json, passphrase: passphrase);
+      return _decryptBooksCopy(crypto, json: json, passphrase: passphrase);
     }
     if (fileKind == legacyLedgerBackupKind) {
-      final db = await _decryptRawPayload(json: json, passphrase: passphrase);
+      final db = await _decryptRawPayload(
+        crypto,
+        json: json,
+        passphrase: passphrase,
+      );
       return BooksCopyContents(
         databaseBytes: db,
         settings: const {},
@@ -83,6 +98,7 @@ class BooksCopyFile {
     }
     if (fileKind == legacyDeviceMigrationBundleKind) {
       final plain = await _decryptRawPayload(
+        crypto,
         json: json,
         passphrase: passphrase,
       );
@@ -100,7 +116,8 @@ class BooksCopyFile {
     );
   }
 
-  static Future<BooksCopyContents> _decryptBooksCopy({
+  static Future<BooksCopyContents> _decryptBooksCopy(
+    CryptoBackend crypto, {
     required Map<String, dynamic> json,
     required String passphrase,
   }) async {
@@ -109,7 +126,11 @@ class BooksCopyFile {
         'Unsupported books copy file version: ${json['version']}',
       );
     }
-    final plain = await _decryptRawPayload(json: json, passphrase: passphrase);
+    final plain = await _decryptRawPayload(
+      crypto,
+      json: json,
+      passphrase: passphrase,
+    );
     final payload = jsonDecode(utf8.decode(plain)) as Map<String, dynamic>;
     final settingsRaw = payload['settings'];
     final settings = <String, Object?>{};
@@ -135,40 +156,40 @@ class BooksCopyFile {
     );
   }
 
-  static Future<Uint8List> _decryptRawPayload({
+  static Future<Uint8List> _decryptRawPayload(
+    CryptoBackend crypto, {
     required Map<String, dynamic> json,
     required String passphrase,
   }) async {
     final salt = base64Decode(json['salt'] as String);
     final iterations = json['iterations'] as int;
     final secretKey = await _deriveKey(
+      crypto,
       passphrase: passphrase,
       salt: salt,
       iterations: iterations,
     );
 
-    final box = SecretBox(
-      base64Decode(json['cipherText'] as String),
+    final box = AesGcmBox(
       nonce: base64Decode(json['nonce'] as String),
-      mac: Mac(base64Decode(json['mac'] as String)),
+      cipherText: base64Decode(json['cipherText'] as String),
+      mac: base64Decode(json['mac'] as String),
     );
-
-    final plainText = await AesGcm.with256bits().decrypt(
-      box,
-      secretKey: secretKey,
-    );
-    return Uint8List.fromList(plainText);
+    return crypto.aesGcmDecrypt(key: secretKey, box: box);
   }
 
-  static Future<SecretKey> _deriveKey({
+  static Future<Uint8List> _deriveKey(
+    CryptoBackend crypto, {
     required String passphrase,
     required List<int> salt,
     int iterations = _iterations,
   }) {
-    return Pbkdf2.hmacSha256(
+    return crypto.pbkdf2HmacSha256(
+      password: utf8.encode(passphrase),
+      salt: salt,
       iterations: iterations,
-      bits: 256,
-    ).deriveKeyFromPassword(password: passphrase, nonce: salt);
+      keyLength: 32,
+    );
   }
 }
 

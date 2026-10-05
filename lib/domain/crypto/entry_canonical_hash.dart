@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:cryptography/cryptography.dart';
+import 'crypto_backend.dart';
 
 /// The genesis entry's `previous_entry_hash`: a well-defined 32-zero-byte
 /// constant, never an arbitrary null (spec: "Chained and Signed Journal
@@ -70,8 +70,22 @@ Uint8List canonicalEntryBytes({
 }
 
 /// SHA-256 of [canonicalEntryBytes]'s output - the `entry_hash` that gets
-/// signed and chained.
-Future<Uint8List> hashCanonicalEntry(Uint8List canonicalBytes) async {
-  final hash = await Sha256().hash(canonicalBytes);
-  return Uint8List.fromList(hash.bytes);
+/// signed and chained. Computed by the [CryptoBackend] (the operating
+/// system's SHA-256 on Apple platforms).
+Future<Uint8List> hashCanonicalEntry(
+  Uint8List canonicalBytes, {
+  CryptoBackend? backend,
+}) {
+  return (backend ?? CryptoBackend.instance).sha256(canonicalBytes);
+}
+
+/// [hashCanonicalEntry] for many entries in one backend call. Chain
+/// verification uses this so the Apple backend pays one platform-channel
+/// round trip per chain instead of one per entry (design D2).
+Future<List<Uint8List>> hashCanonicalEntries(
+  List<Uint8List> canonicalBytesList, {
+  CryptoBackend? backend,
+}) {
+  if (canonicalBytesList.isEmpty) return Future.value(const []);
+  return (backend ?? CryptoBackend.instance).sha256Many(canonicalBytesList);
 }

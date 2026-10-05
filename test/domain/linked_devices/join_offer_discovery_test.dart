@@ -62,8 +62,8 @@ void main() {
     expect(smaraJoinMdnsServiceType, '_smara-join._tcp');
   });
 
-  test('check code crypto still agrees across sides', () {
-    final code = JoinCodeCrypto.checkCode(
+  test('check code crypto still agrees across sides', () async {
+    final code = await JoinCodeCrypto.checkCode(
       code: 'K7QF3M9P',
       inviterPublicKey: List.filled(32, 1),
       joinerPublicKey: List.filled(32, 2),

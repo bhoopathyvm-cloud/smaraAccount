@@ -32,19 +32,20 @@ import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
 import 'data/repositories/sync_merge_repository.dart';
 import 'data/books_set/books_set_paths.dart';
+import 'domain/crypto/crypto_backend.dart';
 import 'domain/crypto/secure_key_storage.dart';
 import 'domain/crypto/signing_key_service.dart';
 import 'domain/linked_devices/device_certificate_store.dart';
 import 'domain/linked_devices/join_offer_discovery.dart';
 import 'domain/linked_devices/local_network_permission.dart';
 import 'domain/linked_devices/local_network_reachability.dart';
-import 'domain/linked_devices/persisting_device_certificate_store.dart';
+import 'domain/linked_devices/platform_device_certificate_store.dart';
 import 'domain/peer_sync/bonsoir_peer_discovery.dart';
 import 'domain/peer_sync/direct_address_peer_discovery.dart';
 import 'domain/peer_sync/peer_discovery.dart';
 import 'domain/peer_sync/peer_sync_service.dart';
 import 'domain/peer_sync/sync_transport.dart';
-import 'domain/peer_sync/tls_sync_transport.dart';
+import 'data/peer_sync/socket_sync_transport.dart';
 import 'l10n/l10n.dart';
 import 'domain/lock/app_lock_service.dart';
 import 'domain/lock/biometric_authenticator.dart';
@@ -65,6 +66,11 @@ import 'ui/features/summary/view_models/summary_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Chosen once from the platform: Apple frameworks on iOS and macOS, the
+  // Dart implementation elsewhere (os-provided-encryption design D1). The
+  // debug check fails loudly if an Apple build would reach Dart crypto.
+  CryptoBackend.use(selectCryptoBackend());
+  debugCheckCryptoBackendMatchesPlatform();
   final session = await ActiveBooksSession.open();
   runApp(SmaraAccountingApp(session: session));
 }
@@ -78,6 +84,7 @@ class SmaraAccountingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<CryptoBackend>.value(value: CryptoBackend.instance),
         ChangeNotifierProvider<ActiveBooksSession>.value(value: session),
         ProxyProvider<ActiveBooksSession, AppDatabase>(
           update: (_, session, _) => session.database,
@@ -202,7 +209,7 @@ class SmaraAccountingApp extends StatelessWidget {
           create: (_) => FakeLocalNetworkReachability(onLocalNetwork: true),
         ),
         Provider<DeviceCertificateStore>(
-          create: (_) => PersistingDeviceCertificateStore(
+          create: (_) => createPlatformDeviceCertificateStore(
             secureStorage: FlutterSecureKeyStorage(),
           ),
         ),
@@ -213,7 +220,7 @@ class SmaraAccountingApp extends StatelessWidget {
           create: (_) => BonsoirJoinOfferDiscovery(),
         ),
         Provider<SyncTransport>(
-          create: (_) => TlsSyncTransport(),
+          create: (_) => createPlatformSyncTransport(),
           dispose: (_, transport) => transport.stopListening(),
         ),
         ProxyProvider<LocalNetworkPermission, PeerDiscovery>(
@@ -404,7 +411,10 @@ class SmaraAccountingApp extends StatelessWidget {
                 currentIdentityId: identitySource.current,
               ),
         ),
-        Provider<AppLockService>(create: (_) => AppLockService()),
+        Provider<AppLockService>(
+          create: (context) =>
+              AppLockService(backend: context.read<CryptoBackend>()),
+        ),
         Provider<BiometricAuthenticator>(
           create: (_) => LocalAuthBiometricAuthenticator(),
         ),

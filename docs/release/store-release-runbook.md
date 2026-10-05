@@ -256,7 +256,7 @@ back, something reverted:
 |---|---|---|
 | 90285 `Invalid Code Signing Entitlements … keychain-access-groups` | Keychain access-group entitlement on macOS | Keep it out of `macos/Runner/Release.entitlements` |
 | 90242 `Info.plist must contain a LSApplicationCategoryType key` | Missing category | `LSApplicationCategoryType = public.app-category.finance` in `macos/Runner/Info.plist` |
-| App Encryption Documentation prompt | Missing export-compliance flag | `ITSAppUsesNonExemptEncryption = false` in `macos/Runner/Info.plist` |
+| App Encryption Documentation prompt | Missing export-compliance flag | `ITSAppUsesNonExemptEncryption = false` in `macos/Runner/Info.plist`; basis: Apple builds use only the operating system's encryption (ADR 0005, OpenSpec `os-provided-encryption`; `test/platform/export_compliance_test.dart`) |
 
 Then in App Store Connect (👤): same steps as iOS 1–5 under **macOS App**
 (processing, TestFlight, new version `<version>`, **Automatically release**,

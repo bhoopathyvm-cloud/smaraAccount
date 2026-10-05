@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:isolate';
 import 'dart:math';
 
-import 'package:cryptography/cryptography.dart';
-
+import '../crypto/crypto_backend.dart';
 import '../crypto/secure_key_storage.dart';
 
 /// Stores and verifies the app-lock PIN (app-lock), never the PIN itself -
@@ -13,10 +11,14 @@ import '../crypto/secure_key_storage.dart';
 /// are the same for consistency with this app's one existing
 /// crypto-storage pattern (design.md Decision 1).
 class AppLockService {
-  AppLockService({SecureKeyStorage? secureStorage})
-    : _secureStorage = secureStorage ?? FlutterSecureKeyStorage();
+  AppLockService({SecureKeyStorage? secureStorage, CryptoBackend? backend})
+    : _secureStorage = secureStorage ?? FlutterSecureKeyStorage(),
+      _backend = backend;
 
   final SecureKeyStorage _secureStorage;
+  final CryptoBackend? _backend;
+
+  CryptoBackend get _crypto => _backend ?? CryptoBackend.instance;
 
   static const _pinRecordStorageKey = 'app_lock_pin_record';
   static const _iterations = 210000;
@@ -68,17 +70,15 @@ class AppLockService {
     required List<int> salt,
     required int iterations,
   }) {
-    // Run PBKDF2 off the platform/UI isolate. On macOS, a long sync derive
-    // on the same isolate that services flutter_secure_storage's method
-    // channel has been observed to interact badly with Keychain reads
-    // after a same-process app relaunch (acceptance-app-lock-unlock).
-    return Isolate.run(() async {
-      final secretKey = await Pbkdf2.hmacSha256(
-        iterations: iterations,
-        bits: 256,
-      ).deriveKeyFromPassword(password: pin, nonce: salt);
-      return secretKey.extractBytes();
-    });
+    // PBKDF2-HMAC-SHA256 through the crypto backend: CommonCrypto on
+    // Apple platforms, the Dart implementation (off the UI isolate)
+    // elsewhere.
+    return _crypto.pbkdf2HmacSha256(
+      password: utf8.encode(pin),
+      salt: salt,
+      iterations: iterations,
+      keyLength: 32,
+    );
   }
 }
 

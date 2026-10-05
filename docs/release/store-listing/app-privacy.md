@@ -56,14 +56,26 @@ not two separate risks.
 
 ## 3. Export compliance (same screen, App Store Connect submission flow)
 
-`ITSAppUsesNonExemptEncryption` is already `false` in `ios/Runner/
-Info.plist`, matching privacy-policy.md's "Cryptography (export
-compliance)" section (crypto used only for local signing/verification
-and PIN hashing, not to scramble network traffic or as a standalone
-crypto product) and the already-enforced `ios-privacy-compliance`
-requirement that this stays consistent with the public policy. Nothing
-new needed here — just confirming it's already correct before
-submission, since App Store Connect will ask this again at upload time.
+`ITSAppUsesNonExemptEncryption` is `false` in `ios/Runner/Info.plist` and
+`macos/Runner/Info.plist`. The basis, stated in privacy-policy.md's
+"Cryptography (export compliance)" section and in ADR 0005: the Apple
+builds encrypt only through Apple's operating system. AES-GCM, PBKDF2,
+Ed25519, HMAC and SHA-256 run in CryptoKit / CommonCrypto through the
+in-repo `smara_apple_crypto` plugin; linked-device TLS runs in the Network
+framework; the device TLS key is created and kept by the Security
+framework in the Keychain; HTTPS lookups go through URLSession
+(`cupertino_http`). No app-provided cryptographic implementation is used
+on iOS or macOS (`test/domain/crypto/crypto_backend_selection_test.dart`
+and `test/platform/export_compliance_test.dart` enforce this and the
+policy wording; OpenSpec change `os-provided-encryption`).
+
+Answer the App Store Connect question as: the app uses encryption, and it
+uses only encryption provided by the operating system (exempt). The owner
+confirms this classification before the first submission of a build that
+carries the change (tasks 7.1 of `os-provided-encryption`). The Flutter
+engine still links its own TLS library for `dart:io`, which the Apple
+builds no longer call; whether an unused copy matters is part of that
+confirmation.
 
 ## 4. Cross-store comparison (task 4.2)
 

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
+import 'http/platform_http_client.dart';
 import '../domain/investment/exchange_registry.dart';
 import '../domain/models/quote_provider.dart';
 import '../domain/money/currency_minor_units.dart';
@@ -53,7 +54,7 @@ class InstrumentCandidate {
 /// `null`.
 class InstrumentQuoteService {
   InstrumentQuoteService({http.Client? client})
-    : _client = client ?? http.Client();
+    : _client = client ?? createPlatformHttpClient();
 
   final http.Client _client;
 

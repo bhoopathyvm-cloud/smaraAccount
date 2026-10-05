@@ -60,6 +60,11 @@ dependencies:
   crypto: ^3.0.7
   bonsoir: ^7.1.5
   basic_utils: ^5.8.2
+  cupertino_http: ^2.4.0
+  # In-repo iOS/macOS plugin: cryptography, TLS and device identity through
+  # Apple's frameworks (OpenSpec os-provided-encryption, ADR 0005).
+  smara_apple_crypto:
+    path: packages/smara_apple_crypto
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,0 +1,30 @@
+name: smara_apple_crypto
+description: >-
+  In-repo iOS/macOS plugin that performs Smara's cryptography, TLS and device
+  identity through Apple's frameworks (CryptoKit, CommonCrypto, Security,
+  Network) so the App Store builds encrypt only through the operating system.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      ios:
+        pluginClass: SmaraAppleCryptoPlugin
+        sharedDarwinSource: true
+      macos:
+        pluginClass: SmaraAppleCryptoPlugin
+        sharedDarwinSource: true
