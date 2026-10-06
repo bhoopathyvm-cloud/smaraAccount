@@ -2,7 +2,7 @@
 # Company sync multi-instance acceptance runner (tasks 7.3–7.5 / 8.x).
 #
 # Usage:
-#   tool/run_company_sync_test.sh [--employees N] [--dry] [--household] [--ios-only] [--real-devices] [--second-iphone]
+#   tool/run_company_sync_test.sh [--employees N] [--dry] [--household] [--ios-only] [--real-devices] [--second-iphone] [--android]
 #
 # --employees N   Claimant count (default 2; max 5). Full cast is 5.
 # --dry           Two-role dry run (Owner macOS + one iOS Claimant) for 7.2.
@@ -16,6 +16,11 @@
 #                 tap "Allow" for Local Network on the iPhone once, and any
 #                 Android "Nearby devices" prompt.
 #
+# --android       With --household --real-devices: phone B (claimant_1) runs
+#                 on the real Android device instead of a simulator or the
+#                 second iPhone, so one person's Mac, iPhone and Android phone
+#                 share the books.
+#
 # Artifacts land under build/company_sync/<timestamp>/.
 
 set -euo pipefail
@@ -28,6 +33,7 @@ DRY=0
 IOS_ONLY=0
 REAL_DEVICES=0
 SECOND_IPHONE=0
+REAL_ANDROID=0
 HOUSEHOLD=0
 REAL_IPHONE_UDID="00008030-00022D593C82402E"
 # Never launch this device: wireless-only; Xcode wireless deploy hangs.
@@ -40,6 +46,7 @@ while [[ $# -gt 0 ]]; do
     --ios-only) IOS_ONLY=1; shift ;;
     --real-devices) REAL_DEVICES=1; shift ;;
     --second-iphone) SECOND_IPHONE=1; shift ;;
+    --android) REAL_ANDROID=1; shift ;;
     --household) HOUSEHOLD=1; EMPLOYEES=2; shift ;;
     -h|--help)
       sed -n '2,20p' "$0"
@@ -491,6 +498,11 @@ if [[ "$HOUSEHOLD" -eq 1 ]]; then
   if [[ "$REAL_DEVICES" -eq 1 ]]; then HH0="$REAL_IPHONE_UDID"; fi
   if [[ "$REAL_DEVICES" -eq 1 && "$SECOND_IPHONE" -eq 1 ]]; then
     HH1="$REAL_IPHONE_15_PRO_UDID"
+  fi
+  if [[ "$REAL_DEVICES" -eq 1 && "$REAL_ANDROID" -eq 1 ]]; then
+    # Takes precedence over --second-iphone: phone B is the Android device.
+    HH1="$REAL_ANDROID_SERIAL"
+    SECOND_IPHONE=0
   fi
   echo "Household: Mac (owner), phone A=$HH0 (claimant_0), phone B=$HH1 (claimant_1)"
   if [[ "$REAL_DEVICES" -eq 1 ]]; then
