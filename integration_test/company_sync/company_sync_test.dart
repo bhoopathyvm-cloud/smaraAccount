@@ -145,6 +145,35 @@ List<String> _stepsForRole(
   required bool dryRun,
   required int employees,
 }) {
+  if (const bool.fromEnvironment('COMPANY_SYNC_PAIR')) {
+    // One phone hosts (owner), the other joins (claimant_0); see
+    // pairScenario in tool/company_sync/scenario.dart.
+    return switch (role) {
+      'owner' => [
+        'owner.ready',
+        'owner.hh_create_books',
+        'owner.hh_offer_0',
+        'owner.hh_confirm_0',
+        'owner.hh_record',
+        'owner.hh_verify_entries',
+        'owner.hh_compare_balances',
+        'owner.hh_rename',
+        'owner.hh_verify_rename',
+        'owner.pair_remove',
+        'owner.hh_verify_erase',
+      ],
+      'claimant_0' => [
+        'claimant_0.ready',
+        'claimant_0.join',
+        'claimant_0.hh_record',
+        'claimant_0.hh_verify_entries',
+        'claimant_0.hh_rename',
+        'claimant_0.hh_verify_rename',
+        'claimant_0.pair_await_erase',
+      ],
+      _ => fail('pair run supports owner and claimant_0: $role'),
+    };
+  }
   if (const bool.fromEnvironment('COMPANY_SYNC_HOUSEHOLD')) {
     return switch (role) {
       'owner' => [
@@ -301,6 +330,12 @@ Future<void> _executeStep({
       return;
     case 'owner.hh_remove_1':
       await householdRemovePhoneB(tester, client);
+      return;
+    case 'owner.pair_remove':
+      await householdRemovePhoneB(tester, client, peerRole: 'claimant_0');
+      return;
+    case 'claimant_0.pair_await_erase':
+      await householdAwaitErase(tester, client);
       return;
     case 'claimant_1.hh_await_erase':
       await householdAwaitErase(tester, client);

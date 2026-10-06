@@ -18,11 +18,19 @@ import 'conductor_client.dart';
 /// `householdScenario` in tool/company_sync/scenario.dart).
 
 /// The entry each device records: amount in minor units and description.
-const householdEntries = {
+const _allHouseholdEntries = {
   'owner': (amountMinor: 4200, description: 'HH Mac groceries'),
   'claimant_0': (amountMinor: 450, description: 'HH phone A coffee'),
   'claimant_1': (amountMinor: 6000, description: 'HH phone B fuel'),
 };
+
+/// A pair run (COMPANY_SYNC_PAIR) has only the host and one joiner.
+final householdEntries = const bool.fromEnvironment('COMPANY_SYNC_PAIR')
+    ? {
+        for (final e in _allHouseholdEntries.entries)
+          if (e.key != 'claimant_1') e.key: e.value,
+      }
+    : _allHouseholdEntries;
 const householdAfterRemovalEntry = (
   amountMinor: 1250,
   description: 'HH phone A after removal',
@@ -224,12 +232,14 @@ Future<void> householdVerifyRename(WidgetTester tester) async {
   fail('later rename did not win: saw "$name", want "$householdRenameLater"');
 }
 
-/// Mac removes phone B (claimant_1) and marks its copy for erase.
+/// The host removes [peerRole] (phone B, claimant_1, by default) and marks
+/// its copy for erase.
 Future<void> householdRemovePhoneB(
   WidgetTester tester,
-  CompanySyncConductorClient client,
-) async {
-  final raw = await client.waitValue('sync_endpoint_claimant_1');
+  CompanySyncConductorClient client, {
+  String peerRole = 'claimant_1',
+}) async {
+  final raw = await client.waitValue('sync_endpoint_$peerRole');
   final target =
       (jsonDecode(raw) as Map<String, dynamic>)['deviceId'] as String;
   final membership = readRepo<MembershipRepository>(tester);

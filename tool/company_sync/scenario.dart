@@ -367,3 +367,102 @@ List<CompanySyncStep> householdScenario() {
     ),
   ];
 }
+
+/// Direct pair (os-provided-encryption 6.3/6.5): one phone hosts the books
+/// (owner) and the other joins (claimant_0) - an iPhone and an Android
+/// device with no Mac in between, run once with each as host. Both record,
+/// both see both entries with the same balance, the later rename wins on
+/// both, and removing the joiner erases its copy on next contact.
+List<CompanySyncStep> pairScenario() {
+  const all = ['owner', 'claimant_0'];
+  return [
+    const CompanySyncStep(id: 'owner.ready', role: 'owner'),
+    const CompanySyncStep(
+      id: 'owner.hh_create_books',
+      role: 'owner',
+      dependsOn: ['owner.ready'],
+      timeout: Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_offer_0',
+      role: 'owner',
+      dependsOn: ['owner.hh_create_books'],
+      timeout: Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.ready',
+      role: 'claimant_0',
+      dependsOn: ['owner.hh_offer_0'],
+      timeout: Duration(minutes: 10),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.join',
+      role: 'claimant_0',
+      dependsOn: ['claimant_0.ready'],
+      timeout: Duration(minutes: 8),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_confirm_0',
+      role: 'owner',
+      dependsOn: ['owner.hh_offer_0'],
+      timeout: Duration(minutes: 8),
+    ),
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_record',
+        role: role,
+        dependsOn: const ['owner.hh_confirm_0', 'claimant_0.join'],
+        timeout: const Duration(minutes: 5),
+      ),
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_verify_entries',
+        role: role,
+        dependsOn: [for (final r in all) '$r.hh_record'],
+        timeout: const Duration(minutes: 8),
+      ),
+    CompanySyncStep(
+      id: 'owner.hh_compare_balances',
+      role: 'owner',
+      dependsOn: [for (final r in all) '$r.hh_verify_entries'],
+      timeout: const Duration(minutes: 3),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_rename',
+      role: 'owner',
+      dependsOn: ['owner.hh_compare_balances'],
+      timeout: Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.hh_rename',
+      role: 'claimant_0',
+      dependsOn: ['owner.hh_rename'],
+      timeout: Duration(minutes: 5),
+    ),
+    for (final role in all)
+      CompanySyncStep(
+        id: '$role.hh_verify_rename',
+        role: role,
+        dependsOn: const ['claimant_0.hh_rename'],
+        timeout: const Duration(minutes: 8),
+      ),
+    CompanySyncStep(
+      id: 'owner.pair_remove',
+      role: 'owner',
+      dependsOn: [for (final r in all) '$r.hh_verify_rename'],
+      timeout: const Duration(minutes: 5),
+    ),
+    const CompanySyncStep(
+      id: 'claimant_0.pair_await_erase',
+      role: 'claimant_0',
+      dependsOn: ['owner.pair_remove'],
+      timeout: Duration(minutes: 10),
+    ),
+    const CompanySyncStep(
+      id: 'owner.hh_verify_erase',
+      role: 'owner',
+      dependsOn: ['owner.pair_remove'],
+      timeout: Duration(minutes: 10),
+    ),
+  ];
+}
