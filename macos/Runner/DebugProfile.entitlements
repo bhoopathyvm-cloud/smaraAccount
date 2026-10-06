@@ -2,16 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- App Sandbox off for local debug/profile: flutter_secure_storage's
-	     Keychain writes need a keychain-access-groups entitlement whose
-	     $(AppIdentifierPrefix) only resolves under real Apple Developer
-	     code signing, which isn't configured for "Sign to Run Locally."
-	     Release.entitlements enables the sandbox for Mac App Store
-	     builds. Revisit aligning this file once a real Team is routine
-	     for local flutter run -d macos (macos-app-store-sandbox
-	     design.md Decision 3). -->
+	<!-- Debug/Profile builds are signed with the team (Apple Development
+	     certificate + Mac development profile, so this Mac must be a
+	     registered development device). That gives them an application
+	     identifier, which the data-protection keychain needs: the TLS
+	     identity lives there (os-provided-encryption), so the legacy
+	     keychain's per-signature "allow access" dialogs no longer block
+	     the handshake. keychain-access-groups is what makes Xcode embed
+	     the profile; it stays out of Release.entitlements (App Store
+	     rejection 90285), where the distribution profile already supplies
+	     the application identifier. App Sandbox stays off for local
+	     debug/profile; Release.entitlements enables it. -->
 	<key>com.apple.security.app-sandbox</key>
 	<false/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.smaraaccounting.smaraAccounting</string>
+	</array>
 	<key>com.apple.security.cs.allow-jit</key>
 	<true/>
 	<key>com.apple.security.network.server</key>

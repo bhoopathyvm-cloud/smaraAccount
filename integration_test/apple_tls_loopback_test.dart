@@ -17,6 +17,7 @@ import 'package:smara_accounting/domain/linked_devices/reserved_join_identity.da
 import 'package:smara_accounting/domain/models/join_qr_payload.dart';
 import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/domain/peer_sync/apple_tls_socket_factory.dart';
+import 'package:smara_accounting/domain/peer_sync/sync_payloads.dart';
 import 'package:smara_accounting/domain/peer_sync/sync_transport.dart';
 import 'package:smara_accounting/domain/peer_sync/tls_sync_transport.dart';
 import 'package:smara_apple_crypto/smara_apple_crypto.dart';
@@ -134,9 +135,14 @@ void main() {
         onBound: (p) => port = p,
         onSession: (_) async => sessions++,
       );
-      // Listener refuses the stranger's client certificate.
-      await expectLater(
-        stranger.connect(
+      // Listener refuses the stranger's client certificate. Under TLS 1.3
+      // the client finishes its side of the handshake before the server has
+      // checked the client certificate, so the refusal can surface on the
+      // first exchange rather than in connect() (Dart's BoringSSL behaves
+      // the same). Either way it must fail with a real error - a timeout
+      // would hide a server that accepted silently - and no session opens.
+      Future<void> strangerTalksToListener() async {
+        final conn = await stranger.connect(
           local: SyncPeerIdentity(deviceId: 'x', certificate: certStranger),
           remote: SyncPeerIdentity(
             deviceId: 'b',
@@ -145,8 +151,18 @@ void main() {
             port: port,
           ),
           pinnedFingerprints: {certStranger.fingerprint, certB.fingerprint},
-        ),
-        throwsA(anything),
+        );
+        try {
+          await conn.send(const EntryBatch(entries: []).toJson());
+          await conn.receive().timeout(const Duration(seconds: 5));
+        } finally {
+          await conn.close();
+        }
+      }
+
+      await expectLater(
+        strangerTalksToListener(),
+        throwsA(isNot(isA<TimeoutException>())),
       );
       // Caller refuses a listener it has not pinned.
       await expectLater(

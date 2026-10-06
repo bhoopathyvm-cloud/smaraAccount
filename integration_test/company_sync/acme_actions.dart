@@ -29,6 +29,7 @@ import 'package:smara_accounting/ui/features/claims/views/claim_editor_view.dart
 import 'package:smara_accounting/ui/features/claims/views/claims_list_view.dart';
 import 'package:smara_accounting/ui/features/claims/views/personal_claim_limits_page.dart';
 import 'package:smara_accounting/ui/features/settings/views/join_qr_offer_panel.dart';
+import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 import 'package:smara_accounting/ui/features/settings/views/linked_devices_section.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -196,7 +197,11 @@ Future<void> goHome(WidgetTester tester) async {
 Future<void> openLinkedDevices(WidgetTester tester) async {
   final l10n = englishAppLocalizations;
   await goHome(tester);
+  // Settings may already be open and scrolled past Linked devices (the
+  // list builds lazily, so the section isn't in the tree then): count the
+  // Settings page itself as open, and start from its top.
   final open =
+      find.byType(SettingsView).hitTestable().evaluate().isNotEmpty ||
       find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
       find.byType(LinkedDevicesSection).evaluate().isNotEmpty;
   if (!open) {
@@ -225,6 +230,7 @@ Future<void> openLinkedDevices(WidgetTester tester) async {
       );
     }
   }
+  await scrollSettingsToTop(tester);
   await scrollSettingsUntilVisible(
     tester,
     find.text(l10n.settingsLinkedDevices),

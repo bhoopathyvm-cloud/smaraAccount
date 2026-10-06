@@ -9,4 +9,6 @@ useDefault = true
 description = "Test-only TLS fixture keys"
 paths = [
   '''^test/fixtures/(tls/)?(a|b|evil)-key\.pem$''',
+  # The same test keys embedded for on-device integration tests.
+  '''^test/fixtures/tls/dart_peers\.dart$''',
 ]

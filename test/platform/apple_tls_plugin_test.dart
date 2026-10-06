@@ -28,7 +28,7 @@ void main() {
   late StreamController<Object?> eventSink;
   late AppleTls tls;
 
-  Future<bool?> askDartToVerify(int handle) async {
+  Future<bool?> askDartToVerify(int handle, {String? fingerprint}) async {
     final completer = Completer<bool?>();
     await messenger.handlePlatformMessage(
       channel.name,
@@ -36,7 +36,7 @@ void main() {
         MethodCall('verifyPeer', {
           'handle': handle,
           'der': peerDer,
-          'fingerprint': peerFingerprint,
+          'fingerprint': fingerprint ?? peerFingerprint,
         }),
       ),
       (reply) => completer.complete(
@@ -213,11 +213,11 @@ void main() {
         onConnection: accepted.complete,
       );
       expect(listener.port, 48123);
-      expect(
-        (calls.single.arguments as Map)['requestClientCertificate'],
-        isTrue,
-      );
-      expect(await askDartToVerify(3), isTrue);
+      final listenArgs = calls.single.arguments as Map;
+      expect(listenArgs['requestClientCertificate'], isTrue);
+      // The native side verifies with the handle Dart sent, not the
+      // listener id.
+      expect(await askDartToVerify(listenArgs['handle'] as int), isTrue);
 
       eventSink.add({
         'type': 'connection',
@@ -235,4 +235,104 @@ void main() {
       expect(calls.last.method, 'stopListening');
     },
   );
+
+  // Regression: listener ids (native counter) and connect handles (Dart
+  // counter) both start at 1. Keying the listener's verifier by its id let a
+  // connect overwrite it, so the server checked the client's certificate with
+  // the client's verifier and every real handshake was refused.
+  test('a listener and a connection each keep their own verifier', () async {
+    const serverSees = 'client-fp';
+    const clientSees = 'server-fp';
+    int? listenHandle;
+    int? connectHandle;
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      final args = call.arguments as Map;
+      if (call.method == 'listen') {
+        listenHandle = args['handle'] as int;
+        return {'id': 1, 'port': 40000};
+      }
+      if (call.method == 'connect') {
+        connectHandle = args['handle'] as int;
+        return {'id': 1, 'remoteAddress': '127.0.0.1', 'remotePort': 40000};
+      }
+      return null;
+    });
+    final listener = await tls.listen(
+      port: 0,
+      identityLabel: 'smara-device-tls:server',
+      requestClientCertificate: true,
+      verifyPeer: (peer) => peer.fingerprint == serverSees,
+      onConnection: (_) {},
+    );
+    // A connect is in flight while the listener is up (same process, as in
+    // the loopback test and on a device that is both host and joiner).
+    final connecting = tls.connect(
+      host: '127.0.0.1',
+      port: 40000,
+      verifyPeer: (peer) => peer.fingerprint == clientSees,
+    );
+    await connecting;
+    expect(listenHandle, isNot(connectHandle));
+    expect(
+      await askDartToVerify(listenHandle!, fingerprint: serverSees),
+      isTrue,
+      reason: 'the listener keeps its own verifier',
+    );
+    await listener.close();
+  });
+
+  // Regression: the connect reply (method channel) and the peer's first bytes
+  // (event channel) are not ordered against each other. The join-code host
+  // speaks first, so its greeting could reach Dart before the connection was
+  // registered and was dropped; join-by-code then timed out on iOS.
+  test('bytes that arrive before the connect reply are not lost', () async {
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'connect') {
+        eventSink.add({
+          'type': 'data',
+          'id': 21,
+          'bytes': Uint8List.fromList([1, 2, 3]),
+        });
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+        return {'id': 21, 'remoteAddress': '127.0.0.1', 'remotePort': 1};
+      }
+      return null;
+    });
+    final connection = await tls.connect(
+      host: '127.0.0.1',
+      port: 1,
+      verifyPeer: (_) => true,
+    );
+    final first = await connection.data.first.timeout(
+      const Duration(seconds: 2),
+    );
+    expect(first, [1, 2, 3]);
+  });
+
+  // Regression: close() awaited StreamController.close(), which completes
+  // only when the listener receives "done". A StreamIterator between reads
+  // (how the join-code session reads frames) keeps its subscription paused,
+  // so close() never returned and join-by-code hung on both sides.
+  test('close returns while a StreamIterator is between reads', () async {
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'connect') {
+        return {'id': 31, 'remoteAddress': '127.0.0.1', 'remotePort': 1};
+      }
+      return null;
+    });
+    final connection = await tls.connect(
+      host: '127.0.0.1',
+      port: 1,
+      verifyPeer: (_) => true,
+    );
+    eventSink.add({
+      'type': 'data',
+      'id': 31,
+      'bytes': Uint8List.fromList([9]),
+    });
+    final chunks = StreamIterator<Uint8List>(connection.data);
+    expect(await chunks.moveNext(), isTrue);
+    await connection.close().timeout(const Duration(seconds: 2));
+    await chunks.cancel();
+  });
 }
