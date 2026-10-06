@@ -301,6 +301,23 @@ Future<void> scrollSettingsUntilVisible(
   }
 }
 
+/// Jumps Settings' own list back to the top when Settings is the visible
+/// page. [scrollSettingsUntilVisible] only moves down, so a target above the
+/// current position (Linked devices, after an earlier step scrolled to the
+/// research tool or Books copy) would otherwise never be reached.
+Future<void> scrollSettingsToTop(WidgetTester tester) async {
+  final scrollables = find.descendant(
+    of: find.byType(SettingsView),
+    matching: find.byType(Scrollable),
+  );
+  if (scrollables.evaluate().isEmpty ||
+      find.byType(SettingsView).hitTestable().evaluate().isEmpty) {
+    return;
+  }
+  tester.state<ScrollableState>(scrollables.first).position.jumpTo(0);
+  await tester.pump(const Duration(milliseconds: 250));
+}
+
 /// Enters [text] into whatever [fieldTarget] resolves to, then polls (like
 /// [pumpUntilFound]) for [succeeded] to become true; if it doesn't, enters
 /// the text again (up to [maxAttempts] times). Root cause confirmed during
