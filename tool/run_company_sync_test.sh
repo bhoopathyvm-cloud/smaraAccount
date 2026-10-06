@@ -401,10 +401,13 @@ launch_role() {
   local device="$2"
   echo "Launching $role on $device"
   mkdir -p "$REPORT_DIR/$role"
-  # Physical iPhones keep the app after the run: uninstalling also drops
-  # iOS's Local Network permission, which then needs a tap on every run.
+  # Real devices keep the app after the run. On iPhones uninstalling also
+  # drops iOS's Local Network permission, which then needs a tap on every
+  # run; on the real Android device the owner can then open the app and see
+  # what the run did.
   local keep=()
-  if [[ "$device" == "$REAL_IPHONE_UDID" || "$device" == "$REAL_IPHONE_15_PRO_UDID" ]]; then
+  if [[ "$device" == "$REAL_IPHONE_UDID" || "$device" == "$REAL_IPHONE_15_PRO_UDID" \
+    || "$device" == "$REAL_ANDROID_SERIAL" ]]; then
     keep=(--no-uninstall)
   fi
   flutter test integration_test/company_sync/company_sync_test.dart \
