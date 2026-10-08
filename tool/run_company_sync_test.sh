@@ -2,7 +2,7 @@
 # Company sync multi-instance acceptance runner (tasks 7.3–7.5 / 8.x).
 #
 # Usage:
-#   tool/run_company_sync_test.sh [--employees N] [--dry] [--household] [--ios-only] [--real-devices] [--second-iphone] [--android]
+#   tool/run_company_sync_test.sh [--employees N] [--dry] [--household] [--ios-only] [--real-devices] [--second-iphone] [--android] [--pair iphone-host|android-host]
 #
 # --employees N   Claimant count (default 2; max 5). Full cast is 5.
 # --dry           Two-role dry run (Owner macOS + one iOS Claimant) for 7.2.
@@ -21,6 +21,12 @@
 #                 second iPhone, so one person's Mac, iPhone and Android phone
 #                 share the books.
 #
+# --pair HOST     Direct pair, no Mac: the real iPhone SE and the real Android
+#                 device. HOST (iphone-host or android-host) creates the books
+#                 and offers a device code; the other phone joins. Both
+#                 record, sync, rename; the host then removes and erases the
+#                 joiner. Implies --real-devices.
+#
 # Artifacts land under build/company_sync/<timestamp>/.
 
 set -euo pipefail
@@ -34,6 +40,7 @@ IOS_ONLY=0
 REAL_DEVICES=0
 SECOND_IPHONE=0
 REAL_ANDROID=0
+PAIR_HOST=
 HOUSEHOLD=0
 REAL_IPHONE_UDID="00008030-00022D593C82402E"
 # Never launch this device: wireless-only; Xcode wireless deploy hangs.
@@ -47,6 +54,13 @@ while [[ $# -gt 0 ]]; do
     --real-devices) REAL_DEVICES=1; shift ;;
     --second-iphone) SECOND_IPHONE=1; shift ;;
     --android) REAL_ANDROID=1; shift ;;
+    --pair)
+      PAIR_HOST="${2:-}"
+      if [[ "$PAIR_HOST" != "iphone-host" && "$PAIR_HOST" != "android-host" ]]; then
+        echo "--pair needs iphone-host or android-host" >&2
+        exit 64
+      fi
+      HOUSEHOLD=1; REAL_DEVICES=1; EMPLOYEES=1; shift 2 ;;
     --household) HOUSEHOLD=1; EMPLOYEES=2; shift ;;
     -h|--help)
       sed -n '2,20p' "$0"
@@ -235,8 +249,9 @@ else
 fi
 
 if [[ "$HOUSEHOLD" -eq 1 ]]; then
-  # Phone B on the iPhone 17 simulator unless both real iPhones are used.
-  if [[ "$SECOND_IPHONE" -eq 0 ]]; then
+  # Phone B on the iPhone 17 simulator unless both real iPhones are used
+  # (or this is a two-phone pair run).
+  if [[ "$SECOND_IPHONE" -eq 0 && -z "$PAIR_HOST" ]]; then
     if udid="$(find_sim_udid 'iPhone 17')"; then
       IPHONE17_UDID="$udid"
       xcrun simctl boot "$IPHONE17_UDID" 2>/dev/null || true
@@ -326,7 +341,9 @@ fi
 
 # --- Conductor ---
 CONDUCTOR_ARGS=("$REPORT_DIR/conductor")
-if [[ "$HOUSEHOLD" -eq 1 ]]; then
+if [[ -n "$PAIR_HOST" ]]; then
+  CONDUCTOR_ARGS+=(--pair)
+elif [[ "$HOUSEHOLD" -eq 1 ]]; then
   CONDUCTOR_ARGS+=(--household)
 elif [[ "$DRY" -eq 1 ]]; then
   CONDUCTOR_ARGS+=(--dry)
@@ -401,6 +418,9 @@ if [[ "$DRY" -eq 1 ]]; then
 fi
 if [[ "$HOUSEHOLD" -eq 1 ]]; then
   DEFINES+=(--dart-define=COMPANY_SYNC_HOUSEHOLD=true)
+fi
+if [[ -n "$PAIR_HOST" ]]; then
+  DEFINES+=(--dart-define=COMPANY_SYNC_PAIR=true)
 fi
 
 launch_role() {
@@ -485,12 +505,28 @@ PY
 # macOS App Nap throttles the Owner app while simulator windows cover it,
 # which stalled real-device runs for minutes; turn it off for the test app.
 defaults write "$IOS_BUNDLE_ID" NSAppSleepDisabled -bool YES 2>/dev/null || true
+if [[ -z "$PAIR_HOST" ]]; then
 echo "Warming macOS build..."
 flutter build macos --debug \
   --dart-define=COMPANY_SYNC_TEST=true \
   >"$REPORT_DIR/conductor/build_macos.log" 2>&1 || true
+fi
 
-if [[ "$HOUSEHOLD" -eq 1 ]]; then
+if [[ -n "$PAIR_HOST" ]]; then
+  # Two real phones, no Mac. The iPhone launches first and alone (Xcode
+  # drives one physical iOS device at a time), then the Android device.
+  if [[ "$PAIR_HOST" == "iphone-host" ]]; then
+    IPHONE_ROLE=owner; ANDROID_ROLE=claimant_0
+  else
+    IPHONE_ROLE=claimant_0; ANDROID_ROLE=owner
+  fi
+  echo "Pair: iPhone SE $REAL_IPHONE_UDID = $IPHONE_ROLE, Android $REAL_ANDROID_SERIAL = $ANDROID_ROLE (host: $PAIR_HOST)"
+  launch_role "$IPHONE_ROLE" "$REAL_IPHONE_UDID"
+  wait_role_compiled "$IPHONE_ROLE" || exit 1
+  wait_role_ready "$IPHONE_ROLE" || exit 1
+  launch_role "$ANDROID_ROLE" "$REAL_ANDROID_SERIAL"
+  wait_role_compiled "$ANDROID_ROLE" || exit 1
+elif [[ "$HOUSEHOLD" -eq 1 ]]; then
   # One person: the Mac (owner) and two phones (claimant_0, claimant_1)
   # linked with Add a device. Physical iPhones launch first, one at a time.
   HH0="$SE_UDID"

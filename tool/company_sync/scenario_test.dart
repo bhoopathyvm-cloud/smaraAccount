@@ -105,4 +105,31 @@ void main() {
       expect(steps.containsKey('$role.hh_verify_entries'), isTrue);
     }
   });
+
+  test('pairScenario is a valid graph over two devices', () {
+    final steps = pairScenario();
+    final ids = steps.map((s) => s.id).toSet();
+    expect(ids.length, steps.length, reason: 'step ids must be unique');
+    for (final step in steps) {
+      expect(ids.containsAll(step.dependsOn), isTrue, reason: step.id);
+      expect(['owner', 'claimant_0'], contains(step.role));
+    }
+    final done = <String>{};
+    var progressed = true;
+    while (progressed) {
+      progressed = false;
+      for (final step in steps) {
+        if (!done.contains(step.id) && done.containsAll(step.dependsOn)) {
+          done.add(step.id);
+          progressed = true;
+        }
+      }
+    }
+    expect(done.length, steps.length, reason: 'pair scenario has a cycle');
+    final byId = {for (final s in steps) s.id: s};
+    expect(byId['claimant_0.hh_rename']!.dependsOn, ['owner.hh_rename']);
+    expect(byId['claimant_0.pair_await_erase']!.dependsOn, [
+      'owner.pair_remove',
+    ]);
+  });
 }
