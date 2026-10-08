@@ -2,6 +2,7 @@
 # Company sync multi-instance acceptance runner (tasks 7.3–7.5 / 8.x).
 #
 # Usage:
+# Env: REAL_IPHONE_UDID / REAL_ANDROID_SERIAL override the real-device ids.
 #   tool/run_company_sync_test.sh [--employees N] [--dry] [--household] [--ios-only] [--real-devices] [--second-iphone] [--android] [--pair iphone-host|android-host]
 #
 # --employees N   Claimant count (default 2; max 5). Full cast is 5.
@@ -42,10 +43,10 @@ SECOND_IPHONE=0
 REAL_ANDROID=0
 PAIR_HOST=
 HOUSEHOLD=0
-REAL_IPHONE_UDID="00008030-00022D593C82402E"
+REAL_IPHONE_UDID="${REAL_IPHONE_UDID:-00008030-00022D593C82402E}"  # override: REAL_IPHONE_UDID=<udid> (e.g. the iPhone 15 Pro when only it is on USB)
 # Never launch this device: wireless-only; Xcode wireless deploy hangs.
 REAL_IPHONE_15_PRO_UDID="00008130-000A28D93A51001C"
-REAL_ANDROID_SERIAL="RZGL42CPNGP"
+REAL_ANDROID_SERIAL="${REAL_ANDROID_SERIAL:-RZGL42CPNGP}"  # override: REAL_ANDROID_SERIAL=<serial>
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --employees) EMPLOYEES="${2:?}"; shift 2 ;;
@@ -520,7 +521,7 @@ if [[ -n "$PAIR_HOST" ]]; then
   else
     IPHONE_ROLE=claimant_0; ANDROID_ROLE=owner
   fi
-  echo "Pair: iPhone SE $REAL_IPHONE_UDID = $IPHONE_ROLE, Android $REAL_ANDROID_SERIAL = $ANDROID_ROLE (host: $PAIR_HOST)"
+  echo "Pair: iPhone $REAL_IPHONE_UDID = $IPHONE_ROLE, Android $REAL_ANDROID_SERIAL = $ANDROID_ROLE (host: $PAIR_HOST)"
   launch_role "$IPHONE_ROLE" "$REAL_IPHONE_UDID"
   wait_role_compiled "$IPHONE_ROLE" || exit 1
   wait_role_ready "$IPHONE_ROLE" || exit 1
