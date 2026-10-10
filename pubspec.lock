@@ -1308,10 +1308,10 @@ packages:
     dependency: "direct main"
     description:
       name: tabler_icons_plus
-      sha256: "81cc5af10223d905c0d43f0d88ed31401083a2b9152d6e8ae75e273f0b1e7de1"
+      sha256: "7f692f1873396a019e1bf56a54d0e4cb961b3855ad70dadc2c0910f2edcab181"
       url: "https://pub.dev"
     source: hosted
-    version: "3.46.0"
+    version: "3.49.0"
   term_glyph:
     dependency: transitive
     description:
