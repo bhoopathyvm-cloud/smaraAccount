@@ -39,6 +39,6 @@ The app syncs iPhone, Mac and Android, so formats and the sync protocol stayed f
 
 My job was the decision, the constraint and the real-device testing. The assistant did the implementation, and review agents checked it. Treat the question as a design constraint early, keep crypto behind one seam, never allow a silent fallback, and test on real devices.
 
-## One thing I can't remove
+## One thing I don't like yet
 
-The Flutter engine still contains BoringSSL, which `dart:io` uses. Our code doesn't call it on Apple, and removing it would need a custom engine build I don't think is worth maintaining. The same copy ships in every Flutter iOS app. So before each submission I record that I made this call knowingly.
+The Flutter engine still contains its own copy of BoringSSL, which `dart:io` uses. Our code doesn't call it on Apple, but I don't like carrying something we don't use. Neither I nor the AI agent has found a clean way to remove it so far. I'm still researching how to remove it fully, and I'll write about it when I know.
