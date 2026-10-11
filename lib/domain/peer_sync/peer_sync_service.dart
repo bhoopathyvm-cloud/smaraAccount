@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'dart:async';
 import 'dart:io';
 
@@ -471,6 +472,40 @@ class PeerSyncService {
 
   /// Automatic catch-up when the app returns to the foreground.
   Future<List<SyncSessionResult>> onAppResumed() => syncNow();
+
+  /// Delays between the post-join catch-up attempts (the first attempt runs
+  /// immediately). The other device may not have recorded this one yet, or
+  /// may not be advertising yet, so a single attempt can find nothing.
+  static const postJoinRetryDelays = [
+    Duration(seconds: 3),
+    Duration(seconds: 8),
+    Duration(seconds: 20),
+    Duration(seconds: 45),
+  ];
+
+  /// Catch-up right after a join: runs [syncNow] and, until a session pulls
+  /// at least one entry, retries after each of [retryDelays]. Never throws;
+  /// returns the results of the last attempt.
+  Future<List<SyncSessionResult>> catchUpAfterJoin({
+    List<Duration> retryDelays = postJoinRetryDelays,
+    Future<void> Function(Duration)? wait,
+    Future<List<SyncSessionResult>> Function()? attempt,
+  }) async {
+    final pause = wait ?? Future<void>.delayed;
+    final run = attempt ?? syncNow;
+    var results = const <SyncSessionResult>[];
+    for (var i = 0; i <= retryDelays.length; i++) {
+      if (i > 0) await pause(retryDelays[i - 1]);
+      try {
+        results = await run();
+      } catch (_) {
+        // Best-effort: a failed attempt is retried, never surfaced.
+        results = const [];
+      }
+      if (results.any((r) => r.connected && r.entriesReceived > 0)) break;
+    }
+    return results;
+  }
 
   /// Registers a linked peer at [host]:[port] when mDNS is blocked (task 2.3).
   Future<void> connectByAddress({

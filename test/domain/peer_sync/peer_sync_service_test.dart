@@ -3,6 +3,7 @@ import 'package:shared_preferences_platform_interface/shared_preferences_async_p
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/peer_sync/peer_discovery.dart';
 import 'package:smara_accounting/domain/peer_sync/peer_sync_service.dart';
+import 'package:smara_accounting/domain/peer_sync/peer_sync_session.dart';
 import 'package:test/test.dart';
 
 import '../../harness/dual_device_harness.dart';
@@ -77,4 +78,54 @@ void main() {
       await serviceB.stop();
     },
   );
+
+  group('catchUpAfterJoin', () {
+    PeerSyncService service() => PeerSyncService(
+      transport: harness.a.transport,
+      discovery: discoveryA,
+      membership: harness.a.membership,
+      merge: harness.a.merge,
+      certificates: harness.a.certs,
+      settings: settings,
+      reachability: harness.reachability,
+      activeBooksSetId: () async => harness.booksSetId,
+    );
+
+    const empty = SyncSessionResult(
+      connected: true,
+      entriesSent: 0,
+      entriesReceived: 0,
+    );
+    const pulled = SyncSessionResult(
+      connected: true,
+      entriesSent: 0,
+      entriesReceived: 2,
+    );
+
+    test('retries until a session pulls entries, then stops', () async {
+      final waits = <Duration>[];
+      var calls = 0;
+      final results = await service().catchUpAfterJoin(
+        wait: (d) async => waits.add(d),
+        attempt: () async => ++calls < 3 ? [empty] : [pulled],
+      );
+      expect(calls, 3);
+      expect(waits, PeerSyncService.postJoinRetryDelays.take(2));
+      expect(results.single.entriesReceived, 2);
+    });
+
+    test('gives up after the last delay and survives errors', () async {
+      var calls = 0;
+      final results = await service().catchUpAfterJoin(
+        retryDelays: const [Duration(seconds: 1), Duration(seconds: 2)],
+        wait: (_) async {},
+        attempt: () async {
+          calls++;
+          throw StateError('boom');
+        },
+      );
+      expect(calls, 3);
+      expect(results, isEmpty);
+    });
+  });
 }

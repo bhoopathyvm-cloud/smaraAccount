@@ -798,7 +798,9 @@ class _AppRouterHostState extends State<_AppRouterHost>
           try {
             final sync = context.read<PeerSyncService>();
             await sync.startForeground();
-            await sync.syncNow();
+            // Retries with backoff: right after a join the other device may
+            // not have recorded this one yet, so the first pull can be empty.
+            await sync.catchUpAfterJoin();
           } catch (_) {
             // Post-join catch-up is best-effort; failures must not abort the
             // Flutter test / UI isolate.
