@@ -30,6 +30,8 @@ I believe a human would spend far more time here than on the code, setting up de
 
 ## What I learned
 
+The whole of Smara Account is a learning journey for me, and this part shows how much a small detail can matter: one question in a store form reshaped the architecture.
+
 My job was the decision and the real-device testing. Treat the question as a design constraint early, keep crypto behind one seam, never allow a silent fallback, and test on real devices.
 
 ## One thing I don't like yet
