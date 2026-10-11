@@ -1,9 +1,9 @@
-name: Acceptance Suite Weekly
+name: Acceptance Suite Monthly
 
 # Standing locale-regression gate (acceptance-suite-nightly-ci): runs the
 # full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
 # tests) against the Linux desktop target (-d linux, per
-# add-linux-desktop-support) once weekly (Sundays 03:00 UTC), across
+# add-linux-desktop-support) once monthly (1st, 03:00 UTC), across
 # every supported locale. The filename still says "nightly" (its original
 # cadence) so existing run-history and doc links keep working.
 # Replaces localized-release-verification's old manual, curated-9-locale,
@@ -26,12 +26,10 @@ name: Acceptance Suite Weekly
 # Not a flutter-ci.yml gate: a failing or flaky locale on a given run
 # does not block any pull request from merging.
 
-# The weekly cron is switched off to stop automatic metered usage (43 jobs
-# per run). The gate still exists: run it by hand from the Actions tab, or
-# restore the two lines below to put it back on a schedule.
-#   schedule:
-#     - cron: "0 3 * * 0"
 on:
+  schedule:
+    # Monthly, 1st of the month 03:00 UTC (was weekly) to limit usage.
+    - cron: "0 3 1 * *"
   workflow_dispatch:
 
 permissions:
@@ -45,7 +43,7 @@ jobs:
     # needs the owner-gate: github.actor on a schedule event is whoever
     # last edited the cron line, not a real "who triggered this", so
     # checking it there would be fragile rather than protective.
-    if: github.actor == github.repository_owner
+    if: github.event_name == 'schedule' || github.actor == github.repository_owner
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
