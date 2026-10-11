@@ -10,15 +10,58 @@ on:
 permissions:
   contents: read
 
+# A new push to a pull request supersedes the run for its previous commit.
+# Pushes to main get a unique group, so they are never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
+  # "Format, analyze, and test" is a required status check (ruleset "Require
+  # Format, analyze, and test on main"), so the job must always run and
+  # report. A path filter on the workflow would leave the check pending
+  # forever on unrelated PRs. Instead the job always starts and skips its
+  # heavy steps when the PR only touches files no Dart check reads.
   analyze-and-test:
     name: Format, analyze, and test
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # A pull request checks out its merge commit; its first parent is
+          # the base, so depth 2 is enough to list what the PR changes.
+          fetch-depth: 2
+
+      - name: Decide whether the Dart checks are needed
+        id: scope
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          # Only pull requests are filtered. Pushes to main always run in full.
+          if [ "$EVENT_NAME" != "pull_request" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Files nothing in format/analyze/test reads. Deliberately narrow:
+          # docs/release and pages/ are NOT listed because tests read the
+          # privacy policy, app-privacy.md and the release runbook.
+          ignorable='^(openspec/|docs/adr/|docs/agents/|(README|CONTEXT|AGENTS|CLAUDE)\.md$)'
+          changed="$(git diff --name-only HEAD^1 HEAD)"
+          echo "Changed files:"; echo "$changed"
+          # Files that DO need the checks (everything not ignorable).
+          needed="$(echo "$changed" | grep -Ev "$ignorable" || true)"
+          if [ -n "$changed" ] && [ -z "$needed" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Docs/spec-only change: skipping the Dart checks."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Set up Flutter
+        if: steps.scope.outputs.skip != 'true'
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version: "3.47.1"
@@ -26,13 +69,17 @@ jobs:
           cache: true
 
       - name: Install dependencies
+        if: steps.scope.outputs.skip != 'true'
         run: flutter pub get --enforce-lockfile
 
       - name: Verify formatting
+        if: steps.scope.outputs.skip != 'true'
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze
+        if: steps.scope.outputs.skip != 'true'
         run: flutter analyze
 
       - name: Run tests
+        if: steps.scope.outputs.skip != 'true'
         run: flutter test

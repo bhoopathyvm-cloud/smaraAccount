@@ -15,12 +15,23 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    # Only GitHub Actions YAML is analyzed, so a PR that touches none of it
+    # has nothing new to scan. Pushes to main and the weekly run stay
+    # unfiltered. CodeQL is not a required check, so skipping is safe.
+    paths:
+      - ".github/workflows/**"
+      - ".github/actions/**"
+      - ".github/codeql/**"
   schedule:
     # Weekly, offset from security.yml's Monday 12:30 UTC cron.
     - cron: "30 13 * * 1"
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   analyze:
