@@ -14,7 +14,7 @@ The question isn't "is the app secure?" It's "who wrote the encryption?". An app
 2. Skip the countries where the rules are a burden.
 3. Change the app so the simple answer is true.
 
-A normal developer might have chosen the second. I didn't want a smaller market or ongoing paperwork, so I chose the third: on iOS and macOS, only Apple's own encryption. I also asked that it stay true, not just once.
+On my own, I would have chosen the second. Rewriting the app's encryption would have taken me a month or more, so skipping those countries was the sensible choice. But the AI did the rework in about a week. That is a big amplification, and it changed my decision: I chose the third, only Apple's own encryption on iOS and macOS, and I asked that it stay true, not just once. It wasn't cheap, since I used a lot of tokens, but a week is a very different price than a month.
 
 ## What the assistant found and built
 
