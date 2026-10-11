@@ -12,7 +12,7 @@ It isn't "is the app secure?" It's "who wrote the encryption?". An app that only
 
 ## Where our own crypto was hiding
 
-More places than I expected: Books Copy encryption, the app-lock PIN, ledger signing, device-sync TLS, each device's certificate, and even HTTPS lookups for exchange rates.
+More places: Books Copy encryption, the app-lock PIN, ledger signing, device-sync TLS, each device's certificate, and even HTTPS lookups for exchange rates.
 
 ## The design: one door
 
