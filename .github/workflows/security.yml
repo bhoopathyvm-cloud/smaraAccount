@@ -13,6 +13,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Fails the PR check on any new vulnerability introduced by the diff -
   # scans pubspec.lock (and any other lockfiles) against the OSV.dev
@@ -41,6 +45,7 @@ jobs:
   gitleaks:
     name: Secret scanning
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
       pull-requests: write
