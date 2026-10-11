@@ -1,4 +1,4 @@
-# Open-Source Encryption Libraries or Apple's Own? What I Learned Adapting Smara Account
+# Replacing Open-Source Encryption With Apple's Own: What I Learned
 
 **Apple asks one question about encryption before an app ships. I learned what it means, and how to change the app to answer it.**
 
