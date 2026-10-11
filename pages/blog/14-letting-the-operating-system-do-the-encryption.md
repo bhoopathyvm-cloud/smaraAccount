@@ -1,4 +1,4 @@
-# Who Wrote the Encryption? Adapting Smara Account to Apple's Rules
+# Open-Source Encryption Libraries or Apple's Own? What I Learned Adapting Smara Account
 
 **Apple asks one question about encryption before an app ships. I learned what it means, and how to change the app to answer it.**
 
