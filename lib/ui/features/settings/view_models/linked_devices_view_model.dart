@@ -418,6 +418,12 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
           );
         }
         await _load();
+        // Pull the joiner's entries now instead of waiting for a manual
+        // Sync now. Best-effort; a failure must not fail the join.
+        final syncAfterJoin = syncNowAction;
+        if (syncAfterJoin != null) {
+          unawaited(syncAfterJoin().catchError((Object _) {}));
+        }
       },
       loadBootstrapMetadata: () async {
         final outbox = _outbox;
