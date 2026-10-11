@@ -1,9 +1,9 @@
-name: Acceptance Suite Weekly
+name: Acceptance Suite Monthly
 
 # Standing locale-regression gate (acceptance-suite-nightly-ci): runs the
 # full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
 # tests) against the Linux desktop target (-d linux, per
-# add-linux-desktop-support) once weekly (Sundays 03:00 UTC), across
+# add-linux-desktop-support) once monthly (1st, 03:00 UTC), across
 # every supported locale. The filename still says "nightly" (its original
 # cadence) so existing run-history and doc links keep working.
 # Replaces localized-release-verification's old manual, curated-9-locale,
@@ -28,7 +28,8 @@ name: Acceptance Suite Weekly
 
 on:
   schedule:
-    - cron: "0 3 * * 0"
+    # Monthly, 1st of the month 03:00 UTC (was weekly) to limit usage.
+    - cron: "0 3 1 * *"
   workflow_dispatch:
 
 permissions:
