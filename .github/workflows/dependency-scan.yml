@@ -1,0 +1,31 @@
+name: Dependency Scan on Push
+
+# Scans the full dependency tree (OSV.dev) whenever a branch is pushed with a
+# changed dependency manifest or lockfile, so a vulnerable package is caught
+# before a pull request is opened. Pushes to main are already scanned by
+# security.yml, and pull requests by its osv-scanner-pr job, so main is
+# excluded here. Not a required check.
+
+on:
+  push:
+    branches-ignore: [main]
+    paths:
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - "requirements.txt"
+
+permissions:
+  contents: read
+
+# A newer push to the same branch supersedes the scan of the previous one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  osv-scan:
+    permissions:
+      actions: read
+      security-events: write
+      contents: read
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@a345acffa64b0eaede81a3d9aae6141214d9c8fc # v2.6.0
