@@ -1,9 +1,5 @@
 # Replacing Open-Source Encryption With Apple's Own: What I Learned
 
-**Apple asks one question about encryption before an app ships. Answering it honestly meant replacing the open-source encryption in my app with Apple's own.**
-
-Building Smara Account is my learning journey. An AI assistant writes the code and I make the decisions. This is one more lesson.
-
 ## The question
 
 App Store Connect asks: *does your app use encryption beyond what Apple's operating system provides?* My answer was "no", until version 2026.10.0 added encrypted Books Copy files and device sync.
@@ -12,7 +8,7 @@ The question isn't "is the app secure?" It's "who wrote the encryption?". Our en
 
 ## The decision
 
-I saw three ways forward:
+An AI assistant writes Smara Account's code and I make the decisions, and this one was mine. I saw three ways forward:
 
 1. Declare it and do the paperwork.
 2. Skip the countries where the rules are a burden.
