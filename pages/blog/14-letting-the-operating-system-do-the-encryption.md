@@ -2,8 +2,6 @@
 
 **Apple asks one question about encryption before an app ships. My AI assistant wrote the code that answers it; the decision about how to answer was mine.**
 
-*One developer's experience, not legal advice.*
-
 I don't write Smara Account's code by hand. An AI coding assistant builds it, and I make the decisions. This post is about one decision, and what it took for the code to follow.
 
 App Store Connect asks: *does your app use encryption beyond what Apple's operating system provides?* Version 2026.10.0 added encrypted Books Copy files and encrypted device sync, and my old "no" no longer matched the code.
