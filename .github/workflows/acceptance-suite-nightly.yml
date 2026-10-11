@@ -26,9 +26,12 @@ name: Acceptance Suite Weekly
 # Not a flutter-ci.yml gate: a failing or flaky locale on a given run
 # does not block any pull request from merging.
 
+# The weekly cron is switched off to stop automatic metered usage (43 jobs
+# per run). The gate still exists: run it by hand from the Actions tab, or
+# restore the two lines below to put it back on a schedule.
+#   schedule:
+#     - cron: "0 3 * * 0"
 on:
-  schedule:
-    - cron: "0 3 * * 0"
   workflow_dispatch:
 
 permissions:
@@ -42,7 +45,7 @@ jobs:
     # needs the owner-gate: github.actor on a schedule event is whoever
     # last edited the cron line, not a real "who triggered this", so
     # checking it there would be fragile rather than protective.
-    if: github.event_name == 'schedule' || github.actor == github.repository_owner
+    if: github.actor == github.repository_owner
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
