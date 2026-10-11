@@ -1,8 +1,8 @@
 # Who Wrote the Encryption? Adapting Smara Account to Apple's Rules
 
-**Apple asks one question about encryption before an app ships. My AI assistant wrote the code that answers it; the decision about how to answer was mine.**
+**Apple asks one question about encryption before an app ships. I learned what it means, and how to change the app to answer it.**
 
-I don't write Smara Account's code by hand. An AI coding assistant builds it, and I make the decisions. This post is about one decision, and what it took for the code to follow.
+Building Smara Account is a learning journey for me. An AI assistant writes the code and I make the decisions. This is another thing I learned along the way.
 
 App Store Connect asks: *does your app use encryption beyond what Apple's operating system provides?* Version 2026.10.0 added encrypted Books Copy files and encrypted device sync, and my old "no" no longer matched the code.
 
